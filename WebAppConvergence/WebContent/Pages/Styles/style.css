@@ -5,6 +5,33 @@ body{
 	background: none repeat scroll 0 0 #F6F6F6;
 }
 
+div.pageBody {
+	border-right: 1px solid #ACACAC;
+	display: block;
+	padding-top: 20px;
+	padding-left: 10%;
+	width: 80%;
+}
+
+div.pageBodyLeft {
+	background-color: #FFFFFF;
+	background-image: url("../Resources/sidebar-repeat.png");
+	background-repeat: repeat-y;
+	background-position: right;
+	float: left;
+	padding-top: 10px;
+	padding-left: 0%;
+	width: 35%;
+}
+
+div.pageBodyRight {
+	float: left;
+	text-align: justify;
+	padding-top: 10px;
+	padding-left: 5%;
+	width: 60%;
+}
+
 div.greyLine {
 	background: none repeat scroll 0 0 #EBEBEB;
 	height: 3px;
@@ -16,13 +43,13 @@ div.header {
 	line-height: 43px;
 	margin: 0;
 	vertical-align: middle;
+	padding-left: 10%
 }
 
 div.header_item {
 	font-size: 23px;
 	float: left;
-	padding-left: 30px;
-	padding-right: 19px;
+	padding-right: 50px;
 	visibility: visible; 
 }
 
@@ -66,6 +93,11 @@ div.header_menu ul li a:hover   {
 	color:#FFF;
 	text-decoration: none;
 	outline-width:0; 
+}
+
+div.footer {
+	background: none repeat scroll 0 0 #474747;
+	height: 120px;
 }
 
 a, a:link {
