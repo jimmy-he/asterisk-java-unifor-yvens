@@ -5,6 +5,26 @@
 <title>Base HTML Page</title>
 
 <link rel="stylesheet" href="Styles/style.css" type="text/css">
+<script type="text/javascript" src="Libs/jquery.js"></script>
+
+
+<script type="text/javascript">
+	function openSubMenu()
+	{
+		$(this).find('.header_menu').css('visibility', 'visible');
+	}
+	
+	function closeSubMenu()
+	{
+		$(this).find('.header_menu').css('visibility', 'hidden');
+	}
+	
+	$(document).ready(function () {
+		$('.header_item').bind('mouseover', openSubMenu);
+		$('.header_item').bind('mouseout',  closeSubMenu);
+		 
+	});
+</script>
 </head>
 <body>
 
@@ -15,17 +35,64 @@
 	
 	<div class="header">
 		<div class="header_item"> 
-			<a href="basePage.html">Lorem</a>
+			<a id="Lorem" href="#">
+				Lorem
+			</a>
+			<div class="header_menu">
+				<ul>
+					<li>
+						<a id="Lorem" href="#"> oi </a>
+					</li>
+					<li>
+						consectetur
+					</li>
+					<li>
+						adipiscing
+					</li>
+				</ul>
+			</div>
 		</div>
-		<div class="header_item">Ipsum </div>
-		<div class="header_item">Dolor </div>
-		<div class="header_item">Sit </div>    
-		<div class="header_item">Amet </div>
+		<div class="header_item"> 
+			<a id="ipsum" href="#">
+				Ipsum
+			</a>
+			<div class="header_menu">
+				<ul>
+					<li>
+						oi
+					</li>
+					<li>
+						consectetur
+					</li>
+					<li>
+						adipiscing
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="header_item"> 
+			<a id="Dolor" href="#">
+				Dolor
+			</a>
+			<div class="header_menu">
+				<ul>
+					<li>
+						oi
+					</li>
+					<li>
+						consectetur
+					</li>
+					<li>
+						adipiscing
+					</li>
+				</ul>
+			</div>
+		</div>
 	</div>
 </div>
 
 <div class="main_body">
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur cursus, mi nec porttitor vestibulum, justo risus facilisis ipsum, ac semper nisi lectus vitae elit. Sed venenatis blandit sapien at fermentum. Proin at orci eu nibh cursus mollis. Suspendisse bibendum suscipit luctus. Cras consectetur vestibulum magna, eu molestie nisi posuere non. Vestibulum tristique orci sit amet libero hendrerit id consectetur tellus tristique. Nulla dui nisi, pulvinar sed semper non, mollis vel magna. Nam ornare, velit porttitor semper congue, mi est sollicitudin elit, eu blandit nibh dolor quis dui. Sed magna augue, auctor euismod lobortis ac, feugiat et nisi. Mauris mollis adipiscing quam, vel ultrices turpis laoreet ac. 
+	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur cursus, mi nec porttitor vestibulum, justo risus facilisis ipsum, ac semper nisi lectus vitae elit. Sed venenatis blandit sapien at fermentum. Proin at orci eu nibh cursus mollis. Suspendisse bibendum suscipit luctus. Cras consectetur vestibulum magna, eu molestie nisi posuere non. Vestibulum tristique orci sit amet libero hendrerit id consectetur tellus tristique. Nulla dui nisi, pulvinar sed semper non, mollis vel magna. Nam ornare, velit porttitor semper congue, mi est sollicitudin elit, eu blandit nibh dolor quis dui. Sed magna augue, auctor euismod lobortis ac, feugiat et nisi. Mauris mollis adipiscing quam, vel ultrices turpis laoreet ac. 
 </div>
 
 </body>
