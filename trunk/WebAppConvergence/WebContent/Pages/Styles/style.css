@@ -1,13 +1,29 @@
 @CHARSET "UTF-8";
 
-div.header {
-	
-}
-
-div.main_div {
-	background: none repeat scroll 0 0 #F6772F;
-}
-
-div.main_body {
+body{
+	font-size: 15px;
 	background: none repeat scroll 0 0 #F6F6F6;
 }
+
+div.greyLine {
+	background: none repeat scroll 0 0 #EBEBEB;
+	height: 3px;
+}
+
+div.header {
+	background-color: #F6772F;
+	height: 46px;
+	line-height: 43px;
+	margin: 0;
+	vertical-align: middle;
+}
+
+div.header_item {
+	font-size: 23px;
+	float: left;
+	padding-left: 30px;
+}
+
+a, a:link {color:#039; text-decoration:none; outline-width:0;}
+a:visited {color:#688fb0; text-decoration:none;}
+a:hover   {color:#c30; text-decoration:underline;}
