@@ -7,7 +7,6 @@
 <link rel="stylesheet" href="Styles/style.css" type="text/css">
 <script type="text/javascript" src="Libs/jquery.js"></script>
 
-
 <script type="text/javascript">
 	function openSubMenu()
 	{
@@ -54,7 +53,7 @@
 	
 	<div class="greyLine"> </div>
 	
-	<div class="header" style="">
+	<div class="header">
 		<div class="header_item"> 
 			<a id="Lorem" href="#">
 				Lorem
@@ -113,14 +112,31 @@
 </div>
 
 <div class="pageBody">
+	Texto em uma só coluna, class = pageBody.<br/>
 	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur cursus, mi nec porttitor vestibulum, justo risus facilisis ipsum, ac semper nisi lectus vitae elit. Sed venenatis blandit sapien at fermentum. Proin at orci eu nibh cursus mollis. Suspendisse bibendum suscipit luctus. Cras consectetur vestibulum magna, eu molestie nisi posuere non. Vestibulum tristique orci sit amet libero hendrerit id consectetur tellus tristique. Nulla dui nisi, pulvinar sed semper non, mollis vel magna. Nam ornare, velit porttitor semper congue, mi est sollicitudin elit, eu blandit nibh dolor quis dui. Sed magna augue, auctor euismod lobortis ac, feugiat et nisi. Mauris mollis adipiscing quam, vel ultrices turpis laoreet ac. 
 </div>
 
 <div class="pageBody">
 	<div id="columnOne1" class="pageBodyLeft">
+		Texto em duas colunas, class da coluna da esquerda = pageBodyLeft<br/>
+		<h4>Colunas duplas precisam de código javascript para ficarem do mesmo tamanho</h4>
+		<h3>Código na coluna ao lado: </h3>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur cursus, mi nec porttitor vestibulum, justo risus facilisis ipsum, ac semper nisi lectus vitae elit. Sed venenatis blandit sapien at fermentum. Proin at orci eu nibh cursus mollis. Suspendisse bibendum suscipit luctus. Cras consectetur vestibulum magna, eu molestie nisi posuere non. Vestibulum tristique orci sit amet libero hendrerit id consectetur tellus tristique. Nulla dui nisi, pulvinar sed semper non, mollis vel magna. Nam ornare, velit porttitor semper congue, mi est sollicitudin elit, eu blandit nibh dolor quis dui. Sed magna augue, auctor euismod lobortis ac, feugiat et nisi. Mauris mollis adipiscing quam, vel ultrices turpis laoreet ac.
 	</div>
 	<div id="columnTwo1" class="pageBodyRight">
+		Texto em duas colunas, class da coluna da direita = pageBodyRight<br/>
+		<h4>Colunas duplas precisam de código javascript para ficarem do mesmo tamanho</h4>
+		<h3>Exemplo do código: </h3>
+		<code>
+			if($("#columnTwo").height() > $("#columnOne").height()) <br/>
+			{<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;$("#columnOne").height($("#columnTwo").height());<br/>
+			}<br/>
+			else<br/>
+			{<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;$("#columnTwo").height($("#columnOne").height());<br/>
+			}<br/>
+		</code>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur cursus, mi nec porttitor vestibulum, justo risus facilisis ipsum, ac semper nisi lectus vitae elit. Sed venenatis blandit sapien at fermentum. Proin at orci eu nibh cursus mollis. Suspendisse bibendum suscipit luctus. Cras consectetur vestibulum magna, eu molestie nisi posuere non. Vestibulum tristique orci sit amet libero hendrerit id consectetur tellus tristique. Nulla dui nisi, pulvinar sed semper non, mollis vel magna. Nam ornare, velit porttitor semper congue, mi est sollicitudin elit, eu blandit nibh dolor quis dui. Sed magna augue, auctor euismod lobortis ac, feugiat et nisi. Mauris mollis adipiscing quam, vel ultrices turpis laoreet ac.
 	</div>
 </div>
@@ -183,7 +199,7 @@
 	<div class="pageTable">
 		<table align="center" class="result" cellspacing="0" style="width: auto;">
 			<tr>
-				<td class="title" colspan="4">Tabela de Valores 1</td>
+				<td class="title" colspan="4">Exemplo de Tabela</td>
 			</tr>
 			<tr>
 				<td class="subtitle" colspan="4">Subtítulo da tabela</td>
