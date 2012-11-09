@@ -22,7 +22,24 @@
 	$(document).ready(function () {
 		$('.header_item').bind('mouseover', openSubMenu);
 		$('.header_item').bind('mouseout',  closeSubMenu);
-		 
+		
+		if($("#columnTwo1").height() > $("#columnOne1").height())
+		{
+			$("#columnOne1").height($("#columnTwo1").height());
+		}
+		else
+		{
+			$("#columnTwo1").height($("#columnOne1").height());
+		}
+		
+		if($("#columnTwo2").height() > $("#columnOne2").height())
+		{
+			$("#columnOne2").height($("#columnTwo2").height());
+		}
+		else
+		{
+			$("#columnTwo2").height($("#columnOne2").height());
+		}
 	});
 </script>
 </head>
@@ -96,16 +113,72 @@
 </div>
 
 <div class="pageBody">
-	<div class="pageBodyLeft">
+	<div id="columnOne1" class="pageBodyLeft">
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur cursus, mi nec porttitor vestibulum, justo risus facilisis ipsum, ac semper nisi lectus vitae elit. Sed venenatis blandit sapien at fermentum. Proin at orci eu nibh cursus mollis. Suspendisse bibendum suscipit luctus. Cras consectetur vestibulum magna, eu molestie nisi posuere non. Vestibulum tristique orci sit amet libero hendrerit id consectetur tellus tristique. Nulla dui nisi, pulvinar sed semper non, mollis vel magna. Nam ornare, velit porttitor semper congue, mi est sollicitudin elit, eu blandit nibh dolor quis dui. Sed magna augue, auctor euismod lobortis ac, feugiat et nisi. Mauris mollis adipiscing quam, vel ultrices turpis laoreet ac.
 	</div>
-	<div class="pageBodyRight">
+	<div id="columnTwo1" class="pageBodyRight">
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur cursus, mi nec porttitor vestibulum, justo risus facilisis ipsum, ac semper nisi lectus vitae elit. Sed venenatis blandit sapien at fermentum. Proin at orci eu nibh cursus mollis. Suspendisse bibendum suscipit luctus. Cras consectetur vestibulum magna, eu molestie nisi posuere non. Vestibulum tristique orci sit amet libero hendrerit id consectetur tellus tristique. Nulla dui nisi, pulvinar sed semper non, mollis vel magna. Nam ornare, velit porttitor semper congue, mi est sollicitudin elit, eu blandit nibh dolor quis dui. Sed magna augue, auctor euismod lobortis ac, feugiat et nisi. Mauris mollis adipiscing quam, vel ultrices turpis laoreet ac.
 	</div>
 </div>
 
-<div class="footer">
+<div class="pageBody">
+	<div id="columnOne2" class="pageBodyLeft">
+		Exemplo de imagem: <br/>
+		<img alt="asterisk" src="Resources/asterisk.png">
+	</div>
+	<div id="columnTwo2" class="pageBodyRight">
+		Exemplo de Formulário:
+		
+		<form action="#">
+			<table cellspacing="0">
+				<tr> 
+					<td class="left">
+						Campo 1
+					</td>
+					<td class="right">
+						<input type="text">
+					</td>
+				</tr>
+				<tr> 
+					<td class="left">
+						Campo 2
+					</td>
+					<td class="right">
+						<input type="password">
+					</td>
+				</tr>
+				<tr> 
+					<td class="left">
+						Campo 3
+					</td>
+					<td class="right">
+						<input type="radio"> Valor 1
+						<input type="radio"> Valor 2
+					</td>
+				</tr>
+				<tr> 
+					<td class="left">
+						Campo 4
+					</td>
+					<td class="right">
+						<input type="checkbox"> Valor 1
+						<input type="checkbox"> Valor 2
+					</td>
+				</tr>
+				<tr> 
+					<td class="buttons" colspan="2">
+						<input type="button" value="Submit">
+					</td>
+				</tr>
+			</table>	
+		</form>
+	</div>
+</div>
 
+<div class="footer">
+	<div class="footer_copyright">
+		© 2012 Yvens Rebouças, Daniel Santiago. All Rights Reserved.
+	</div>
 </div>
 
 </body>
