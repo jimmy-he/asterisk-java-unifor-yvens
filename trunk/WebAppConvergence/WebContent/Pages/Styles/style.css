@@ -1,5 +1,79 @@
 @CHARSET "UTF-8";
 
+div.emptyWhiteSpace {
+	background-color: #FFFFFF;
+	background-image: url("../Resources/gradientfrombottom.png");
+	background-repeat: repeat-x;	
+}
+
+div.logoHeader {
+	padding-right: 10%;
+	z-index: 2;
+}
+
+div.greyLine {
+	background: none repeat scroll 0 0 #EBEBEB;
+	height: 3px;
+}
+
+div.header {
+	background-color: #F6772F;
+	height: 46px;
+	line-height: 43px;
+	margin: 0;
+	vertical-align: middle;
+	padding-left: 10%
+}
+
+div.header_item {
+	font-size: 23px;
+	float: left;
+	padding-right: 50px;
+	visibility: visible; 
+}
+
+div.header_menu {
+	background-color: #F6772F;
+	border-top: 1px solid #FFFFFF;
+	border-bottom: 1px solid #000000;
+	height: auto;
+	font-size: 17px;
+	position:absolute; 
+	list-style: none;
+	line-height: 24px;
+	visibility:hidden; 
+}
+
+div.header_menu ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	width: auto;
+}
+
+div.header_menu ul li{
+	position: relative;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+div.header_menu li ul {
+	position: absolute;
+	display: none;
+}
+
+div.header_menu ul li a {
+	color: #000;
+	text-decoration: none;
+	outline-width:0;
+}
+
+div.header_menu ul li a:hover   {
+	color:#FFF;
+	text-decoration: none;
+	outline-width:0; 
+}
+
 body{
 	font-size: 15px;
 	background: none repeat scroll 0 0 #F6F6F6;
@@ -87,69 +161,6 @@ div.pageBodyRight {
 	padding-top: 10px;
 	padding-left: 5%;
 	width: 60%;
-}
-
-div.greyLine {
-	background: none repeat scroll 0 0 #EBEBEB;
-	height: 3px;
-}
-
-div.header {
-	background-color: #F6772F;
-	height: 46px;
-	line-height: 43px;
-	margin: 0;
-	vertical-align: middle;
-	padding-left: 10%
-}
-
-div.header_item {
-	font-size: 23px;
-	float: left;
-	padding-right: 50px;
-	visibility: visible; 
-}
-
-div.header_menu {
-	background-color: #F6772F;
-	border-top: 1px solid #FFFFFF;
-	border-bottom: 1px solid #000000;
-	height: auto;
-	font-size: 17px;
-	position:absolute; 
-	list-style: none;
-	line-height: 24px;
-	visibility:hidden; 
-}
-
-div.header_menu ul {
-	margin: 0;
-	padding: 0;
-	list-style: none;
-	width: auto;
-}
-
-div.header_menu ul li{
-	position: relative;
-	padding-left: 10px;
-	padding-right: 10px;
-}
-
-div.header_menu li ul {
-	position: absolute;
-	display: none;
-}
-
-div.header_menu ul li a {
-	color: #000;
-	text-decoration: none;
-	outline-width:0;
-}
-
-div.header_menu ul li a:hover   {
-	color:#FFF;
-	text-decoration: none;
-	outline-width:0; 
 }
 
 div.footer {
