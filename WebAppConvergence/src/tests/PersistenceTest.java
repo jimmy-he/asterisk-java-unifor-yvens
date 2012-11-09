@@ -1,5 +1,8 @@
 package tests;
 
+import java.io.File;
+import java.io.IOException;
+
 import junit.framework.Assert;
 
 import org.junit.Test;
@@ -14,11 +17,13 @@ import persistence.FileHandler;
  */
 public class PersistenceTest {
 	
+	private static final String simple_input_path = "src"+File.separator+"tests"+File.separator+"input"+File.separator+"simple_input.txt";
+	
 	@Test
-	public void testReading() {
+	public void testReading() throws IOException {
 		FileHandler fileHandler = new FileHandler();
 		
-		String[] file = fileHandler.readFile(""); //O arquivo deve vir por aqui
+		String[] file = fileHandler.readFile(simple_input_path); //O arquivo deve vir por aqui
 		
 		int lineNumber = 4; //número de linhas do arquivo
 		Assert.assertEquals(lineNumber, file.length);
@@ -28,7 +33,7 @@ public class PersistenceTest {
 	}
 	
 	@Test
-	public void testWritingDeleting(){
+	public void testWritingDeleting() throws IOException{
 		FileHandler fileHandler = new FileHandler();
 		
 		String[] file = fileHandler.readFile(""); //O arquivo deve vir por aqui
@@ -55,7 +60,7 @@ public class PersistenceTest {
 	}
 	
 	@Test
-	public void testWritingDeletingMultipleLines()
+	public void testWritingDeletingMultipleLines() throws IOException
 	{
 		FileHandler fileHandler = new FileHandler();
 		
