@@ -7,12 +7,65 @@ body{
 
 div.pageBody {
 	border-right: 1px solid #ACACAC;
-	display: block;
 	display: table;
 	padding-top: 20px;
 	padding-left: 10%;
 	padding-bottom: 15px;
 	width: 80%;
+}
+
+div.pageTable {
+	display: table;
+	padding-bottom: 15px;
+	width: 100%;
+}
+
+table.result {
+	border: 1px solid #000000;
+}
+
+td.title {
+	font-size: 18px;
+	font-weight: bold;
+	background-color: #F6772F;
+	height: 30px;
+	margin: 0;
+	padding-left: 15px;
+	vertical-align: middle;
+}
+
+td.subtitle {
+	color: #EBEBEB;
+	font-size: 15px;
+	font-weight: bold;
+	background-color: #474747;
+	height: 20px;
+	margin: 0;
+	padding-left: 15px;
+	vertical-align: middle;
+}
+
+td.header {
+	background-color: #242424;
+	border-right: 1px solid #EBEBEB;
+	color: #EBEBEB;
+	font-size: 12px;
+	font-weight: bold;
+	height: 20px;
+	margin: 0;
+	padding-left: 15px;
+	vertical-align: middle;
+}
+
+td.result {
+	background-color: #EBEBEB;
+	border-right: 1px solid #FFFFFF;
+	color: #000000;
+	font-size: 12px;
+	height: 20px;
+	margin: 0;
+	padding-left: 15px;
+	vertical-align: middle;
 }
 
 div.pageBodyLeft {
@@ -121,6 +174,8 @@ img {
 
 table {
 	display: table;
+	min-width: 500px;
+	width: 100%;
 }
 
 td.left {
