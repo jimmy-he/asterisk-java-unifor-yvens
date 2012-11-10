@@ -42,30 +42,19 @@ public class ServidorOpcoesServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String servidor = "";
 		
-		if(request.getParameter("form") != null && !request.getParameter("form").toString().isEmpty())
+		servidor = request.getLocalAddr();
+		String servidorAtual = ConnectionProperties.getInstace().getServer();
+		if(servidorAtual.isEmpty())
 		{
-			if(request.getParameter("ipServidor") != null && !request.getParameter("ipServidor").toString().isEmpty())
-			{
-				servidor = request.getParameter("ipServidor");
-				ConnectionProperties.getInstace().setServer(servidor);
-				System.out.println("Novo Servidor: "+servidor);
-			}
+			ConnectionProperties.getInstace().setServer(servidor);
+			System.out.println("Servidor: "+servidor);
 		}
 		else
 		{
-			servidor = request.getLocalAddr();
-			String servidorAtual = ConnectionProperties.getInstace().getServer();
-			if(servidorAtual.isEmpty())
-			{
-				ConnectionProperties.getInstace().setServer(servidor);
-				System.out.println("Servidor: "+servidor);
-			}
-			else
-			{
-				servidor = servidorAtual;
-				System.out.println("Servidor: "+servidorAtual);
-			}
+			servidor = servidorAtual;
+			System.out.println("Servidor: "+servidorAtual);
 		}
+		
 		request.setAttribute("servidor", servidor);
 		getServletContext().getRequestDispatcher("/Pages/Application/servidorOpcoes.jsp").forward(request,response);
 	}
