@@ -1,8 +1,10 @@
 package persistence;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -18,6 +20,12 @@ import java.io.InputStreamReader;
  */
 public class FileHandler {
 
+	//Essa variável ativa/desativa a escrita de logs de debug no console
+	public static boolean DEBUG = false;
+	
+	//Essa variável interna da classe mantém o path original do arquivo recentemente lido
+	private String path;
+	
 	/**
 	 * Construtor default
 	 */
@@ -39,7 +47,8 @@ public class FileHandler {
 		String file[] = null;
 		
 		FileInputStream fstream = null;
-		DataInputStream in = null;
+		DataInputStream ds = null;
+		InputStreamReader is = null;
 		BufferedReader br = null;
 		
 		try {
@@ -47,13 +56,14 @@ public class FileHandler {
 			fstream = new FileInputStream(path);
 			
 			//Carrega as classes de leitura
-			in = new DataInputStream(fstream);
-			br = new BufferedReader(new InputStreamReader(in));
+			ds = new DataInputStream(fstream);
+			is = new InputStreamReader(ds);
+			br = new BufferedReader(is);
 			
 			//Instanciado uma String para a leitura linha a linha
 			String strLine;
 			while ((strLine = br.readLine()) != null) {
-				if(text == ""){
+				if(text.equals("")){
 					text += strLine;
 				}
 				else
@@ -64,8 +74,11 @@ public class FileHandler {
 		} catch (Exception e) {
 			System.err.println("Erro: " + e.getMessage());
 		} finally {
+			this.path = path; 
+			
 			br.close();
-			in.close();
+			is.close();
+			ds.close();
 			fstream.close();
 		}
 		
@@ -82,10 +95,38 @@ public class FileHandler {
 	 * @param file
 	 * @param newText
 	 * @param line
+	 * @throws IOException 
 	 */
-	public void writeOnFile(String[] file, String newText, int line)
+	public void writeOnFile(String[] file, String newText, int line) throws IOException
 	{
+		//Esse método deve, inicialmente, criar um novo vetor de linhas
+		//que seja o número de linhas antigas mais 1 (da linha nova)
+		String[] newFile = new String[file.length + 1];
 		
+		//Esse laço vai copiar todas as linhas do texto antigo para o novo
+		//até o índice I for igual à linha onde será inserida a nova
+		//linha, nesse momento a nova linha é colocada e daí em diante o
+		//backUp continua, mas com I - 1 no arquivo original para não repercurtir
+		//os efeitos da adição da nova linha
+		for (int i = 0; i < newFile.length; i++) {
+			if(i < line)
+			{
+				newFile[i] = file[i];
+			}
+			else if(i == line)
+			{
+				newFile[i] = newText;
+			}
+			else
+			{
+				newFile[i] = file[i - 1];	
+			}
+		}
+		
+		//Depois desse processo, chamamos o método de salvar o arquivo em disco
+		//usando seu path original, que foi mantido na variável PATH durante sua
+		//leitura
+		outputFile(newFile);
 	}
 	
 	/**
@@ -96,10 +137,39 @@ public class FileHandler {
 	 * @param file
 	 * @param newText
 	 * @param line
+	 * @throws IOException 
 	 */
-	public void writeOnFile(String[] file, String[] newText, int line)
+	public void writeOnFile(String[] file, String[] newText, int line) throws IOException
 	{
+		//Esse método deve, inicialmente, criar um novo vetor de linhas
+		//que seja o número de linhas antigas mais o número de linhas novas
+		String[] newFile = new String[file.length + newText.length];
 		
+		//Esse laço vai copiar todas as linhas do texto antigo para o novo
+		//até o índice I for igual à linha onde será inserida as novas
+		//linhas, nesse momento as novas linhas serão colocadas e daí em diante o
+		//backUp continua, mas com I - 'qtde. linhas novas' no arquivo original 
+		//para não repercurtir os efeitos da adição das novas linhas
+		for (int i = 0, j = 0; i < newFile.length; i++) {
+			if(i < line)
+			{
+				newFile[i] = file[i];
+			}
+			else if(i <= line + newText.length - 1)
+			{
+				newFile[i] = newText[j];
+				j++;
+			}
+			else
+			{
+				newFile[i] = file[i - newText.length - 1];	
+			}
+		}
+		
+		//Depois desse processo, chamamos o método de salvar o arquivo em disco
+		//usando seu path original, que foi mantido na variável PATH durante sua
+		//leitura
+		outputFile(newFile);
 	}
 	
 	/**
@@ -108,10 +178,38 @@ public class FileHandler {
 	 * 
 	 * @param file
 	 * @param line
+	 * @throws IOException 
 	 */
-	public void deleteLineOnFile(String [] file, int line)
+	public void deleteLineOnFile(String [] file, int line) throws IOException
 	{
+		//Esse método deve, inicialmente, criar um novo vetor de linhas
+		//que seja o número de linhas antigas menos 1 (da linha removida)
+		String[] newFile = new String[file.length - 1];
 		
+		//Esse laço vai copiar todas as linhas do texto antigo para o novo
+		//até o índice I for igual à linha onde será removida a linha,
+		//nesse momento a nova linha é colocada e daí em diante o
+		//backUp continua, mas com I + 1 no arquivo original para não repercurtir
+		//os efeitos da remoção da nova linha
+		for (int i = 0; i < newFile.length; i++) {
+			if(i < line)
+			{
+				newFile[i] = file[i];
+			}
+			else if(i == line)
+			{
+				continue;
+			}
+			else
+			{
+				newFile[i] = file[i + 1];	
+			}
+		}
+		
+		//Depois desse processo, chamamos o método de salvar o arquivo em disco
+		//usando seu path original, que foi mantido na variável PATH durante sua
+		//leitura
+		outputFile(newFile);
 	}
 	
 	/**
@@ -122,9 +220,90 @@ public class FileHandler {
 	 * @param file
 	 * @param begin
 	 * @param end
+	 * @throws IOException 
 	 */
-	public void deleteLineOnFile(String [] file, int begin, int end)
+	public void deleteLineOnFile(String [] file, int begin, int end) throws IOException
 	{
+		//Esse método deve, inicialmente, criar um novo vetor de linhas
+		//que seja o número de linhas antigas menos o número de linhas removidas
+		String[] newFile = new String[file.length - (end - begin) - 1];
 		
+		//Esse laço vai copiar todas as linhas do texto antigo para o novo
+		//até o índice I for igual ao início das linhas que devem ser removidas,
+		//nesse momento ignoramos todas as linhas que vierem até chegar ao ponto end,
+		//daí o backUp continua, mas com I + 'end + 1' no arquivo original para não 
+		//repercurtir os efeitos da remoção da nova linha
+		for (int i = 0; i < newFile.length; i++) {
+			if(i < begin)
+			{
+				newFile[i] = file[i];
+			}
+			else if(i <= begin + end)
+			{
+				continue;
+			}
+			else
+			{
+				newFile[i - end] = file[i + end];	
+			}
+		}
+		
+		//Depois desse processo, chamamos o método de salvar o arquivo em disco
+		//usando seu path original, que foi mantido na variável PATH durante sua
+		//leitura
+		outputFile(newFile);
+	}
+	
+	/**
+	 * Método para escrever um vetor de strings em um arquivo, substituindo-o
+	 * caso ele exista
+	 * 
+	 * Na forma default, sem a passagem do path, o objeto usa o path salvo quando
+	 * o arquivo foi lido. Caso não exista path salvo, é lançada uma exceção.
+	 * 
+	 * @param file
+	 * @param path
+	 * @throws IOException 
+	 */
+	public void outputFile(String[] file) throws IOException
+	{
+		if(null != path && !path.isEmpty()){
+			outputFile(file, path);
+		}else{
+			throw new IOException("Nenhum PATH especificado");
+		}
+	}
+	
+	/**
+	 * Método para escrever um vetor de strings em um arquivo, substituindo-o
+	 * caso ele exista
+	 * 
+	 * @param file
+	 * @param path
+	 * @throws IOException 
+	 */
+	public void outputFile(String[] file, String path) throws IOException
+	{
+		BufferedWriter bw = null;
+		FileWriter fw = null;
+		
+		try {
+			fw = new FileWriter(path);
+			bw = new BufferedWriter(fw);
+
+			for (int i = 0; i < file.length; i++) {
+				bw.write(file[i]);
+				if(i != file.length - 1){
+					bw.newLine();
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		finally
+		{
+			bw.close();
+			fw.close();
+		}
 	}
 }
