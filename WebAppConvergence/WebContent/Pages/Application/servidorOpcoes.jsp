@@ -14,12 +14,6 @@
 			$("#columnTwo").height($("#columnOne").height());
 		}
 	});
-	
-	function limpar()
-	{
-		var input = document.getElementById("ipServidor");
-		input.setAttribute("value", "");
-	}
 </script>
 
 <div class="pageBody">
@@ -28,25 +22,16 @@
 	</div>
 	<div id="columnTwo" class="pageBodyRight">
 		<h3>Informações do Servidor</h3>
-		
-		<form action="ServidorOpcoesServlet?form=true" method="post">
-			<table cellspacing="0">
-				<tr> 
-					<td class="left">
-						Ip do Servidor
-					</td>
-					<td class="right">
-						<input id="ipServidor" name="ipServidor" type="text" value="${servidor}"> 
-					</td>
-				</tr>
-				<tr> 
-					<td class="buttons" colspan="2">
-						<input type="submit" value="Enviar">
-						<input type="button" value="Limpar" onclick="limpar();">
-					</td>
-				</tr>
-			</table>	
-		</form>
+		<table cellspacing="0">
+			<tr> 
+				<td class="left">
+					Ip do Servidor
+				</td>
+				<td class="right">
+					<input id="ipServidor" name="ipServidor" type="text" value="${servidor}" readonly="readonly"> 
+				</td>
+			</tr>
+		</table>	
 	</div>
 </div>
 
