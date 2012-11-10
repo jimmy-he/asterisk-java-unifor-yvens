@@ -140,6 +140,14 @@ td.result {
 	vertical-align: middle;
 }
 
+tr.hidden_tr {
+	background-color: #EBEBEB;
+}
+
+tr.hidden_tr td{
+	border-bottom: 2px solid #DCDCDC;
+}
+
 div.pageBodyLeft {
 	background-color: #FFFFFF;
 	background-image: url("../Resources/sidebar-repeat.png");
@@ -193,16 +201,19 @@ td.buttons {
 	border-bottom: 3px solid #EBEBEB;
 	border-right: 3px solid #EBEBEB;
 	padding-left: 40%;
+	padding-top: 15px;
 	width: 100%;
 }
 
 td.left {
+	border-bottom: 2px solid #EBEBEB;
 	padding-top: 15px;
 	text-align: right;
 	width: 40%;
 }
 
 td.right {
+	border-bottom: 2px solid #EBEBEB;
 	border-right: 3px solid #EBEBEB;
 	padding-top: 15px;
 	text-align: left;

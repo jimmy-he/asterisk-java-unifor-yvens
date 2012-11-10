@@ -24,7 +24,7 @@
 		Bem-vindo ao Asteroid 0.1.<br/>
 		Esse website funciona como um client para o servidor asterisk 
 		<h1>${servidor}</h1>
-		Para mudar o IP do servidor vá na aba <b>Servidor</b> e selecione <b>Opções</b>.
+		Para verificar o status do servidor vá na aba <b>Servidor</b> e selecione <b>Opções</b>.
 	</div>
 </div>
 

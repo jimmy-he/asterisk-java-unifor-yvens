@@ -54,29 +54,20 @@
 						<li>
 							<a id="servidor_opcoes" href="ServidorOpcoesServlet"> Opções </a>
 						</li>
-						<li>
-							Consectetur
-						</li>
-						<li>
-							Adipiscing
-						</li>
 					</ul>
 				</div>
 			</div>
 			<div class="header_item"> 
-				<a id="Ipsum" href="#">
-					Ipsum
+				<a id="ramais" href="#">
+					Ramais
 				</a>
 				<div class="header_menu">
 					<ul>
 						<li>
-							<a id="Lorem" href="#"> Link </a>
+							<a id="adicionarRamais" href="CrudRamalServlet"> Adicionar </a>
 						</li>
 						<li>
-							Consectetur
-						</li>
-						<li>
-							Adipiscing
+							<a id="listarRamais" href="#"> Listar </a>
 						</li>
 					</ul>
 				</div>
