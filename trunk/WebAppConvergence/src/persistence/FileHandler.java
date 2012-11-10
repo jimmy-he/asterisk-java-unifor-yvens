@@ -31,7 +31,20 @@ public class FileHandler {
 	 */
 	public FileHandler()
 	{
+		//Requisita permissão de administrador para abrir e fechar qualquer arquivo
 		
+		//TODO mover as variáveis relevantes à senha do administrador para uma classe específica
+		//para centralizar
+		
+		/*
+        String[] cmdArray = {"gnome-terminal", "ifconfig"};
+
+        try {
+            Runtime.getRuntime().exec(cmdArray);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        */
 	}
 	
 	/**
