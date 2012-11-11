@@ -94,6 +94,9 @@
 					<td class="right">
 						<select size="1" name="D1">
 							<option selected value="Selecione">Selecione!</option>
+							<c:forEach var="ramalType" items="ramalTypeList">
+							
+							</c:forEach>
 							<option value="2000">2000</option>
 							<option value="2001">2001</option>
 						</select>
