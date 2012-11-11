@@ -1,7 +1,10 @@
 package asterisk;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.Semaphore;
+
+import exception.SipConfigException;
 
 import model.Ramal;
 import persistence.FileHandler;
@@ -16,6 +19,8 @@ import persistence.FileHandler;
 public class RamalHandler {
 
 	private FileHandler fileHandler;
+	private String sipConfPath;
+	private int sipConfLines;
 	
 	//Semáforo para evitar modificações concorrentes nos arquivos do ramal
 	private static final Semaphore mutex;
@@ -23,8 +28,28 @@ public class RamalHandler {
 		mutex = new Semaphore(1);
 	}
 	
-	public RamalHandler(){
+	public RamalHandler() throws IOException, SipConfigException{
+		this(AsteriskConfiguration.SIP_CONFIG_PATH);
+	}
+	
+	public RamalHandler(String sipConfPath) throws IOException, SipConfigException{
 		fileHandler = new FileHandler();
+		this.sipConfPath = sipConfPath;
+		if(!sipConfCertified()){
+			throw new SipConfigException();
+		}
+	}
+	
+	/**
+	 * Método para fazer a verificação do PATH do sip.conf passado
+	 * 
+	 * @return verdadeiro caso seja realizada uma leitura com sucesso do arquivo do PATH passado
+	 * @throws IOException 
+	 */
+	private boolean sipConfCertified() throws IOException{
+		String[] sipConf = fileHandler.readFile(sipConfPath);
+		this.sipConfLines= sipConf.length; 
+		return sipConf.length > 0;
 	}
 	
 	/**
@@ -101,5 +126,9 @@ public class RamalHandler {
 	 */
 	public List<Ramal> listRamal(){
 		return null;
+	}
+
+	public int getSipConfLines() {
+		return sipConfLines;
 	}
 }

@@ -9,6 +9,7 @@ package asterisk;
  */
 public class AsteriskConfiguration {
 
+	//TODO adicionar o path real do sip.conf
 	public static final String SIP_CONFIG_PATH = "";
 	
 }
