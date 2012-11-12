@@ -2,7 +2,7 @@
 <!-- Header default da aplicação web -->
 	<div id="pageHeader">
 		<div class="logoHeader"> 
-			<img alt="" src="../Resources/logoAsteroid2.png" style="float: right;">
+			<img alt="" src="Pages/Resources/logoAsteroid2.png" style="float: right;">
 		</div>
 	
 		<div class="emptyWhiteSpace" style="padding-top: 40px;"> </div>
