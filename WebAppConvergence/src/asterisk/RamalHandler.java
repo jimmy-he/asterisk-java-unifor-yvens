@@ -1,13 +1,14 @@
 package asterisk;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Semaphore;
 
-import exception.SipConfigException;
-
 import model.Ramal;
+import model.RamalType;
 import persistence.FileHandler;
+import exception.SipConfigException;
 
 /**
  * Classe responsável por realizar todas as operações relativas aos ramais, 
@@ -63,7 +64,6 @@ public class RamalHandler {
 	 */
 	public boolean createRamal(Ramal ramal) throws InterruptedException{
 		if(mutex.tryAcquire()){
-			mutex.acquire();
 			
 			//TODO 
 			
@@ -85,7 +85,6 @@ public class RamalHandler {
 	 */
 	public boolean deleteRamal(Ramal ramal) throws InterruptedException{
 		if(mutex.tryAcquire()){
-			mutex.acquire();
 			
 			//TODO
 			
@@ -107,7 +106,6 @@ public class RamalHandler {
 	 */
 	public boolean updateRamal(Ramal ramal) throws InterruptedException{
 		if(mutex.tryAcquire()){
-			mutex.acquire();
 			
 			//TODO
 			
@@ -123,9 +121,67 @@ public class RamalHandler {
 	 * 
 	 * Esse método acontece mesmo que alguém esteja modificando o arquivo
 	 * @return
+	 * @throws IOException 
 	 */
-	public List<Ramal> listRamal(){
-		return null;
+	public List<Ramal> listRamal() throws IOException{
+		String[] sipConfFile = fileHandler.readFile(sipConfPath);
+		List<Ramal> listRamal = new ArrayList<Ramal>();
+		
+		for (int i = 0; i < sipConfFile.length; i++) {
+			//Verificando se acha uma TAG no estilo [4666]
+			if(!sipConfFile[i].isEmpty() && sipConfFile[i].charAt(0) == '[' && !sipConfFile[i].equals("[general]")){
+				Ramal ramal = null;
+				
+				//1 - TAG
+				String tag = sipConfFile[i++];
+
+				//Declaração das variáveis do RAMAL
+				String callerId = "";
+				RamalType type = null;
+				String accountCode = null;
+				String username = null;
+				String secret = null;
+				boolean canReinvite = false;
+				String context = null;
+				String dtmfMode = null;
+				int callLimit = 0;
+				boolean nat = false;
+				
+				while(i < sipConfFile.length && !sipConfFile[i].equals("")){
+					String parameters[] = sipConfFile[i++].split("=");
+					if(parameters[0].equals("callerid")){
+						callerId = parameters[1];
+					}else if(parameters[0].equals("type")){
+						type = RamalType.getRamalType(sipConfFile[i++].split("=")[1]);
+					}else if(parameters[0].equals("accountcode")){
+						accountCode = parameters[1];
+					}else if(parameters[0].equals("username")){
+						username = parameters[1];
+					}else if(parameters[0].equals("secret")){
+						secret = parameters[1];
+					}else if(parameters[0].equals("canreinvite")){
+						canReinvite = (parameters[1].equals("yes")) ? true : false;
+					}else if(parameters[0].equals("host")){
+						callerId = parameters[1];
+					}else if(parameters[0].equals("context")){
+						context = parameters[1];
+					}else if(parameters[0].equals("dtmfmode")){
+						dtmfMode = parameters[1];
+					}else if(parameters[0].equals("call-limit")){
+						callLimit = Integer.parseInt(parameters[1]);
+					}else if(parameters[0].equals("nat")){
+						nat = (parameters[1].equals("yes")) ? true : false;
+					}
+					
+					i++;
+				}
+				
+				ramal = new Ramal(tag, callerId, type, accountCode, username, secret, canReinvite, context, dtmfMode, callLimit, nat);
+				
+				listRamal.add(ramal);
+			}
+		}
+		return listRamal;
 	}
 
 	public int getSipConfLines() {

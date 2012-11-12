@@ -16,6 +16,7 @@ public class Ramal {
 	    [4600]                         :Tag            (String)
 		callerid="Ramal-SIP" <4600>    :CallerId       (String)
 		type=friend                    :Type           (Enum)
+		accountcode=viglocal           :AccountCode    (String)
 		username=4600                  :Username       (String)
 		secret=1234                    :Secret         (String)
 		canreinvite=no                 :CanReinvite    (boolean)
@@ -34,6 +35,7 @@ public class Ramal {
 	private boolean canReinvite;
 	private String context;
 	private String dtmfMode;
+	private String accountCode;
 	private int callLimit;
 	private boolean nat;
 	
@@ -47,7 +49,7 @@ public class Ramal {
 	 * @param secret
 	 */
 	public Ramal (String tag, String callerId, String username, String secret){
-		this(tag, callerId, RamalType.FRIEND, username, secret, false, "LOCAL", "rfc2833", 2, false);
+		this(tag, callerId, RamalType.FRIEND, "viglocal", username, secret, false, "LOCAL", "rfc2833", 2, false);
 	}
 	
 	/**
@@ -57,6 +59,7 @@ public class Ramal {
 	 * @param callerId
 	 * @param type
 	 * @param username
+	 * @param accountCode
 	 * @param secret
 	 * @param canReinvite
 	 * @param context
@@ -64,13 +67,14 @@ public class Ramal {
 	 * @param callLimit
 	 * @param nat
 	 */
-	private Ramal(String tag, String callerId, RamalType type, String username,
-			String secret, boolean canReinvite, String context,
+	public Ramal(String tag, String callerId, RamalType type, String username,
+			String accountCode, String secret, boolean canReinvite, String context,
 			String dtmfMode, int callLimit, boolean nat) {
 		super();
 		this.tag = tag;
 		this.callerId = callerId;
 		this.type = type;
+		this.accountCode = accountCode;
 		this.username = username;
 		this.secret = secret;
 		this.canReinvite = canReinvite;
@@ -98,6 +102,14 @@ public class Ramal {
 	public void setType(RamalType type) {
 		this.type = type;
 	}
+	public String getAccountCode() {
+		return accountCode;
+	}
+
+	public void setAccountCode(String accountCode) {
+		this.accountCode = accountCode;
+	}
+
 	public String getUsername() {
 		return username;
 	}
