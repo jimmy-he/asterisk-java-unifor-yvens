@@ -6,9 +6,9 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Asteroid 0.1</title>
 	
-	<link rel="stylesheet" href="../Styles/style.css" type="text/css">
-	<script type="text/javascript" src="../Libs/jquery.js"></script>
-	<script type="text/javascript" src="../Libs/jquery-ui-1.9.1.custom.js"></script>
+	<link rel="stylesheet" href="Pages/Styles/style.css" type="text/css">
+	<script type="text/javascript" src="Pages/Libs/jquery.js"></script>
+	<script type="text/javascript" src="Pages/Libs/jquery-ui-1.9.1.custom.js"></script>
 	
 	<script type="text/javascript">
 		function openSubMenu()
