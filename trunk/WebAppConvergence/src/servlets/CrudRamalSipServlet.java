@@ -13,14 +13,14 @@ import javax.servlet.http.HttpServletResponse;
  * @author yvens
  *
  */
-@WebServlet("/CrudRamalServlet")
-public class CrudRamalServlet extends HttpServlet {
+@WebServlet("/CrudRamalSipServlet")
+public class CrudRamalSipServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CrudRamalServlet() {
+    public CrudRamalSipServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -44,7 +44,7 @@ public class CrudRamalServlet extends HttpServlet {
 			request.setAttribute("btnSubmit", "Inserir");
 		}
 		
-		getServletContext().getRequestDispatcher("/Pages/Application/crudRamal.jsp").forward(request,response); 
+		getServletContext().getRequestDispatcher("/Pages/Application/crudRamalSip.jsp").forward(request,response); 
 	}
 
 }

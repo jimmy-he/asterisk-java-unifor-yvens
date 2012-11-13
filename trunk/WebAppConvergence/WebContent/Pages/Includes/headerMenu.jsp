@@ -29,12 +29,12 @@
 			</div>
 			<div class="header_item"> 
 				<a id="ramais" href="#">
-					Ramais
+					Ramais SIP
 				</a>
 				<div class="header_menu">
 					<ul>
 						<li>
-							<a id="adicionarRamais" href="CrudRamalServlet"> Adicionar </a>
+							<a id="adicionarRamais" href="CrudRamalSipServlet"> Adicionar </a>
 						</li>
 						<li>
 							<a id="listarRamais" href="#"> Listar </a>

@@ -39,6 +39,8 @@ public class FileHandler {
 		/*
         String[] cmdArray = {"gnome-terminal", "ifconfig"};
 
+		Comando> sudo chmod -R 777 + pasta
+
         try {
             Runtime.getRuntime().exec(cmdArray);
         } catch (IOException e) {

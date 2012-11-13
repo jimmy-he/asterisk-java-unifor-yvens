@@ -1,0 +1,23 @@
+E-mail enviado dia 12/11/12
+
+Definidas:
+
+    Aplicação deverá permitir o usuário inserir endereço IP e porta de conexão do. Servidor de Telefonia IP. Ex: IP 10.255.0.101 Porta – 22
+    Aplicação deve permitir a configuração de Ramais SIP (Yvens)
+    Aplicação deve permitir a configuração de Ramais IAX (Daniel)
+
+Essa primeira atividade já está feita, bastava fazer no modelo website mesmo que o ip e porta serão a url e a porta de comunicação.
+
+Estou trabalhando na segunda atividade, vou precisar renomear as classes para RamalSIP e equivalentes, daí você segue o mesmo modelo. De preferência faça exatamente as mesmas classes que eu fizer, incluindo a classe de testes que é muito importante. Inclusive, era interessante que você usasse "a mesma classe" porque os métodos devem ser equivalente.
+
+Eu fico responsável de montar as páginas .jsp das duas partes, então você não precisa ficar preocupado em testar o site no ar, basta rolar os testes e verificar se tá todo o código ok, eu faço a validação no website.
+
+A decidir:
+
+    Aplicação deve permitir a configuração de Plano de Discagem
+    Aplicação deve permitir a configuração de Filas de Atendimento
+    Aplicação deve permitir a configuração de Agentes de Atendimento
+    Aplicação deve permitir a configuração de Salas de Conferência
+    Aplicação deve permitir o Monitoramento de Ramais
+
+Essas tarefas precisam de estudo para serem definidas, como nós não sabemos como fazer nenhuma delas vamos precisar dar uma estudada antes de dividí-las.

@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Semaphore;
 
-import model.Ramal;
-import model.RamalType;
+import model.RamalSip;
+import model.RamalSipType;
 import persistence.FileHandler;
 import exception.SipConfigException;
 
@@ -17,7 +17,7 @@ import exception.SipConfigException;
  * @author yvens
  *
  */
-public class RamalHandler {
+public class RamalSipHandler {
 
 	private FileHandler fileHandler;
 	private String sipConfPath;
@@ -29,11 +29,11 @@ public class RamalHandler {
 		mutex = new Semaphore(1);
 	}
 	
-	public RamalHandler() throws IOException, SipConfigException{
+	public RamalSipHandler() throws IOException, SipConfigException{
 		this(AsteriskConfiguration.SIP_CONFIG_PATH);
 	}
 	
-	public RamalHandler(String sipConfPath) throws IOException, SipConfigException{
+	public RamalSipHandler(String sipConfPath) throws IOException, SipConfigException{
 		fileHandler = new FileHandler();
 		this.sipConfPath = sipConfPath;
 		if(!sipConfCertified()){
@@ -62,7 +62,7 @@ public class RamalHandler {
 	 * no momento, assim, evitando conflito entre os arquivos
 	 * @throws InterruptedException 
 	 */
-	public boolean createRamal(Ramal ramal) throws InterruptedException{
+	public boolean createRamal(RamalSip ramal) throws InterruptedException{
 		if(mutex.tryAcquire()){
 			
 			//TODO 
@@ -83,7 +83,7 @@ public class RamalHandler {
 	 * no momento, assim, evitando conflito entre os arquivos
 	 * @throws InterruptedException 
 	 */
-	public boolean deleteRamal(Ramal ramal) throws InterruptedException{
+	public boolean deleteRamal(RamalSip ramal) throws InterruptedException{
 		if(mutex.tryAcquire()){
 			
 			//TODO
@@ -104,7 +104,7 @@ public class RamalHandler {
 	 * no momento, assim, evitando conflito entre os arquivos
 	 * @throws InterruptedException 
 	 */
-	public boolean updateRamal(Ramal ramal) throws InterruptedException{
+	public boolean updateRamal(RamalSip ramal) throws InterruptedException{
 		if(mutex.tryAcquire()){
 			
 			//TODO
@@ -123,21 +123,21 @@ public class RamalHandler {
 	 * @return
 	 * @throws IOException 
 	 */
-	public List<Ramal> listRamal() throws IOException{
+	public List<RamalSip> listRamal() throws IOException{
 		String[] sipConfFile = fileHandler.readFile(sipConfPath);
-		List<Ramal> listRamal = new ArrayList<Ramal>();
+		List<RamalSip> listRamal = new ArrayList<RamalSip>();
 		
 		for (int i = 0; i < sipConfFile.length; i++) {
 			//Verificando se acha uma TAG no estilo [4666]
 			if(!sipConfFile[i].isEmpty() && sipConfFile[i].charAt(0) == '[' && !sipConfFile[i].equals("[general]")){
-				Ramal ramal = null;
+				RamalSip ramal = null;
 				
 				//1 - TAG
 				String tag = sipConfFile[i++];
 
 				//Declaração das variáveis do RAMAL
 				String callerId = "";
-				RamalType type = null;
+				RamalSipType type = null;
 				String accountCode = null;
 				String username = null;
 				String secret = null;
@@ -152,7 +152,7 @@ public class RamalHandler {
 					if(parameters[0].equals("callerid")){
 						callerId = parameters[1];
 					}else if(parameters[0].equals("type")){
-						type = RamalType.getRamalType(sipConfFile[i++].split("=")[1]);
+						type = RamalSipType.getRamalType(sipConfFile[i++].split("=")[1]);
 					}else if(parameters[0].equals("accountcode")){
 						accountCode = parameters[1];
 					}else if(parameters[0].equals("username")){
@@ -176,7 +176,7 @@ public class RamalHandler {
 					i++;
 				}
 				
-				ramal = new Ramal(tag, callerId, type, accountCode, username, secret, canReinvite, context, dtmfMode, callLimit, nat);
+				ramal = new RamalSip(tag, callerId, type, accountCode, username, secret, canReinvite, context, dtmfMode, callLimit, nat);
 				
 				listRamal.add(ramal);
 			}

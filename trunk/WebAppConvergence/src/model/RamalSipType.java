@@ -9,11 +9,11 @@ import java.util.List;
  * @author yvens
  *
  */
-public enum RamalType {
+public enum RamalSipType {
 	FRIEND("FRIEND");
 	
 	private String type;
-	private RamalType(String type){
+	private RamalSipType(String type){
 		this.type = type;
 	}
 	
@@ -30,8 +30,8 @@ public enum RamalType {
 	 * @param type
 	 * @return retorna um Enum RamalType que tenha o type passado, ou nulo caso não exista
 	 */
-	public static RamalType getRamalType(String type){
-		RamalType[] list = RamalType.class.getEnumConstants();
+	public static RamalSipType getRamalType(String type){
+		RamalSipType[] list = RamalSipType.class.getEnumConstants();
 		
 		for (int i = 0; i < list.length; i++) {
 			if(list[i].toString().equalsIgnoreCase(type)){
@@ -46,7 +46,7 @@ public enum RamalType {
 	 * @return retorna um ArrayList de Strings
 	 */
 	public static List<String> listRamalType(){
-		RamalType[] list = RamalType.class.getEnumConstants();
+		RamalSipType[] list = RamalSipType.class.getEnumConstants();
 		List<String> listRamalType = new ArrayList<String>();
 		
 		for (int i = 0; i < list.length; i++) {
