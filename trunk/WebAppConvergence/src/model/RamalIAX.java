@@ -84,7 +84,55 @@ public class RamalIAX {
 		this.requireCallToken = requireCallToken;
 	}
 
+	/**
+	 * Método para retornar o RAMAL no formato que deve ser escrito no iax.conf
+	 * 
+	 * @return retorna um vetor de Strings com as linhas a serem adicionadas no arquivo iax.conf
+	 */
+	public String[] toRamalIAX(){
+		String[] ramalIAX = new String[10];
+		ramalIAX[0] = "\r["+tag+"]\r";
+		ramalIAX[1] = "callerid="+callerId+"\r";
+		ramalIAX[2] = "type="+type.toString()+"\r";
+		ramalIAX[3] = "defaultuser="+defaultUser+"\r";
+		
+		ramalIAX[4] = "secret="+secret+"\r";
+		ramalIAX[5] = "context="+context+"\r";
+		ramalIAX[6] = "host="+host+"\r";
+		ramalIAX[7] = "auth="+auth+"\r";
+		ramalIAX[8] = "transfer="+((transfer)? "yes" : "no")+"\r";
+		ramalIAX[9] = "requirecalltoken="+((requireCallToken)? "yes" : "no")+"\r";
+		
+		
+		
+		
+		return ramalIAX;
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((tag == null) ? 0 : tag.hashCode());
+		return result;
+	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RamalIAX other = (RamalIAX) obj;
+		if (tag == null) {
+			if (other.tag != null)
+				return false;
+		} else if (!tag.equals(other.tag))
+			return false;
+		return true;
+	}
 
 	public String getTag() {
 		return tag;
