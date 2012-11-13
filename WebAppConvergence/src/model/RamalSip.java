@@ -8,7 +8,7 @@ package model;
  * @author yvens
  *
  */
-public class Ramal {
+public class RamalSip {
 
 	/**
 	 * Exemplo de Ramal:
@@ -29,7 +29,7 @@ public class Ramal {
 	
 	private String tag;
 	private String callerId;
-	private RamalType type;
+	private RamalSipType type;
 	private String username;
 	private String secret;
 	private boolean canReinvite;
@@ -48,8 +48,8 @@ public class Ramal {
 	 * @param username
 	 * @param secret
 	 */
-	public Ramal (String tag, String callerId, String username, String secret){
-		this(tag, callerId, RamalType.FRIEND, "viglocal", username, secret, false, "LOCAL", "rfc2833", 2, false);
+	public RamalSip (String tag, String callerId, String username, String secret){
+		this(tag, callerId, RamalSipType.FRIEND, "viglocal", username, secret, false, "LOCAL", "rfc2833", 2, false);
 	}
 	
 	/**
@@ -67,7 +67,7 @@ public class Ramal {
 	 * @param callLimit
 	 * @param nat
 	 */
-	public Ramal(String tag, String callerId, RamalType type, String username,
+	public RamalSip(String tag, String callerId, RamalSipType type, String username,
 			String accountCode, String secret, boolean canReinvite, String context,
 			String dtmfMode, int callLimit, boolean nat) {
 		super();
@@ -96,10 +96,10 @@ public class Ramal {
 	public void setCallerId(String callerId) {
 		this.callerId = callerId;
 	}
-	public RamalType getType() {
+	public RamalSipType getType() {
 		return type;
 	}
-	public void setType(RamalType type) {
+	public void setType(RamalSipType type) {
 		this.type = type;
 	}
 	public String getAccountCode() {

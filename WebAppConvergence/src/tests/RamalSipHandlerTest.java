@@ -7,25 +7,25 @@ import java.io.IOException;
 import java.util.List;
 
 import junit.framework.Assert;
-import model.Ramal;
+import model.RamalSip;
 
 import org.junit.Test;
 
 import exception.SipConfigException;
 
-import asterisk.RamalHandler;
+import asterisk.RamalSipHandler;
 
-public class RamalHandlerTest {
+public class RamalSipHandlerTest {
 
 	public final static String sip_conf = "src"+File.separator+"tests"+File.separator+"input"+File.separator+"sip.conf";
 	
-	public final static Ramal ramal = new Ramal("4666", "4666", "TesteApp", "senha");
+	public final static RamalSip ramal = new RamalSip("4666", "4666", "TesteApp", "senha");
 	
 	@Test
 	public void TestReadingLocalSipConf() throws IOException, SipConfigException {
 		//Essa verificação é default e também serve para verificar exceptions lançadas 
 		//durante a execução do construtor
-		RamalHandler ramalHandler = new RamalHandler(sip_conf);
+		RamalSipHandler ramalHandler = new RamalSipHandler(sip_conf);
 		
 		//Verificação se o arquivo de sip.conf lido possui mais de 1 linha
 		Assert.assertEquals(true, ramalHandler.getSipConfLines() > 0);
@@ -35,7 +35,7 @@ public class RamalHandlerTest {
 	public void TestReadingRealSipConf() throws IOException, SipConfigException {
 		//Essa verificação é default e também serve para verificar exceptions lançadas 
 		//durante a execução do construtor
-		RamalHandler ramalHandler = new RamalHandler();
+		RamalSipHandler ramalHandler = new RamalSipHandler();
 		
 		//Verificação se o arquivo de sip.conf lido possui mais de 1 linha
 		Assert.assertEquals(true, ramalHandler.getSipConfLines() > 0);
@@ -43,17 +43,17 @@ public class RamalHandlerTest {
 
 	@Test
 	public void TestAddingAndDeletingRamalLocalSipConf() throws IOException, SipConfigException, InterruptedException {
-		RamalHandler ramalHandler = new RamalHandler(sip_conf);
+		RamalSipHandler ramalHandler = new RamalSipHandler(sip_conf);
 		
 		//Criado um ramal default
 		ramalHandler.createRamal(ramal);
 		
 		//Carregado a lista dos ramais, para buscar pelo ramal adicionado
-		List<Ramal> listRamal = ramalHandler.listRamal();
+		List<RamalSip> listRamal = ramalHandler.listRamal();
 		
 		//Iteração na lista de ramais para buscar pelo ramal recentemente adicionado
 		boolean exist = false;
-		for(Ramal insertedRamal : listRamal){
+		for(RamalSip insertedRamal : listRamal){
 			if(insertedRamal.equals(ramal)){
 				exist = true;
 			}
@@ -69,7 +69,7 @@ public class RamalHandlerTest {
 		
 		//Iteração na lista de ramais para buscar pelo ramal recentemente removido
 		exist = false;
-		for(Ramal insertedRamal : listRamal){
+		for(RamalSip insertedRamal : listRamal){
 			if(insertedRamal.equals(ramal)){
 				exist = true;
 			}
@@ -80,17 +80,17 @@ public class RamalHandlerTest {
 	
 	@Test
 	public void TestAddingUpdatingDeletingRamalLocalSipConf() throws IOException, SipConfigException, InterruptedException {
-		RamalHandler ramalHandler = new RamalHandler(sip_conf);
+		RamalSipHandler ramalHandler = new RamalSipHandler(sip_conf);
 		
 		//Criado um ramal default
 		ramalHandler.createRamal(ramal);
 		
 		//Carregado a lista dos ramais, para buscar pelo ramal adicionado
-		List<Ramal> listRamal = ramalHandler.listRamal();
+		List<RamalSip> listRamal = ramalHandler.listRamal();
 		
 		//Iteração na lista de ramais para buscar pelo ramal recentemente adicionado
 		boolean exist = false;
-		for(Ramal insertedRamal : listRamal){
+		for(RamalSip insertedRamal : listRamal){
 			if(insertedRamal.equals(ramal)){
 				exist = true;
 			}
@@ -109,8 +109,8 @@ public class RamalHandlerTest {
 		//Carregado a lista dos ramais, para buscar pelo ramal alterado
 		listRamal = ramalHandler.listRamal();		
 		
-		Ramal realRamal = null;
-		for(Ramal insertedRamal : listRamal){
+		RamalSip realRamal = null;
+		for(RamalSip insertedRamal : listRamal){
 			if(insertedRamal.getTag().equals(ramal.getTag())){
 				realRamal = insertedRamal;
 			}
@@ -128,7 +128,7 @@ public class RamalHandlerTest {
 		listRamal = ramalHandler.listRamal();		
 		
 		realRamal = null;
-		for(Ramal insertedRamal : listRamal){
+		for(RamalSip insertedRamal : listRamal){
 			if(insertedRamal.getTag().equals(ramal.getTag())){
 				realRamal = insertedRamal;
 			}
@@ -150,7 +150,7 @@ public class RamalHandlerTest {
 		
 		//Iteração na lista de ramais para buscar pelo ramal recentemente removido
 		exist = false;
-		for(Ramal insertedRamal : listRamal){
+		for(RamalSip insertedRamal : listRamal){
 			if(insertedRamal.equals(ramal)){
 				exist = true;
 			}
@@ -161,9 +161,9 @@ public class RamalHandlerTest {
 	
 	@Test
 	public void TestListingRamalLocalSipConf() throws IOException, SipConfigException {
-		RamalHandler ramalHandler = new RamalHandler(sip_conf);
+		RamalSipHandler ramalHandler = new RamalSipHandler(sip_conf);
 		
-		List<Ramal> ramalList = ramalHandler.listRamal();
+		List<RamalSip> ramalList = ramalHandler.listRamal();
 		
 		Assert.assertEquals(2, ramalList.size());
 	}
