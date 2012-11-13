@@ -165,16 +165,27 @@ public class RamalSipHandler {
 					//Iteramos todas as linhas de propriedades do ramal atualizado
 					
 					for (int j = 0; j < updatedRamal.length; j++) {
+						System.out.println("Delete line "+i+" > "+sipConf[i]);
+						fileHandler.deleteLineOnFile(sipConf, i);
+						sipConf = fileHandler.readFile(sipConfPath);
+						System.out.println("Line has now >"+sipConf[i]);
+						fileHandler.writeOnFile(sipConf, updatedRamal[j], i);
+						sipConf = fileHandler.readFile(sipConfPath);
+						System.out.println("Update to >"+sipConf[i]);
+						
 						//Para cada linha diferente entre a versão atual e a atualizada
 						
 						//Deletamos a linha atual
+						
+						/*
 						fileHandler.deleteLineOnFile(sipConf, i);
 						sipConf = fileHandler.readFile(sipConfPath);
 						//Escrevemos a linha nova no lugar
 						fileHandler.writeOnFile(sipConf, updatedRamal[j], i);
 						sipConf = fileHandler.readFile(sipConfPath);
+						*/
 					}
-					i--;
+					//i--;
 				}
 			}
 			
@@ -219,8 +230,10 @@ public class RamalSipHandler {
 				int callLimit = 0;
 				boolean nat = false;
 				
-				while(i < sipConfFile.length && !sipConfFile[i].equals("")){
+				while(i < sipConfFile.length && !sipConfFile[i].equals("") && !sipConfFile[i].isEmpty() && sipConfFile[i].charAt(0) != '['){
+					
 					String parameters[] = sipConfFile[i++].split("=");
+					
 					if(parameters[0].equals("callerid")){
 						callerId = parameters[1];
 					}else if(parameters[0].equals("type")){
@@ -244,12 +257,12 @@ public class RamalSipHandler {
 					}else if(parameters[0].equals("nat")){
 						nat = (parameters[1].equals("yes")) ? true : false;
 					}
-					
-					ramal = new RamalSip(tag, callerId, type, username, secret, canReinvite, host, context, dtmfMode, accountCode, callLimit, nat);  
 					i++;
 				}
-				
+				ramal = new RamalSip(tag, callerId, type, username, secret, canReinvite, host, context, dtmfMode, accountCode, callLimit, nat);  
 				listRamal.add(ramal);
+				
+				i--;
 			}
 		}
 		return listRamal;
