@@ -12,6 +12,7 @@ import model.RamalIAX;
 import org.junit.Test;
 
 import exception.IAXConfigException;
+import exception.RamalIAXException;
 
 import asterisk.RamalIAXHandler;
 
@@ -42,7 +43,7 @@ public class RamalIAXHandlerTest {
 	}
 
 	@Test
-	public void TestAddingAndDeletingRamalLocalIAXConf() throws IOException, IAXConfigException, InterruptedException {
+	public void TestAddingAndDeletingRamalLocalIAXConf() throws IOException, IAXConfigException, InterruptedException, RamalIAXException {
 		RamalIAXHandler ramalHandler = new RamalIAXHandler(iax_conf);
 		
 		//Criado um ramal default
@@ -79,7 +80,7 @@ public class RamalIAXHandlerTest {
 	}
 	
 	@Test
-	public void TestAddingUpdatingDeletingRamalLocalIAXConf() throws IOException, IAXConfigException, InterruptedException {
+	public void TestAddingUpdatingDeletingRamalLocalIAXConf() throws IOException, IAXConfigException, InterruptedException, RamalIAXException {
 		RamalIAXHandler ramalHandler = new RamalIAXHandler(iax_conf);
 		
 		//Criado um ramal default

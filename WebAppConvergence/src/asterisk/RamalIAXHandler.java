@@ -7,8 +7,10 @@ import java.util.concurrent.Semaphore;
 
 import model.RamalIAX;
 import model.RamalIAXType;
+
 import persistence.FileHandler;
 import exception.IAXConfigException;
+import exception.RamalIAXException;
 
 /**
  * Classe responsável por realizar todas as operações relativas aos ramais IAX,
@@ -43,7 +45,7 @@ public class RamalIAXHandler {
 	}
 
 	/**
-	 * Método para fazer a verificação do PATH do sip.conf passado
+	 * Método para fazer a verificação do PATH do iax.conf passado
 	 * 
 	 * @return verdadeiro caso seja realizada uma leitura com sucesso do arquivo
 	 *         do PATH passado
@@ -64,10 +66,26 @@ public class RamalIAXHandler {
 	 *         no momento, assim, evitando conflito entre os arquivos
 	 * @throws InterruptedException
 	 */
-	public boolean createRamal(RamalIAX ramal) throws InterruptedException {
+	public boolean createRamal(RamalIAX ramal) throws InterruptedException,
+			IOException, RamalIAXException {
 		if (mutex.tryAcquire()) {
 
-			// TODO
+			// Lê o arquivo iax.conf
+			String[] iaxConf = fileHandler.readFile(iaxConfPath);
+
+			// Busca pela tag que queremos adicionar
+			for (int i = 0; i < iaxConf.length; i++) {
+				// Lança uma excessão caso já exista a tag enviada
+				if (iaxConf[i].equals("[" + ramal.getTag() + "]")) {
+					throw new RamalIAXException();
+				}
+			}
+
+			// Gera as linhas que devem ser adicionadas ao iax.conf
+			String[] newRamal = ramal.toRamalIAX();
+
+			// Escreve as linhas no arquivo iax.conf
+			fileHandler.writeOnFile(iaxConf, newRamal, iaxConf.length);
 
 			mutex.release();
 			return true;
@@ -85,10 +103,39 @@ public class RamalIAXHandler {
 	 *         no momento, assim, evitando conflito entre os arquivos
 	 * @throws InterruptedException
 	 */
-	public boolean deleteRamal(RamalIAX ramal) throws InterruptedException {
+	public boolean deleteRamal(RamalIAX ramal) throws InterruptedException,
+			IOException, RamalIAXException {
 		if (mutex.tryAcquire()) {
 
-			// TODO
+			// Lê o arquivo iax.conf
+			String[] iaxConf = fileHandler.readFile(iaxConfPath);
+
+			// Busca pelas linhas que contém o ramal que deve ser apagado
+			int begin = -1;
+			int end = -1;
+			for (int i = 0; i < iaxConf.length; i++) {
+				if (iaxConf[i].equals("[" + ramal.getTag() + "]")) {
+					begin = i;
+
+					// Itera pelas linhas do ramal até chegar ao fim do arquivo
+					// ou a uma linha em branco (final do ramal)
+					while (i < iaxConf.length && !iaxConf[i].equals("")) {
+						i++;
+					}
+					end = --i;
+
+					break;
+				}
+			}
+
+			// Caso não tenha sido encontrado o ramal, é lançada uma exceção
+			if (begin == -1 || end == -1) {
+				throw new RamalIAXException(
+						"Não existe o Ramal passado. Tag = " + ramal.getTag());
+			}
+
+			// Enviado o comando para apagar as linhas correspondentes ao ramal
+			fileHandler.deleteLineOnFile(iaxConf, begin, end);
 
 			mutex.release();
 			return true;
@@ -178,7 +225,8 @@ public class RamalIAXHandler {
 					i++;
 				}
 
-				ramal = new RamalIAX(tag, callerId, type, defaultUser, secret, context, host, auth, transfer, requireCallToken);
+				ramal = new RamalIAX(tag, callerId, type, defaultUser, secret,
+						context, host, auth, transfer, requireCallToken);
 
 				listRamal.add(ramal);
 			}
