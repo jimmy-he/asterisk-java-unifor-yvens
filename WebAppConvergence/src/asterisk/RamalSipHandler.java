@@ -161,17 +161,20 @@ public class RamalSipHandler {
 			//Busca pelas linhas que contém o ramal que deve ser alterado
 			for (int i = 0; i < sipConf.length; i++) {
 				//Procuramos pela linha que contenha a tag do ramal desejado
-				if(sipConf[i].equals(ramal.getTag())){
+				if(sipConf[i].equals("["+ramal.getTag()+"]")){
 					//Iteramos todas as linhas de propriedades do ramal atualizado
-					for (int j = 0; j < updatedRamal.length; j++, i++) {
+					
+					for (int j = 0; j < updatedRamal.length; j++) {
 						//Para cada linha diferente entre a versão atual e a atualizada
-						if(!updatedRamal[j].equals(sipConf[i])){
-							//Deletamos a linha atual
-							fileHandler.deleteLineOnFile(sipConf, i);
-							//Escrevemos a linha nova no lugar
-							fileHandler.writeOnFile(sipConf, updatedRamal[j], i);
-						}
+						
+						//Deletamos a linha atual
+						fileHandler.deleteLineOnFile(sipConf, i);
+						sipConf = fileHandler.readFile(sipConfPath);
+						//Escrevemos a linha nova no lugar
+						fileHandler.writeOnFile(sipConf, updatedRamal[j], i);
+						sipConf = fileHandler.readFile(sipConfPath);
 					}
+					i--;
 				}
 			}
 			
@@ -181,7 +184,7 @@ public class RamalSipHandler {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * Método para buscar a lista de todos os ramais do arquivo sip.conf
 	 * 

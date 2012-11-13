@@ -2,6 +2,7 @@ package tests;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Calendar;
 
 import junit.framework.Assert;
 
@@ -59,6 +60,61 @@ public class PersistenceTest {
 		
 		//Comparamos se a última linha realmente mudou
 		Assert.assertEquals(false, file[file.length-1].equals(newLine));
+	}
+	
+	@Test
+	public void testWritingDeletingLineInbetween() throws IOException
+	{
+		FileHandler fileHandler = new FileHandler();
+		
+		String[] file = fileHandler.readFile(simple_input_write_path); //O arquivo deve vir por aqui
+		
+		String newLine = "[intro2]";
+		String oldLine = file[2];
+		
+		//Escrita a nova linha na linha 2
+		fileHandler.writeOnFile(file, newLine, 2);
+		
+		file = fileHandler.readFile(simple_input_write_path);
+		
+		//Verifica se a linha foi corretamente inserida
+		Assert.assertEquals(newLine, file[2]);
+		
+		//Deleta a segunda linha para deixar o texto como estava
+		fileHandler.deleteLineOnFile(file, 2);
+		
+		file = fileHandler.readFile(simple_input_write_path);
+		
+		//Verifica se a linha mudou
+		Assert.assertEquals(oldLine, file[2]);
+	}
+	
+	@Test
+	public void testDeletingLines() throws IOException
+	{
+		FileHandler fileHandler = new FileHandler();
+		
+		String[] file = fileHandler.readFile(simple_input_write_path); //O arquivo deve vir por aqui
+		int lines = file.length;
+		
+		String oldLine = file[2];
+
+		//Escrita de 5 linhas para ter conteúdo para ser apagado
+		for (int i = 0; i < 5; i++) {
+			fileHandler.writeOnFile(file, Calendar.getInstance()+"\r", 2);
+			file = fileHandler.readFile(simple_input_write_path);
+		}
+		
+		file = fileHandler.readFile(simple_input_write_path);
+		
+		//Deleta várias vezes a linha 2
+		for (int i = 0; i < 5; i++) {
+			fileHandler.deleteLineOnFile(file, 2);
+			file = fileHandler.readFile(simple_input_write_path);
+		}
+		
+		Assert.assertEquals(oldLine, file[2]);
+		Assert.assertEquals(lines, file.length);
 	}
 	
 	@Test
