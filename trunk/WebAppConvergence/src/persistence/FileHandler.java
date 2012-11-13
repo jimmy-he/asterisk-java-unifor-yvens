@@ -206,7 +206,7 @@ public class FileHandler {
 		//nesse momento a nova linha é colocada e daí em diante o
 		//backUp continua, mas com I + 1 no arquivo original para não repercurtir
 		//os efeitos da remoção da nova linha
-		for (int i = 0; i < newFile.length; i++) {
+		for (int i = 0; i < file.length; i++) {
 			if(i < line)
 			{
 				newFile[i] = file[i];
@@ -217,7 +217,7 @@ public class FileHandler {
 			}
 			else
 			{
-				newFile[i] = file[i + 1];	
+				newFile[i - 1] = file[i];	
 			}
 		}
 		
@@ -302,6 +302,8 @@ public class FileHandler {
 		BufferedWriter bw = null;
 		FileWriter fw = null;
 		
+		file = normalizeFile(file);
+		
 		try {
 			fw = new FileWriter(path);
 			bw = new BufferedWriter(fw);
@@ -320,5 +322,21 @@ public class FileHandler {
 			bw.close();
 			fw.close();
 		}
+	}
+	
+	/**
+	 * Procura por linhas nulas no arquivo e inicializa com o valor ""
+	 * 
+	 * @param file
+	 * @return retorna o arquivo sem linhas null
+	 */
+	private String[] normalizeFile(String[] file){
+		for (int i = 0; i < file.length; i++) {
+			if(file[i] == null){
+				file[i] = "";
+			}
+		}
+		
+		return file;
 	}
 }
