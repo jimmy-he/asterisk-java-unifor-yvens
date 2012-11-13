@@ -1,0 +1,210 @@
+package model;
+
+/**
+ * Classe modelo do Ramal IAX
+ * 
+ * Contém as informações relevantes ao ramal IAX
+ * 
+ * @author daniel
+ *
+ */
+public class RamalIAX {
+
+	/**
+	 * Exemplo de Ramal:
+	 * 
+	 *  [3000] 							:Tag            (String)
+		callerid="Ramal" <3000>			:CallerId       (String)
+		type=friend						:Type           (Enum)
+		defaultuser=3000				:DefaultUser    (String)
+		secret=lab$3000					:Secret         (String)
+		context=LOCAL					:Context        (String)
+		host=dynamic					:Host           (String)
+		auth=md5						:Auth 			(String)
+		transfer=yes					:Transfer    (boolean)
+		requirecalltoken=no				:RequireCallToken    (boolean)	 
+	    
+	 */
+	
+	private String tag;
+	private String callerId;
+	private RamalIAXType type;
+	private String defaultUser;
+	private String secret;
+	private String context;
+	private String host;
+	
+	private String auth;
+	private boolean transfer;
+	private boolean requireCallToken;
+	
+	/**
+	 * Construtor com os parâmetros que normalmente serão inseridos e os demais 
+	 * valores serão os padrões dos exemplos passados em sala de aula
+	 *  
+	 * @param tag
+	 * @param callerId
+	 * @param defaultUser;
+	 * @param secret
+	 */
+	public RamalIAX (String tag, String callerId, String defaultUser, String secret){
+		this(tag, callerId, RamalIAXType.FRIEND, defaultUser, secret, "LOCAL", "dynamic", "md5", true, false);
+	}
+
+	
+	
+	/**
+	 * Construtor com todos os parâmetros
+	 * 
+	 * @param tag
+	 * @param callerId
+	 * @param type
+	 * @param defaultUser
+	 * @param secret
+	 * @param context
+	 * @param host		 
+	 * @param auth
+	 * @param transfer
+	 * @param requireCallToken
+	 */
+	
+	public RamalIAX(String tag, String callerId, RamalIAXType type,
+			String defaultUser, String secret, String context, String host,
+			String auth, boolean transfer, boolean requireCallToken) {
+		super();
+		this.tag = tag;
+		this.callerId = callerId;
+		this.type = type;
+		this.defaultUser = defaultUser;
+		this.secret = secret;
+		this.context = context;
+		this.host = host;
+		this.auth = auth;
+		this.transfer = transfer;
+		this.requireCallToken = requireCallToken;
+	}
+
+
+
+	public String getTag() {
+		return tag;
+	}
+
+
+
+	public void setTag(String tag) {
+		this.tag = tag;
+	}
+
+
+
+	public String getCallerId() {
+		return callerId;
+	}
+
+
+
+	public void setCallerId(String callerId) {
+		this.callerId = callerId;
+	}
+
+
+
+	public RamalIAXType getType() {
+		return type;
+	}
+
+
+
+	public void setType(RamalIAXType type) {
+		this.type = type;
+	}
+
+
+
+	public String getDefaultUser() {
+		return defaultUser;
+	}
+
+
+
+	public void setDefaultUser(String defaultUser) {
+		this.defaultUser = defaultUser;
+	}
+
+
+
+	public String getSecret() {
+		return secret;
+	}
+
+
+
+	public void setSecret(String secret) {
+		this.secret = secret;
+	}
+
+
+
+	public String getContext() {
+		return context;
+	}
+
+
+
+	public void setContext(String context) {
+		this.context = context;
+	}
+
+
+
+	public String getHost() {
+		return host;
+	}
+
+
+
+	public void setHost(String host) {
+		this.host = host;
+	}
+
+
+
+	public String getAuth() {
+		return auth;
+	}
+
+
+
+	public void setAuth(String auth) {
+		this.auth = auth;
+	}
+
+
+
+	public boolean isTransfer() {
+		return transfer;
+	}
+
+
+
+	public void setTransfer(boolean transfer) {
+		this.transfer = transfer;
+	}
+
+
+
+	public boolean isRequireCallToken() {
+		return requireCallToken;
+	}
+
+
+
+	public void setRequireCallToken(boolean requireCallToken) {
+		this.requireCallToken = requireCallToken;
+	}	
+	
+	
+	
+}
+

@@ -43,6 +43,21 @@
 				</div>
 			</div>
 			<div class="header_item"> 
+				<a id="ramais" href="#">
+					Ramais IAX
+				</a>
+				<div class="header_menu">
+					<ul>
+						<li>
+							<a id="adicionarRamais" href="CrudRamalIAXServlet"> Adicionar </a>
+						</li>
+						<li>
+							<a id="listarRamais" href="#"> Listar </a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="header_item"> 
 				<a id="Dolor" href="#">
 					Dolor
 				</a>
