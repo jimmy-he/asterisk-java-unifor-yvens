@@ -11,6 +11,7 @@ import model.RamalSip;
 
 import org.junit.Test;
 
+import exception.RamalSipException;
 import exception.SipConfigException;
 
 import asterisk.RamalSipHandler;
@@ -42,7 +43,7 @@ public class RamalSipHandlerTest {
 	}
 
 	@Test
-	public void TestAddingAndDeletingRamalLocalSipConf() throws IOException, SipConfigException, InterruptedException {
+	public void TestAddingAndDeletingRamalLocalSipConf() throws IOException, SipConfigException, InterruptedException, RamalSipException {
 		RamalSipHandler ramalHandler = new RamalSipHandler(sip_conf);
 		
 		//Criado um ramal default
@@ -79,7 +80,7 @@ public class RamalSipHandlerTest {
 	}
 	
 	@Test
-	public void TestAddingUpdatingDeletingRamalLocalSipConf() throws IOException, SipConfigException, InterruptedException {
+	public void TestAddingUpdatingDeletingRamalLocalSipConf() throws IOException, SipConfigException, InterruptedException, RamalSipException {
 		RamalSipHandler ramalHandler = new RamalSipHandler(sip_conf);
 		
 		//Criado um ramal default

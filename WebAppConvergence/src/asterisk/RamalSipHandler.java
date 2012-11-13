@@ -8,6 +8,7 @@ import java.util.concurrent.Semaphore;
 import model.RamalSip;
 import model.RamalSipType;
 import persistence.FileHandler;
+import exception.RamalSipException;
 import exception.SipConfigException;
 
 /**
@@ -34,8 +35,8 @@ public class RamalSipHandler {
 	}
 	
 	public RamalSipHandler(String sipConfPath) throws IOException, SipConfigException{
-		fileHandler = new FileHandler();
 		this.sipConfPath = sipConfPath;
+		fileHandler = new FileHandler();
 		if(!sipConfCertified()){
 			throw new SipConfigException();
 		}
@@ -61,11 +62,28 @@ public class RamalSipHandler {
 	 * caso alguma outra instância esteja acessando e modificando o arquivo
 	 * no momento, assim, evitando conflito entre os arquivos
 	 * @throws InterruptedException 
+	 * @throws IOException 
+	 * @throws SipConfigException 
 	 */
-	public boolean createRamal(RamalSip ramal) throws InterruptedException{
+	public boolean createRamal(RamalSip ramal) throws InterruptedException, IOException, RamalSipException{
 		if(mutex.tryAcquire()){
 			
-			//TODO 
+			//Lê o arquivo sip.conf
+			String[] sipConf = fileHandler.readFile(sipConfPath);
+			
+			//Busca pela tag que queremos adicionar
+			for (int i = 0; i < sipConf.length; i++) {
+				//Lança uma excessão caso já exista a tag enviada
+				if(sipConf[i].equals("["+ramal.getTag()+"]")){
+					throw new RamalSipException();
+				}
+			}
+			
+			//Gera as linhas que devem ser adicionadas ao sip.conf
+			String[] newRamal = ramal.toRamalSip();
+			
+			//Escreve as linhas no arquivo sip.conf
+			fileHandler.writeOnFile(sipConf, newRamal, sipConf.length);
 			
 			mutex.release();
 			return true;
@@ -82,11 +100,39 @@ public class RamalSipHandler {
 	 * caso alguma outra instância esteja acessando e modificando o arquivo
 	 * no momento, assim, evitando conflito entre os arquivos
 	 * @throws InterruptedException 
+	 * @throws IOException 
+	 * @throws RamalSipException 
 	 */
-	public boolean deleteRamal(RamalSip ramal) throws InterruptedException{
+	public boolean deleteRamal(RamalSip ramal) throws InterruptedException, IOException, RamalSipException{
 		if(mutex.tryAcquire()){
 			
-			//TODO
+			//Lê o arquivo sip.conf
+			String[] sipConf = fileHandler.readFile(sipConfPath);
+			
+			//Busca pelas linhas que contém o ramal que deve ser apagado
+			int begin = -1;
+			int end = -1;
+			for (int i = 0; i < sipConf.length; i++) {
+				if(sipConf[i].equals("["+ramal.getTag()+"]")){
+					begin = i;
+					
+					//Itera pelas linhas do ramal até chegar ao fim do arquivo ou a uma linha em branco (final do ramal)
+					while(i < sipConf.length && !sipConf[i].equals("")){
+						i++;
+					}
+					end = --i;
+					
+					break;
+				}
+			}
+			
+			//Caso não tenha sido encontrado o ramal, é lançada uma excessão
+			if(begin == -1 || end == -1){
+				throw new RamalSipException("Não existe o Ramal passado. Tag = "+ramal.getTag());
+			}
+			
+			//Enviado o comando para apagar as linhas correspondentes ao ramal
+			fileHandler.deleteLineOnFile(sipConf, begin, end);
 			
 			mutex.release();
 			return true;
@@ -103,11 +149,31 @@ public class RamalSipHandler {
 	 * caso alguma outra instância esteja acessando e modificando o arquivo
 	 * no momento, assim, evitando conflito entre os arquivos
 	 * @throws InterruptedException 
+	 * @throws IOException 
 	 */
-	public boolean updateRamal(RamalSip ramal) throws InterruptedException{
+	public boolean updateRamal(RamalSip ramal) throws InterruptedException, IOException{
 		if(mutex.tryAcquire()){
 			
-			//TODO
+			//Lê o arquivo sip.conf
+			String[] sipConf = fileHandler.readFile(sipConfPath);
+			String[] updatedRamal = ramal.toRamalSip();
+			
+			//Busca pelas linhas que contém o ramal que deve ser alterado
+			for (int i = 0; i < sipConf.length; i++) {
+				//Procuramos pela linha que contenha a tag do ramal desejado
+				if(sipConf[i].equals(ramal.getTag())){
+					//Iteramos todas as linhas de propriedades do ramal atualizado
+					for (int j = 0; j < updatedRamal.length; j++, i++) {
+						//Para cada linha diferente entre a versão atual e a atualizada
+						if(!updatedRamal[j].equals(sipConf[i])){
+							//Deletamos a linha atual
+							fileHandler.deleteLineOnFile(sipConf, i);
+							//Escrevemos a linha nova no lugar
+							fileHandler.writeOnFile(sipConf, updatedRamal[j], i);
+						}
+					}
+				}
+			}
 			
 			mutex.release();
 			return true;
@@ -133,7 +199,9 @@ public class RamalSipHandler {
 				RamalSip ramal = null;
 				
 				//1 - TAG
-				String tag = sipConfFile[i++];
+				String tag = sipConfFile[i];
+				tag = tag.substring(1, tag.length()-1);
+				i++;
 
 				//Declaração das variáveis do RAMAL
 				String callerId = "";
@@ -142,6 +210,7 @@ public class RamalSipHandler {
 				String username = null;
 				String secret = null;
 				boolean canReinvite = false;
+				String host = null;
 				String context = null;
 				String dtmfMode = null;
 				int callLimit = 0;
@@ -152,7 +221,7 @@ public class RamalSipHandler {
 					if(parameters[0].equals("callerid")){
 						callerId = parameters[1];
 					}else if(parameters[0].equals("type")){
-						type = RamalSipType.getRamalType(sipConfFile[i++].split("=")[1]);
+						type = RamalSipType.getRamalType(parameters[1]);
 					}else if(parameters[0].equals("accountcode")){
 						accountCode = parameters[1];
 					}else if(parameters[0].equals("username")){
@@ -162,7 +231,7 @@ public class RamalSipHandler {
 					}else if(parameters[0].equals("canreinvite")){
 						canReinvite = (parameters[1].equals("yes")) ? true : false;
 					}else if(parameters[0].equals("host")){
-						callerId = parameters[1];
+						host = parameters[1];
 					}else if(parameters[0].equals("context")){
 						context = parameters[1];
 					}else if(parameters[0].equals("dtmfmode")){
@@ -173,10 +242,9 @@ public class RamalSipHandler {
 						nat = (parameters[1].equals("yes")) ? true : false;
 					}
 					
+					ramal = new RamalSip(tag, callerId, type, username, secret, canReinvite, host, context, dtmfMode, accountCode, callLimit, nat);  
 					i++;
 				}
-				
-				ramal = new RamalSip(tag, callerId, type, accountCode, username, secret, canReinvite, context, dtmfMode, callLimit, nat);
 				
 				listRamal.add(ramal);
 			}

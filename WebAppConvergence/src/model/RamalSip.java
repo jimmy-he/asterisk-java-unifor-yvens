@@ -33,6 +33,7 @@ public class RamalSip {
 	private String username;
 	private String secret;
 	private boolean canReinvite;
+	private String host; 
 	private String context;
 	private String dtmfMode;
 	private String accountCode;
@@ -49,7 +50,7 @@ public class RamalSip {
 	 * @param secret
 	 */
 	public RamalSip (String tag, String callerId, String username, String secret){
-		this(tag, callerId, RamalSipType.FRIEND, "viglocal", username, secret, false, "LOCAL", "rfc2833", 2, false);
+		this(tag, callerId, RamalSipType.FRIEND, username, secret, false, "dynamic", "LOCAL", "rfc2833", "viglocal", 2, false);
 	}
 	
 	/**
@@ -59,31 +60,83 @@ public class RamalSip {
 	 * @param callerId
 	 * @param type
 	 * @param username
-	 * @param accountCode
 	 * @param secret
 	 * @param canReinvite
+	 * @param host
 	 * @param context
 	 * @param dtmfMode
+	 * @param accountCode
 	 * @param callLimit
 	 * @param nat
 	 */
-	public RamalSip(String tag, String callerId, RamalSipType type, String username,
-			String accountCode, String secret, boolean canReinvite, String context,
-			String dtmfMode, int callLimit, boolean nat) {
+	public RamalSip(String tag, String callerId, RamalSipType type,
+			String username, String secret, boolean canReinvite, String host,
+			String context, String dtmfMode, String accountCode, int callLimit,
+			boolean nat) {
 		super();
 		this.tag = tag;
 		this.callerId = callerId;
 		this.type = type;
-		this.accountCode = accountCode;
 		this.username = username;
 		this.secret = secret;
 		this.canReinvite = canReinvite;
+		this.host = host;
 		this.context = context;
 		this.dtmfMode = dtmfMode;
+		this.accountCode = accountCode;
 		this.callLimit = callLimit;
 		this.nat = nat;
 	}
+
+	/**
+	 * Método para retornar o RAMAL no formato que deve ser escrito no sip.conf
+	 * 
+	 * @return retorna um vetor de Strings com as linhas a serem adicionadas no arquivo sip.conf
+	 */
+	public String[] toRamalSip(){
+		String[] ramalSip = new String[12];
+		ramalSip[0] = "\r["+tag+"]\r";
+		ramalSip[1] = "callerid="+callerId+"\r";
+		ramalSip[2] = "type="+type.toString()+"\r";
+		ramalSip[3] = "accountcode="+accountCode+"\r";
+		ramalSip[4] = "username="+username+"\r";
+		ramalSip[5] = "secret="+secret+"\r";
+		ramalSip[6] = "canreinvite="+((canReinvite)? "yes" : "no")+"\r";
+		ramalSip[7] = "host="+host+"\r";
+		ramalSip[8] = "context="+context+"\r";
+		ramalSip[9] = "dtmfmode="+dtmfMode+"\r";
+		ramalSip[9] = "dtmfmode="+dtmfMode+"\r";
+		ramalSip[10] = "call-limit="+callLimit+"\r";
+		ramalSip[11] = "nat="+((nat)? "yes" : "no")+"\r";
+		
+		return ramalSip;
+	}
 	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((tag == null) ? 0 : tag.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RamalSip other = (RamalSip) obj;
+		if (tag == null) {
+			if (other.tag != null)
+				return false;
+		} else if (!tag.equals(other.tag))
+			return false;
+		return true;
+	}
+
 	public String getTag() {
 		return tag;
 	}
@@ -105,11 +158,9 @@ public class RamalSip {
 	public String getAccountCode() {
 		return accountCode;
 	}
-
 	public void setAccountCode(String accountCode) {
 		this.accountCode = accountCode;
 	}
-
 	public String getUsername() {
 		return username;
 	}
@@ -127,6 +178,12 @@ public class RamalSip {
 	}
 	public void setCanReinvite(boolean canReinvite) {
 		this.canReinvite = canReinvite;
+	}
+	public String getHost() {
+		return host;
+	}
+	public void setHost(String host) {
+		this.host = host;
 	}
 	public String getContext() {
 		return context;
