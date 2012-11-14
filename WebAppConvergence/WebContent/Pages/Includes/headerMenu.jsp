@@ -40,7 +40,7 @@
 							<a id="adicionarRamais" href="CrudRamalSipServlet"> Adicionar </a>
 						</li>
 						<li>
-							<a id="listarRamais" href="#"> Listar </a>
+							<a id="listarRamais" href="TableRamalSipServlet"> Listar </a>
 						</li>
 					</ul>
 				</div>
