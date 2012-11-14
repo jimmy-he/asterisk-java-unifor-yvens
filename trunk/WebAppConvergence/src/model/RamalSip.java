@@ -1,5 +1,7 @@
 package model;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * Classe modelo do Ramal
  * 
@@ -110,6 +112,63 @@ public class RamalSip {
 		ramalSip[11] = "nat="+((nat)? "yes" : "no")+"";
 		
 		return ramalSip;
+	}
+	
+	public static RamalSip getRamalFromParameter(HttpServletRequest request){
+		RamalSip ramal = null;
+		
+		String tag = "";
+		String callerId = "";
+		RamalSipType type = null;
+		String username = "";
+		String secret = "";
+		boolean canReinvite = false;
+		String host = "";
+		String context = "";
+		String dtmfMode = "";
+		String accountCode = "";
+		int callLimit = 0;
+		boolean nat = false;
+		
+		if(request.getParameter("tag") != null){
+			tag = request.getParameter("tag");
+		}
+		if(request.getParameter("callerId") != null){
+			callerId = request.getParameter("callerId");
+		}
+		if(request.getParameter("type") != null){
+			type = RamalSipType.getRamalType(request.getParameter("type"));
+		}
+		if(request.getParameter("username") != null){
+			username = request.getParameter("username");
+		}
+		if(request.getParameter("secret") != null){
+			secret = request.getParameter("secret");
+		}
+		if(request.getParameter("canReinvite") != null){
+			canReinvite = (request.getParameter("canReinvite").equals("yes")) ? true : false;
+		}
+		if(request.getParameter("host") != null){
+			host = request.getParameter("host");
+		}
+		if(request.getParameter("context") != null){
+			context = request.getParameter("context");
+		}
+		if(request.getParameter("dtmfMode") != null){
+			dtmfMode = request.getParameter("dtmfMode");
+		}
+		if(request.getParameter("accountCode") != null){
+			accountCode = request.getParameter("accountCode");
+		}
+		if(request.getParameter("callLimit") != null){
+			callLimit = Integer.parseInt(request.getParameter("callLimit"));
+		}
+		if(request.getParameter("nat") != null){
+			nat = (request.getParameter("nat").equals("yes")) ? true : false;
+		}
+		
+		ramal = new RamalSip(tag, callerId, type, username, secret, canReinvite, host, context, dtmfMode, accountCode, callLimit, nat);
+		return ramal;
 	}
 	
 	@Override

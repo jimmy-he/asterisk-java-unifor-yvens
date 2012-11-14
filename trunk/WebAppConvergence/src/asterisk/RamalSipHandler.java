@@ -268,8 +268,7 @@ public class RamalSipHandler {
 					} else if (parameters[0].equals("secret")) {
 						secret = parameters[1];
 					} else if (parameters[0].equals("canreinvite")) {
-						canReinvite = (parameters[1].equals("yes")) ? true
-								: false;
+						canReinvite = (parameters[1].equals("yes")) ? true : false;
 					} else if (parameters[0].equals("host")) {
 						host = parameters[1];
 					} else if (parameters[0].equals("context")) {

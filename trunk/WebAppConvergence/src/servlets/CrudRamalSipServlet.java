@@ -1,11 +1,15 @@
 package servlets;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import model.RamalSip;
+import asterisk.RamalSipHandler;
 
 /**
  * Servlet responsável pelo CRUD dos ramais
@@ -22,7 +26,6 @@ public class CrudRamalSipServlet extends HttpServlet {
      */
     public CrudRamalSipServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -36,15 +39,52 @@ public class CrudRamalSipServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//TODO implementar
-		if(request.getParameter("tarefa") != null && !request.getParameter("tarefa").isEmpty()){
-			
-		}else{
-			request.setAttribute("tarefa", "Inserção de Ramal SIP");
-			request.setAttribute("btnSubmit", "Inserir");
-		}
+		String error = "error";
+		String feedback = "feedback";
 		
-		getServletContext().getRequestDispatcher("/Pages/Application/crudRamalSip.jsp").forward(request,response); 
+		String forward = "/Pages/Application/crudRamalSip.jsp";
+		try {
+			if(request.getParameter("alterar") != null && !request.getParameter("alterar").isEmpty()){
+				//IF para verificar se acontecerá uma alteração em um ramal já existente
+				//TODO pegar o conteúdo do ramal passado
+				
+				
+				request.setAttribute("tarefa", "Alterar");
+				request.setAttribute("btnSubmit", "Alterar");
+			}else if(request.getParameter("tarefa") != null && !request.getParameter("tarefa").isEmpty()){
+				//IF caso seja realizada uma tarefa do tipo Inserção, Alteração e Deleção
+				String task = request.getParameter("tarefa");
+				RamalSipHandler handler = new RamalSipHandler();
+				RamalSip ramalSip = RamalSip.getRamalFromParameter(request);
+				
+				if(task.equals("Inserir")){
+					handler.createRamal(ramalSip);
+					feedback = "Ramal "+ramalSip.getTag()+" adicionado com sucesso!";
+				}else if(task.equals("Alterar")){
+					handler.updateRamal(ramalSip);
+					feedback = "Ramal "+ramalSip.getTag()+" atualizado com sucesso!";
+				}else if(task.equals("Remover")){
+					handler.deleteRamal(ramalSip);
+					feedback = "Ramal "+ramalSip.getTag()+" removido com sucesso!";
+				}
+				
+				//TODO inserir a linha de comando para dar o reload no asterisk
+				
+				//Dá um forward para a tabela com todos os SIPs
+				forward = "/Pages/Application/tableRamalSip.jsp";
+			}else{
+				//Else caso não seja nenhum dos três comando dos CRUD
+				request.setAttribute("tarefa", "Inserir");
+				request.setAttribute("btnSubmit", "Inserir");
+			}
+		} catch (Exception e) {
+			error = e.getMessage();
+			e.printStackTrace();
+		}finally{
+			request.setAttribute("feedback", feedback);
+			request.setAttribute("error", error);
+			getServletContext().getRequestDispatcher(forward).forward(request,response); 
+		}
 	}
 
 }
