@@ -13,6 +13,6 @@ public class AsteriskConfiguration {
 	public static final String SIP_CONFIG_PATH = "/etc/asterisk/sip.conf";
 
 	// TODO adicionar o path real do iax.conf
-	public static final String IAX_CONFIG_PATH = "";
+	public static final String IAX_CONFIG_PATH = "/etc/asterisk/iax.conf";
 
 }

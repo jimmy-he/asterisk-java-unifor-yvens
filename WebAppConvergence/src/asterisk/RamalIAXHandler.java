@@ -37,8 +37,9 @@ public class RamalIAXHandler {
 
 	public RamalIAXHandler(String iaxConfPath) throws IOException,
 			IAXConfigException {
-		fileHandler = new FileHandler();
 		this.iaxConfPath = iaxConfPath;
+		fileHandler = new FileHandler();
+		
 		if (!iaxConfCertified()) {
 			throw new IAXConfigException();
 		}
@@ -75,7 +76,7 @@ public class RamalIAXHandler {
 
 			// Busca pela tag que queremos adicionar
 			for (int i = 0; i < iaxConf.length; i++) {
-				// Lança uma excessão caso já exista a tag enviada
+				// Lança uma exceção caso já exista a tag enviada
 				if (iaxConf[i].equals("[" + ramal.getTag() + "]")) {
 					throw new RamalIAXException();
 				}
@@ -110,32 +111,40 @@ public class RamalIAXHandler {
 			// Lê o arquivo iax.conf
 			String[] iaxConf = fileHandler.readFile(iaxConfPath);
 
-			// Busca pelas linhas que contém o ramal que deve ser apagado
+			// Busca pelas linhas que contém o ramal que deve ser alterado
+			boolean ramalFound = false;
+			int i = 0;
 			int begin = -1;
 			int end = -1;
-			for (int i = 0; i < iaxConf.length; i++) {
+			while (!ramalFound && i < iaxConf.length) {
+
+				// Procuramos pela linha que contenha a tag do ramal desejado
+				// E pegamos a posição inicial do ramal e a linha em que ele
+				// termina
 				if (iaxConf[i].equals("[" + ramal.getTag() + "]")) {
 					begin = i;
 
-					// Itera pelas linhas do ramal até chegar ao fim do arquivo
-					// ou a uma linha em branco (final do ramal)
 					while (i < iaxConf.length && !iaxConf[i].equals("")) {
 						i++;
 					}
-					end = --i;
+					if (i == iaxConf.length) {
+						i--;
+					}
+					end = i;
 
-					break;
+					ramalFound = true;
 				}
+				i++;
 			}
+
+			// Apagado o ramal do arquivo iax.conf
+			fileHandler.deleteLineOnFile(iaxConf, begin, end);
 
 			// Caso não tenha sido encontrado o ramal, é lançada uma exceção
 			if (begin == -1 || end == -1) {
 				throw new RamalIAXException(
 						"Não existe o Ramal passado. Tag = " + ramal.getTag());
 			}
-
-			// Enviado o comando para apagar as linhas correspondentes ao ramal
-			fileHandler.deleteLineOnFile(iaxConf, begin, end);
 
 			mutex.release();
 			return true;
@@ -152,11 +161,50 @@ public class RamalIAXHandler {
 	 *         caso alguma outra instância esteja acessando e modificando o
 	 *         arquivo no momento, assim, evitando conflito entre os arquivos
 	 * @throws InterruptedException
+	 * @throws IOException
 	 */
-	public boolean updateRamal(RamalIAX ramal) throws InterruptedException {
+	public boolean updateRamal(RamalIAX ramal) throws InterruptedException,
+			IOException {
 		if (mutex.tryAcquire()) {
 
-			// TODO
+			// Lê o arquivo iax.conf
+			String[] iaxConf = fileHandler.readFile(iaxConfPath);
+			String[] updatedRamal = ramal.toRamalIAX();
+
+			// Busca pelas linhas que contém o ramal que deve ser alterado
+			boolean ramalFound = false;
+			int i = 0;
+			int begin = -1;
+			int end = -1;
+			while (!ramalFound && i < iaxConf.length) {
+
+				// Procuramos pela linha que contenha a tag do ramal desejado
+				// E pegamos a posição inicial do ramal e a linha em que ele
+				// termina
+				if (iaxConf[i].equals("[" + ramal.getTag() + "]")) {
+					begin = i;
+
+					while (i < iaxConf.length && !iaxConf[i].equals("")) {
+						i++;
+					}
+					if (i == iaxConf.length) {
+						i--;
+					}
+					end = i;
+
+					ramalFound = true;
+				}
+				i++;
+			}
+
+			// Apagado o ramal do arquivo iax.conf
+			fileHandler.deleteLineOnFile(iaxConf, begin, end);
+
+			// Atualiza o valor do vetor do iax.conf
+			iaxConf = fileHandler.readFile(iaxConfPath);
+
+			// Adicionado o ramal atualizado no final do arquivo
+			fileHandler.writeOnFile(iaxConf, updatedRamal, iaxConf.length);
 
 			mutex.release();
 			return true;
@@ -197,7 +245,9 @@ public class RamalIAXHandler {
 				boolean transfer = false;
 				boolean requireCallToken = false;
 
-				while (i < iaxConfFile.length && !iaxConfFile[i].equals("")) {
+				while (i < iaxConfFile.length && !iaxConfFile[i].equals("")
+						&& !iaxConfFile[i].isEmpty()
+						&& iaxConfFile[i].charAt(0) != '[') {
 					String parameters[] = iaxConfFile[i++].split("=");
 
 					if (parameters[0].equals("callerid")) {
@@ -229,6 +279,7 @@ public class RamalIAXHandler {
 						context, host, auth, transfer, requireCallToken);
 
 				listRamal.add(ramal);
+				i--;
 			}
 		}
 		return listRamal;
