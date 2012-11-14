@@ -1,7 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <body>
-<!-- Header default da aplicão web -->
+<!-- Header default da aplicação web -->
 
 	<div id="pageHeader">
 		<div class="logoHeader"> 
