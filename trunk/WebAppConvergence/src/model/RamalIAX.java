@@ -94,17 +94,13 @@ public class RamalIAX {
 		ramalIAX[0] = "\r["+tag+"]\r";
 		ramalIAX[1] = "callerid="+callerId+"\r";
 		ramalIAX[2] = "type="+type.toString()+"\r";
-		ramalIAX[3] = "defaultuser="+defaultUser+"\r";
-		
+		ramalIAX[3] = "defaultuser="+defaultUser+"\r";		
 		ramalIAX[4] = "secret="+secret+"\r";
 		ramalIAX[5] = "context="+context+"\r";
 		ramalIAX[6] = "host="+host+"\r";
 		ramalIAX[7] = "auth="+auth+"\r";
 		ramalIAX[8] = "transfer="+((transfer)? "yes" : "no")+"\r";
-		ramalIAX[9] = "requirecalltoken="+((requireCallToken)? "yes" : "no")+"\r";
-		
-		
-		
+		ramalIAX[9] = "requirecalltoken="+((requireCallToken)? "yes" : "no")+"";		
 		
 		return ramalIAX;
 	}
