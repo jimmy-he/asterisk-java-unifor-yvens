@@ -16,6 +16,13 @@ div.greyLine {
 	height: 3px;
 }
 
+div.hardGreyLine {
+	background: none repeat scroll 0 0 #474747;
+	height: 3px;
+}
+
+
+
 div.header {
 	background-color: #F6772F;
 	height: 46px;
@@ -70,6 +77,22 @@ div.header_menu ul li a:hover   {
 	color:#FFF;
 	text-decoration: none;
 	outline-width:0; 
+}
+
+div.error {
+	background-color: #F62F3C;
+	border: 0.5px solid #474747;
+	border-top: none;
+	color: #F6F6F6;
+	padding-left: 10%;
+}
+
+div.feedback {
+	background-color: #ADF62F;
+	border: 0.5px solid #474747;
+	border-top: none;
+	color: #474747;
+	padding-left: 10%;
 }
 
 body{

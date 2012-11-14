@@ -1,5 +1,8 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <body>
-<!-- Header default da aplicação web -->
+<!-- Header default da aplic�o web -->
+
 	<div id="pageHeader">
 		<div class="logoHeader"> 
 			<img alt="" src="Pages/Resources/logoAsteroid2.png" style="float: right;">
@@ -77,3 +80,12 @@
 			</div>
 		</div>
 	</div>
+	<div class="hardGreyLine">
+	</div>
+
+<c:if test="${!empty error}">
+	<jsp:include page="error.jsp" />
+</c:if>	
+<c:if test="${!empty feedback}">
+	<jsp:include page="feedback.jsp" />
+</c:if>
