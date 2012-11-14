@@ -109,30 +109,38 @@ public class RamalSipHandler {
 			//Lê o arquivo sip.conf
 			String[] sipConf = fileHandler.readFile(sipConfPath);
 			
-			//Busca pelas linhas que contém o ramal que deve ser apagado
+			//Busca pelas linhas que contém o ramal que deve ser alterado
+			boolean ramalFound = false;
+			int i = 0;
 			int begin = -1;
 			int end = -1;
-			for (int i = 0; i < sipConf.length; i++) {
+			while(!ramalFound && i < sipConf.length){
+				
+				//Procuramos pela linha que contenha a tag do ramal desejado
+				//E pegamos a posição inicial do ramal e a linha em que ele termina
 				if(sipConf[i].equals("["+ramal.getTag()+"]")){
 					begin = i;
 					
-					//Itera pelas linhas do ramal até chegar ao fim do arquivo ou a uma linha em branco (final do ramal)
-					while(i < sipConf.length && !sipConf[i].equals("")){
+					while(i < sipConf.length && !sipConf[i].equals("")) {
 						i++;
 					}
-					end = --i;
+					if(i == sipConf.length){
+						i--;
+					}
+					end = i;
 					
-					break;
+					ramalFound = true;
 				}
+				i++;
 			}
+			
+			//Apagado o ramal do arquivo sip.conf
+			fileHandler.deleteLineOnFile(sipConf, begin, end);
 			
 			//Caso não tenha sido encontrado o ramal, é lançada uma excessão
 			if(begin == -1 || end == -1){
 				throw new RamalSipException("Não existe o Ramal passado. Tag = "+ramal.getTag());
 			}
-			
-			//Enviado o comando para apagar as linhas correspondentes ao ramal
-			fileHandler.deleteLineOnFile(sipConf, begin, end);
 			
 			mutex.release();
 			return true;
@@ -159,35 +167,38 @@ public class RamalSipHandler {
 			String[] updatedRamal = ramal.toRamalSip();
 			
 			//Busca pelas linhas que contém o ramal que deve ser alterado
-			for (int i = 0; i < sipConf.length; i++) {
+			boolean ramalFound = false;
+			int i = 0;
+			int begin = -1;
+			int end = -1;
+			while(!ramalFound && i < sipConf.length){
+				
 				//Procuramos pela linha que contenha a tag do ramal desejado
+				//E pegamos a posição inicial do ramal e a linha em que ele termina
 				if(sipConf[i].equals("["+ramal.getTag()+"]")){
-					//Iteramos todas as linhas de propriedades do ramal atualizado
+					begin = i;
 					
-					for (int j = 0; j < updatedRamal.length; j++) {
-						System.out.println("Delete line "+i+" > "+sipConf[i]);
-						fileHandler.deleteLineOnFile(sipConf, i);
-						sipConf = fileHandler.readFile(sipConfPath);
-						System.out.println("Line has now >"+sipConf[i]);
-						fileHandler.writeOnFile(sipConf, updatedRamal[j], i);
-						sipConf = fileHandler.readFile(sipConfPath);
-						System.out.println("Update to >"+sipConf[i]);
-						
-						//Para cada linha diferente entre a versão atual e a atualizada
-						
-						//Deletamos a linha atual
-						
-						/*
-						fileHandler.deleteLineOnFile(sipConf, i);
-						sipConf = fileHandler.readFile(sipConfPath);
-						//Escrevemos a linha nova no lugar
-						fileHandler.writeOnFile(sipConf, updatedRamal[j], i);
-						sipConf = fileHandler.readFile(sipConfPath);
-						*/
+					while(i < sipConf.length && !sipConf[i].equals("")) {
+						i++;
 					}
-					//i--;
+					if(i == sipConf.length){
+						i--;
+					}
+					end = i;
+					
+					ramalFound = true;
 				}
+				i++;
 			}
+			
+			//Apagado o ramal do arquivo sip.conf
+			fileHandler.deleteLineOnFile(sipConf, begin, end);
+			
+			//Atualiza o valor do vetor do sip.conf
+			sipConf = fileHandler.readFile(sipConfPath);
+			
+			//Adicionado o ramal atualizado no final do arquivo
+			fileHandler.writeOnFile(sipConf, updatedRamal, sipConf.length);
 			
 			mutex.release();
 			return true;

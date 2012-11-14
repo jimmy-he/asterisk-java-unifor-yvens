@@ -107,7 +107,7 @@ public class RamalSip {
 		ramalSip[9] = "dtmfmode="+dtmfMode+"\r";
 		ramalSip[9] = "dtmfmode="+dtmfMode+"\r";
 		ramalSip[10] = "call-limit="+callLimit+"\r";
-		ramalSip[11] = "nat="+((nat)? "yes" : "no")+"\r";
+		ramalSip[11] = "nat="+((nat)? "yes" : "no")+"";
 		
 		return ramalSip;
 	}

@@ -149,5 +149,8 @@ public class PersistenceTest {
 		
 		//Verificamos se a última linha do arquivo corresponde a antiga última linha guardada
 		Assert.assertEquals(file[file.length-1], oldLastLine);
+
+		//Verifica se o arquivo tem o mesmo número de linhas que originalmente tinha
+		Assert.assertEquals(lines, file.length);
 	}
 }
