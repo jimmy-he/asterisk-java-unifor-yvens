@@ -82,6 +82,8 @@ public class RamalSipHandlerTest {
 	@Test
 	public void TestAddingUpdatingDeletingRamalLocalSipConf() throws IOException, SipConfigException, InterruptedException, RamalSipException {
 		RamalSipHandler ramalHandler = new RamalSipHandler(sip_conf);
+		//Para verificar a integridade do arquivo
+		int originalLines = ramalHandler.getSipConfLines();
 		
 		//Criado um ramal default
 		ramalHandler.createRamal(ramal);
@@ -101,8 +103,7 @@ public class RamalSipHandlerTest {
 		
 		//Modificado um parâmetro dentro do ramal
 		
-		//String oldCallerId = ramal.getCallerId();
-		
+		String oldCallerId = ramal.getCallerId();
 		String newCallerId = "4666Rock";
 		ramal.setCallerId(newCallerId);
 		
@@ -124,9 +125,11 @@ public class RamalSipHandlerTest {
 		}
 		Assert.assertEquals(newCallerId, realRamal.getCallerId());
 		
-		/*
 		//Agora é feita a reversão para o caller id original
 		ramal.setCallerId(oldCallerId);
+		
+		//Enviado o comando para alterar o ramal no arquivo
+		ramalHandler.updateRamal(ramal);
 		
 		//Carregado a lista dos ramais, para buscar pelo ramal alterado
 		listRamal = ramalHandler.listRamal();		
@@ -143,9 +146,6 @@ public class RamalSipHandlerTest {
 		}
 		Assert.assertEquals(oldCallerId, realRamal.getCallerId());
 		
-		//Enviado o comando para alterar o ramal no arquivo
-		ramalHandler.updateRamal(ramal);
-		
 		//Enviado o comando para remover o ramal que foi adicionado
 		ramalHandler.deleteRamal(ramal);
 		
@@ -161,7 +161,9 @@ public class RamalSipHandlerTest {
 		}
 		
 		Assert.assertEquals(false, exist);
-		*/
+		
+		//Verifica se o arquivo contém o mesmo número de linhas que o original
+		Assert.assertEquals(originalLines, new RamalSipHandler(sip_conf).getSipConfLines());
 	}
 	
 	@Test

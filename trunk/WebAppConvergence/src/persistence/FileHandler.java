@@ -31,22 +31,6 @@ public class FileHandler {
 	 */
 	public FileHandler()
 	{
-		//Requisita permissão de administrador para abrir e fechar qualquer arquivo
-		
-		//TODO mover as variáveis relevantes à senha do administrador para uma classe específica
-		//para centralizar
-		
-		/*
-        String[] cmdArray = {"gnome-terminal", "ifconfig"};
-
-		Comando> sudo chmod -R 777 + pasta
-
-        try {
-            Runtime.getRuntime().exec(cmdArray);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        */
 	}
 	
 	/**
@@ -156,15 +140,26 @@ public class FileHandler {
 	 */
 	public void writeOnFile(String[] file, String[] newText, int line) throws IOException
 	{
+		//Adiciona uma linha a mais no documento caso a última linha não seja um espaço vazio
+		int aditionalLine = (file[file.length - 1].isEmpty()) ? 1 : 0;
+		
 		//Esse método deve, inicialmente, criar um novo vetor de linhas
 		//que seja o número de linhas antigas mais o número de linhas novas
-		String[] newFile = new String[file.length + newText.length];
+		String[] newFile = new String[file.length + newText.length + aditionalLine];
 		
 		//Esse laço vai copiar todas as linhas do texto antigo para o novo
 		//até o índice I for igual à linha onde será inserida as novas
 		//linhas, nesse momento as novas linhas serão colocadas e daí em diante o
 		//backUp continua, mas com I - 'qtde. linhas novas' no arquivo original 
 		//para não repercurtir os efeitos da adição das novas linhas
+
+		//Caso a linha seja maior do que o tamanho do arquivo
+		//Setamos a linha para ser na última linha do arquivo
+		if(line > file.length){
+			//A adição de uma linha caso a última linha possua conteúdo
+			line = (file.length - 1) + aditionalLine;
+		}
+		
 		for (int i = 0, j = 0; i < newFile.length; i++) {
 			if(i < line)
 			{
