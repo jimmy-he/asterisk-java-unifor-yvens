@@ -232,7 +232,9 @@ public class RamalIAXHandler {
 				RamalIAX ramal = null;
 
 				// 1 - TAG
-				String tag = iaxConfFile[i++];
+				String tag = iaxConfFile[i];
+				tag = tag.substring(1, tag.length() - 1);
+				i++;
 
 				// Declaração das variáveis do RAMAL
 				String callerId = "";
