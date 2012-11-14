@@ -63,7 +63,7 @@ public class RamalIAXHandlerTest {
 		boolean exist = false;
 
 		for (RamalIAX insertedRamal : listRamal) {
-			System.out.println(insertedRamal.getTag());
+			
 			if (insertedRamal.equals(ramal)) {
 				exist = true;
 			}
