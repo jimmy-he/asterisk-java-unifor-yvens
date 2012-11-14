@@ -39,15 +39,14 @@ public class CrudRamalSipServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String error = "error";
-		String feedback = "feedback";
+		String error = "";
+		String feedback = "";
 		
 		String forward = "/Pages/Application/crudRamalSip.jsp";
 		try {
 			if(request.getParameter("alterar") != null && !request.getParameter("alterar").isEmpty()){
 				//IF para verificar se acontecerá uma alteração em um ramal já existente
 				//TODO pegar o conteúdo do ramal passado
-				
 				
 				request.setAttribute("tarefa", "Alterar");
 				request.setAttribute("btnSubmit", "Alterar");
@@ -71,6 +70,7 @@ public class CrudRamalSipServlet extends HttpServlet {
 				//TODO inserir a linha de comando para dar o reload no asterisk
 				
 				//Dá um forward para a tabela com todos os SIPs
+				//TODO mudar para o servlet responsável por carregar a table
 				forward = "/Pages/Application/tableRamalSip.jsp";
 			}else{
 				//Else caso não seja nenhum dos três comando dos CRUD
