@@ -273,8 +273,6 @@ public class RamalIAXHandler {
 						requireCallToken = (parameters[1].equals("yes")) ? true
 								: false;
 					}
-
-					i++;
 				}
 
 				ramal = new RamalIAX(tag, callerId, type, defaultUser, secret,

@@ -32,25 +32,22 @@
 			</div>
 			<div class="header_item"> 
 				<a id="ramais" href="#">
-					Ramais SIP
+					Ramais
 				</a>
 				<div class="header_menu">
 					<ul>
+						<li class="header_menu_grouper">
+							SIP
+						</li>
 						<li>
 							<a id="adicionarRamais" href="CrudRamalSipServlet"> Adicionar </a>
 						</li>
 						<li>
 							<a id="listarRamais" href="TableRamalSipServlet"> Listar </a>
 						</li>
-					</ul>
-				</div>
-			</div>
-			<div class="header_item"> 
-				<a id="ramais" href="#">
-					Ramais IAX
-				</a>
-				<div class="header_menu">
-					<ul>
+						<li class="header_menu_grouper">
+							IAX
+						</li>
 						<li>
 							<a id="adicionarRamais" href="CrudRamalIAXServlet"> Adicionar </a>
 						</li>

@@ -40,8 +40,8 @@ div.header_item {
 
 div.header_menu {
 	background-color: #F6772F;
-	border-top: 1px solid #FFFFFF;
-	border-bottom: 1px solid #000000;
+	border: 1px solid #474747;
+	border-bottom: 1px solid #ACACAC;
 	font-size: 17px;
 	height: auto;
 	list-style: none;
@@ -58,9 +58,16 @@ div.header_menu ul {
 }
 
 div.header_menu ul li{
-	position: relative;
 	padding-left: 10px;
 	padding-right: 10px;
+	position: relative;
+}
+
+div.header_menu ul li.header_menu_grouper{
+	background-color: #474747;
+	padding-left: 10px;
+	padding-right: 10px;
+	position: relative;
 }
 
 div.header_menu li ul {
@@ -148,6 +155,7 @@ td.header {
 	font-weight: bold;
 	height: 20px;
 	margin: 0;
+	min-width: 80px;
 	padding-left: 15px;
 	vertical-align: middle;
 }
