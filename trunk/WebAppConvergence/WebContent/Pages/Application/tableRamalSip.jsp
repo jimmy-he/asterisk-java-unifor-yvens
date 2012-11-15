@@ -48,7 +48,7 @@
 						<c:out value="${ramal.context}"></c:out>
 					</td>
 					<td class="result">
-						<a href="#">Alterar</a>
+						<a href="/CrudRamalSipServlet?tarefa=alteracao&tag=${ramal.tag}">Alterar</a>
 					</td>
 					<td class="result" style="border: none;">
 						<a href="#">Remover</a>

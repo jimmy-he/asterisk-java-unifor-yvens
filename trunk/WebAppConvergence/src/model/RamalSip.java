@@ -171,6 +171,14 @@ public class RamalSip {
 		return ramal;
 	}
 	
+	/**
+	 * 
+	 * @param request
+	 */
+	public void ramalToRequest(HttpServletRequest request){
+		
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

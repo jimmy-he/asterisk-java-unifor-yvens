@@ -44,16 +44,23 @@ public class CrudRamalSipServlet extends HttpServlet {
 		
 		String forward = "/Pages/Application/crudRamalSip.jsp";
 		try {
-			if(request.getParameter("alterar") != null && !request.getParameter("alterar").isEmpty()){
+			RamalSipHandler handler = new RamalSipHandler();
+			
+			if(request.getParameter("alteracao") != null && !request.getParameter("alteracao").isEmpty()){
 				//IF para verificar se acontecerá uma alteração em um ramal já existente
 				//TODO pegar o conteúdo do ramal passado
+				
+				String tag = request.getParameter("tag");
+				
+				RamalSip ramal = handler.getRamal(tag);
+				
+				ramal.ramalToRequest(request);
 				
 				request.setAttribute("tarefa", "Alterar");
 				request.setAttribute("btnSubmit", "Alterar");
 			}else if(request.getParameter("tarefa") != null && !request.getParameter("tarefa").isEmpty()){
 				//IF caso seja realizada uma tarefa do tipo Inserção, Alteração e Deleção
 				String task = request.getParameter("tarefa");
-				RamalSipHandler handler = new RamalSipHandler();
 				RamalSip ramalSip = RamalSip.getRamalFromParameter(request);
 				
 				if(task.equals("Inserir")){
@@ -70,8 +77,7 @@ public class CrudRamalSipServlet extends HttpServlet {
 				//TODO inserir a linha de comando para dar o reload no asterisk
 				
 				//Dá um forward para a tabela com todos os SIPs
-				//TODO mudar para o servlet responsável por carregar a table
-				forward = "/Pages/Application/tableRamalSip.jsp";
+				forward = "/TableRamalSipServlet";
 			}else{
 				//Else caso não seja nenhum dos três comando dos CRUD
 				request.setAttribute("tarefa", "Inserir");

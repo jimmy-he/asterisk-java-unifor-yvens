@@ -34,8 +34,7 @@ public class RamalSipHandler {
 		this(AsteriskConfiguration.SIP_CONFIG_PATH);
 	}
 
-	public RamalSipHandler(String sipConfPath) throws IOException,
-			SipConfigException {
+	public RamalSipHandler(String sipConfPath) throws IOException, SipConfigException {
 		this.sipConfPath = sipConfPath;
 		fileHandler = new FileHandler();
 		if (!sipConfCertified()) {
@@ -280,7 +279,6 @@ public class RamalSipHandler {
 					} else if (parameters[0].equals("nat")) {
 						nat = (parameters[1].equals("yes")) ? true : false;
 					}
-					i++;
 				}
 				ramal = new RamalSip(tag, callerId, type, username, secret,
 						canReinvite, host, context, dtmfMode, accountCode,
@@ -291,6 +289,32 @@ public class RamalSipHandler {
 			}
 		}
 		return listRamal;
+	}
+	
+	/**
+	 * Método para buscar o ramal sip com determinado tag
+	 * 
+	 * @param tag
+	 * @return retorna o ramal com a tag passada
+	 * @throws IOException
+	 * @throws RamalSipException
+	 */
+	public RamalSip getRamal(String tag) throws IOException, RamalSipException{
+		List<RamalSip> list = listRamal();
+		
+		RamalSip ramal = null;
+		
+		for (RamalSip ramalSip : list) {
+			if(ramal.getTag().equals(tag)){
+				ramal = ramalSip;
+			}
+		}
+		
+		if(ramal == null){
+			throw new RamalSipException("Erro! Ramal não encontrado!");
+		}
+		
+		return ramal;
 	}
 
 	public int getSipConfLines() {
