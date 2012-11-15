@@ -9,10 +9,15 @@ package asterisk;
  */
 public class AsteriskConfiguration {
 
-	// TODO adicionar o path real do sip.conf
+	//Path do arquivo sip.conf
 	public static final String SIP_CONFIG_PATH = "/etc/asterisk/sip.conf";
 
-	// TODO adicionar o path real do iax.conf
+	//Path do arquivo iax.conf
 	public static final String IAX_CONFIG_PATH = "/etc/asterisk/iax.conf";
 
+	//IP de conexão com o servidor do asterisk
+	public static final String ASTERISK_IP = "127.0.0.1";
+	
+	//Porta de conexão com o servidor do asterisk
+	public static final int ASTERISK_PORT = 5038;
 }
