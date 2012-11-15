@@ -48,10 +48,10 @@
 						<c:out value="${ramal.context}"></c:out>
 					</td>
 					<td class="result">
-						<a href="/CrudRamalSipServlet?tarefa=alteracao&tag=${ramal.tag}">Alterar</a>
+						<a href="CrudRamalSipServlet?tarefa=alteracao&atividade=alteracao&tag=${ramal.tag}">Alterar</a>
 					</td>
 					<td class="result" style="border: none;">
-						<a href="#">Remover</a>
+						<a href="CrudRamalSipServlet?tarefa=remocao&atividade=remocao&tag=${ramal.tag}">Remover</a>
 					</td>
 				</tr>
 			</c:forEach>
