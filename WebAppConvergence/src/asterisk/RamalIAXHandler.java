@@ -7,11 +7,8 @@ import java.util.concurrent.Semaphore;
 
 import model.RamalIAX;
 import model.RamalIAXType;
-import model.RamalIAX;
-
 import persistence.FileHandler;
 import exception.IAXConfigException;
-import exception.RamalIAXException;
 import exception.RamalIAXException;
 
 /**
