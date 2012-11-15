@@ -64,6 +64,7 @@ div.header_menu ul li{
 }
 
 div.header_menu ul li.header_menu_grouper{
+	color: #EBEBEB;
 	background-color: #474747;
 	padding-left: 10px;
 	padding-right: 10px;

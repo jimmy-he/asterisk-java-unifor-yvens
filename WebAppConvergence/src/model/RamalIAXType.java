@@ -46,7 +46,7 @@ public enum RamalIAXType {
 	 * @return retorna um ArrayList de Strings
 	 */
 	public static List<String> listRamalType(){
-		RamalSipType[] list = RamalSipType.class.getEnumConstants();
+		RamalIAXType[] list = RamalIAXType.class.getEnumConstants();
 		List<String> listRamalType = new ArrayList<String>();
 		
 		for (int i = 0; i < list.length; i++) {

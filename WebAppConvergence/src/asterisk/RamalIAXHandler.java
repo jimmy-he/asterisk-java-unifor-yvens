@@ -7,9 +7,11 @@ import java.util.concurrent.Semaphore;
 
 import model.RamalIAX;
 import model.RamalIAXType;
+import model.RamalIAX;
 
 import persistence.FileHandler;
 import exception.IAXConfigException;
+import exception.RamalIAXException;
 import exception.RamalIAXException;
 
 /**
@@ -255,8 +257,7 @@ public class RamalIAXHandler {
 					if (parameters[0].equals("callerid")) {
 						callerId = parameters[1];
 					} else if (parameters[0].equals("type")) {
-						type = RamalIAXType.getRamalType(iaxConfFile[i++]
-								.split("=")[1]);
+						type = RamalIAXType.getRamalType(parameters[1]);
 					} else if (parameters[0].equals("defaultuser")) {
 						defaultUser = parameters[1];
 					} else if (parameters[0].equals("secret")) {
@@ -283,6 +284,32 @@ public class RamalIAXHandler {
 			}
 		}
 		return listRamal;
+	}
+	
+	/**
+	 * Método para buscar o ramal iax com determinado tag
+	 * 
+	 * @param tag
+	 * @return retorna o ramal com a tag passada
+	 * @throws IOException
+	 * @throws RamalIAXException
+	 */
+	public RamalIAX getRamal(String tag) throws IOException, RamalIAXException{
+		List<RamalIAX> list = listRamal();
+		
+		RamalIAX ramal = null;
+		
+		for (RamalIAX ramalIAX : list) {
+			if(ramal.getTag().equals(tag)){
+				ramal = ramalIAX;
+			}
+		}
+		
+		if(ramal == null){
+			throw new RamalIAXException("Erro! Ramal não encontrado!");
+		}
+		
+		return ramal;
 	}
 
 	public int getIAXConfLines() {

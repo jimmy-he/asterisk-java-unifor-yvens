@@ -52,7 +52,7 @@
 							<a id="adicionarRamais" href="CrudRamalIAXServlet"> Adicionar </a>
 						</li>
 						<li>
-							<a id="listarRamais" href="#"> Listar </a>
+							<a id="listarRamais" href="TableRamalIAXServlet"> Listar </a>
 						</li>
 					</ul>
 				</div>
