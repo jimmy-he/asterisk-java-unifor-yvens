@@ -46,40 +46,54 @@ public class CrudRamalSipServlet extends HttpServlet {
 		try {
 			RamalSipHandler handler = new RamalSipHandler();
 			
-			if(request.getParameter("alteracao") != null && !request.getParameter("alteracao").isEmpty()){
-				//IF para verificar se acontecerá uma alteração em um ramal já existente
-				//TODO pegar o conteúdo do ramal passado
+			if(request.getParameter("atividade") != null && request.getParameter("atividade").equals("inserir")){
+				//Caso seja realizada uma inserção de ramal
+				RamalSip ramalSip = RamalSip.getRamalFromParameter(request);
 				
+				//TODO remover
+				System.out.println(ramalSip.toString());
+				
+				handler.createRamal(ramalSip);
+				feedback = "Ramal "+ramalSip.getTag()+" adicionado com sucesso!";
+				
+				forward = "/TableRamalSipServlet";
+			}
+			else if(request.getParameter("atividade") != null && request.getParameter("atividade").equals("alteracao")){
+				//Redirecionamento para a página de inserção, mas com os campso já preenchidos
 				String tag = request.getParameter("tag");
-				
 				RamalSip ramal = handler.getRamal(tag);
 				
 				ramal.ramalToRequest(request);
 				
+				request.setAttribute("atividade", "alterar");
 				request.setAttribute("tarefa", "Alterar");
 				request.setAttribute("btnSubmit", "Alterar");
-			}else if(request.getParameter("tarefa") != null && !request.getParameter("tarefa").isEmpty()){
-				//IF caso seja realizada uma tarefa do tipo Inserção, Alteração e Deleção
-				String task = request.getParameter("tarefa");
+			}
+			else if(request.getParameter("atividade") != null && request.getParameter("atividade").equals("alterar")){
+				//Caso seja realizada uma alteração em um ramal já existente
 				RamalSip ramalSip = RamalSip.getRamalFromParameter(request);
+				handler.updateRamal(ramalSip);
+				feedback = "Ramal "+ramalSip.getTag()+" alterado com sucesso!";
 				
-				if(task.equals("Inserir")){
-					handler.createRamal(ramalSip);
-					feedback = "Ramal "+ramalSip.getTag()+" adicionado com sucesso!";
-				}else if(task.equals("Alterar")){
-					handler.updateRamal(ramalSip);
-					feedback = "Ramal "+ramalSip.getTag()+" atualizado com sucesso!";
-				}else if(task.equals("Remover")){
-					handler.deleteRamal(ramalSip);
-					feedback = "Ramal "+ramalSip.getTag()+" removido com sucesso!";
-				}
+				forward = "/TableRamalSipServlet";
+			}
+			else if(request.getParameter("atividade") != null && request.getParameter("atividade").equals("remocao")){
+				//Caso seja feita a remoção de um ramal já existente
+				RamalSip ramalSip = RamalSip.getRamalFromParameter(request);
+				handler.deleteRamal(ramalSip);
+				feedback = "Ramal "+ramalSip.getTag()+" removido com sucesso!";
 				
-				//TODO inserir a linha de comando para dar o reload no asterisk
-				
-				//Dá um forward para a tabela com todos os SIPs
 				forward = "/TableRamalSipServlet";
 			}else{
 				//Else caso não seja nenhum dos três comando dos CRUD
+				
+				//Instanciado um ramal apenas com os valores para os campos avançados
+				RamalSip ramal = new RamalSip("", "", "","");
+				
+				//Setado os valores avançados para o request
+				ramal.ramalToRequest(request);
+				
+				request.setAttribute("atividade", "inserir");
 				request.setAttribute("tarefa", "Inserir");
 				request.setAttribute("btnSubmit", "Inserir");
 			}

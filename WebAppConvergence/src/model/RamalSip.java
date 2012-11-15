@@ -107,7 +107,6 @@ public class RamalSip {
 		ramalSip[7] = "host="+host+"\r";
 		ramalSip[8] = "context="+context+"\r";
 		ramalSip[9] = "dtmfmode="+dtmfMode+"\r";
-		ramalSip[9] = "dtmfmode="+dtmfMode+"\r";
 		ramalSip[10] = "call-limit="+callLimit+"\r";
 		ramalSip[11] = "nat="+((nat)? "yes" : "no")+"";
 		
@@ -172,11 +171,23 @@ public class RamalSip {
 	}
 	
 	/**
+	 * Método para setar os valores do ramal atual no request
 	 * 
 	 * @param request
 	 */
 	public void ramalToRequest(HttpServletRequest request){
-		
+		request.setAttribute("tag", tag);
+		request.setAttribute("callerId", callerId);
+		request.setAttribute("type", type);
+		request.setAttribute("username", username);
+		request.setAttribute("secret", secret);
+		request.setAttribute("canReinvite", (canReinvite)? "yes" : "no");
+		request.setAttribute("host", host);
+		request.setAttribute("context", context);
+		request.setAttribute("dtmfMode", dtmfMode);
+		request.setAttribute("accountCode", accountCode);
+		request.setAttribute("callLimit", callLimit);
+		request.setAttribute("nat", (nat)? "yes" : "no");
 	}
 	
 	@Override

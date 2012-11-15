@@ -66,8 +66,7 @@ public class RamalSipHandler {
 	 * @throws IOException
 	 * @throws SipConfigException
 	 */
-	public boolean createRamal(RamalSip ramal) throws InterruptedException,
-			IOException, RamalSipException {
+	public boolean createRamal(RamalSip ramal) throws InterruptedException, IOException, RamalSipException {
 		if (mutex.tryAcquire()) {
 
 			// Lê o arquivo sip.conf
@@ -305,7 +304,7 @@ public class RamalSipHandler {
 		RamalSip ramal = null;
 		
 		for (RamalSip ramalSip : list) {
-			if(ramal.getTag().equals(tag)){
+			if(ramalSip.getTag().equals(tag)){
 				ramal = ramalSip;
 			}
 		}
