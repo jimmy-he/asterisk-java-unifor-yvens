@@ -158,6 +158,25 @@ public class RamalIAX {
 		return ramal;
 	}
 
+	/**
+	 * 
+	 * @param request
+	 */
+	public void ramalToRequest(HttpServletRequest request) {
+
+		request.setAttribute("tag", tag);
+		request.setAttribute("callerId", callerId);
+		request.setAttribute("type", type);
+		request.setAttribute("defaultUser", defaultUser);
+		request.setAttribute("secret", secret);
+		request.setAttribute("context", context);
+		request.setAttribute("host", host);
+		request.setAttribute("auth", auth);
+		request.setAttribute("transfer", (transfer) ? "yes" : "no");
+		request.setAttribute("requireCallToken", (requireCallToken) ? "yes"
+				: "no");
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

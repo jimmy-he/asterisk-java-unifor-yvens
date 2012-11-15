@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,87 +15,95 @@ import asterisk.RamalIAXHandler;
  * Servlet responsável pelo CRUD dos ramais IAX
  * 
  * @author daniel
- * 
+ *
  */
 @WebServlet("/CrudRamalIAXServlet")
 public class CrudRamalIAXServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public CrudRamalIAXServlet() {
+        super();
+    }
 
 	/**
-	 * @see HttpServlet#HttpServlet()
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	public CrudRamalIAXServlet() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		String error = "error";
-		String feedback = "feedback";
-
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String error = "";
+		String feedback = "";
+		
 		String forward = "/Pages/Application/crudRamalIAX.jsp";
 		try {
-			if (request.getParameter("alterar") != null
-					&& !request.getParameter("alterar").isEmpty()) {
-				// IF para verificar se acontecerá uma alteração em um ramal já
-				// existente
-				// TODO pegar o conteúdo do ramal passado
-
+			RamalIAXHandler handler = new RamalIAXHandler();
+			
+			if(request.getParameter("atividade") != null && request.getParameter("atividade").equals("inserir")){
+				//Caso seja realizada uma inserção de ramal
+				RamalIAX ramalIAX = RamalIAX.getRamalFromParameter(request);
+				
+				//TODO remover
+				System.out.println(ramalIAX.toString());
+				
+				handler.createRamal(ramalIAX);
+				feedback = "Ramal "+ramalIAX.getTag()+" adicionado com sucesso!";
+				
+				forward = "/TableRamalIAXServlet";
+			}
+			else if(request.getParameter("atividade") != null && request.getParameter("atividade").equals("alteracao")){
+				//Redirecionamento para a página de inserção, mas com os campso já preenchidos
+				String tag = request.getParameter("tag");
+				RamalIAX ramal = handler.getRamal(tag);
+				
+				ramal.ramalToRequest(request);
+				
+				request.setAttribute("atividade", "alterar");
 				request.setAttribute("tarefa", "Alterar");
 				request.setAttribute("btnSubmit", "Alterar");
-			} else if (request.getParameter("tarefa") != null
-					&& !request.getParameter("tarefa").isEmpty()) {
-				// IF caso seja realizada uma tarefa do tipo Inserção, Alteração
-				// e Deleção
-				String task = request.getParameter("tarefa");
-				RamalIAXHandler handler = new RamalIAXHandler();
+			}
+			else if(request.getParameter("atividade") != null && request.getParameter("atividade").equals("alterar")){
+				//Caso seja realizada uma alteração em um ramal já existente
 				RamalIAX ramalIAX = RamalIAX.getRamalFromParameter(request);
-
-				if (task.equals("Inserir")) {
-					handler.createRamal(ramalIAX);
-					feedback = "Ramal " + ramalIAX.getTag()
-							+ " adicionado com sucesso!";
-				} else if (task.equals("Alterar")) {
-					handler.updateRamal(ramalIAX);
-					feedback = "Ramal " + ramalIAX.getTag()
-							+ " atualizado com sucesso!";
-				} else if (task.equals("Remover")) {
-					handler.deleteRamal(ramalIAX);
-					feedback = "Ramal " + ramalIAX.getTag()
-							+ " removido com sucesso!";
-				}
-
-				// TODO inserir a linha de comando para dar o reload no asterisk
-
-				// Dá um forward para a tabela com todos os IAXs
-				forward = "/Pages/Application/tableRamalIAX.jsp";
-			} else {
-				// Else caso não seja nenhum dos três comando dos CRUD
+				handler.updateRamal(ramalIAX);
+				feedback = "Ramal "+ramalIAX.getTag()+" alterado com sucesso!";
+				
+				forward = "/TableRamalIAXServlet";
+			}
+			else if(request.getParameter("atividade") != null && request.getParameter("atividade").equals("remocao")){
+				//Caso seja feita a remoção de um ramal já existente
+				RamalIAX ramalIAX = RamalIAX.getRamalFromParameter(request);
+				handler.deleteRamal(ramalIAX);
+				feedback = "Ramal "+ramalIAX.getTag()+" removido com sucesso!";
+				
+				forward = "/TableRamalIAXServlet";
+			}else{
+				//Else caso não seja nenhum dos três comando dos CRUD
+				
+				//Instanciado um ramal apenas com os valores para os campos avançados
+				RamalIAX ramal = new RamalIAX("", "", "","");
+				
+				//Setado os valores avançados para o request
+				ramal.ramalToRequest(request);
+				
+				request.setAttribute("atividade", "inserir");
 				request.setAttribute("tarefa", "Inserir");
 				request.setAttribute("btnSubmit", "Inserir");
 			}
 		} catch (Exception e) {
 			error = e.getMessage();
 			e.printStackTrace();
-		} finally {
+		}finally{
 			request.setAttribute("feedback", feedback);
 			request.setAttribute("error", error);
-			getServletContext().getRequestDispatcher(forward).forward(request,
-					response);
+			getServletContext().getRequestDispatcher(forward).forward(request,response); 
 		}
 	}
 
