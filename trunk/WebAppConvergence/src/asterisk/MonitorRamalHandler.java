@@ -39,8 +39,8 @@ public class MonitorRamalHandler {
 		List<String> list = socket.receiveMessage();
 
 		socket.sendMessage("Action: reload\r\n\r\n");
-		
-		//o serviço demora mais de 500ms para dar reload
+
+		// o serviço demora mais de 500ms para dar reload
 
 		socket.delay(1000);
 
@@ -57,7 +57,7 @@ public class MonitorRamalHandler {
 		String name = "";
 		String host = "";
 		String dyn = "";
-		String forceport = "";
+		String forcerport = "";
 		String acl = "";
 		int port = 0;
 		String status = "";
@@ -72,7 +72,7 @@ public class MonitorRamalHandler {
 			} else if (messages[0].contains("Dynamic")) {
 				dyn = messages[1];
 			} else if (messages[0].contains("Forcerport")) {
-				forceport = messages[1];
+				forcerport = messages[1];
 			} else if (messages[0].contains("ACL")) {
 				acl = messages[1];
 			} else if (messages[0].contains("Status")) {
@@ -80,7 +80,7 @@ public class MonitorRamalHandler {
 
 			} else if (messages[0].contains("RealtimeDevice")) {
 				MonitorRamalSip mr = new MonitorRamalSip(name, host, dyn,
-						forceport, acl, port, status);
+						forcerport, acl, port, status);
 				ramaisSip.add(mr);
 			}
 		}
@@ -110,6 +110,7 @@ public class MonitorRamalHandler {
 
 		socket.sendMessage("Action: reload\r\n\r\n");
 
+		// o serviço demora mais de 500ms para dar reload
 		socket.delay(1000);
 
 		list = socket.receiveMessage();
@@ -145,8 +146,6 @@ public class MonitorRamalHandler {
 				MonitorRamalIAX mr = new MonitorRamalIAX(name, host, dyn, mask,
 						port, status);
 				ramaisIAX.add(mr);
-			} else if (messages[0].contains("RealtimeDevice")) {
-
 			}
 		}
 
