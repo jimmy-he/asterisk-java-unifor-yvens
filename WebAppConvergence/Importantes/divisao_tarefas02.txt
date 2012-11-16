@@ -1,0 +1,12 @@
+    Aplicação deverá permitir o usuário inserir endereço IP e porta de conexão do Servidor de Telefonia IP. Ex: IP 10.255.0.101 Porta – 22
+    Aplicação deve permitir a configuração de Ramais SIP
+    Aplicação deve permitir a configuração de Ramais IAX
+    Aplicação deve permitir a configuração de Plano de Discagem
+    Aplicação deve permitir a configuração de Filas de Atendimento
+    Aplicação deve permitir a configuração de Agentes de Atendimento
+    Aplicação deve permitir a configuração de Salas de Conferência
+    Aplicação deve permitir o Monitoramento de Ramais
+
+Cara, as tarefas 1,2 e 3 já estão concluídas ou praticamente no fim.
+Eu acho que tu deveria ficar com a 8 que, para mim, é tu realizar um comando de show sip users / show iax users e mostrar para o usuário. Vou inserir essa opção no menu e vou fazer as telas, tu só vai precisar preencher com os valores vindo do servlet.
+Eu vou ver essa chibata da tarefa 4.

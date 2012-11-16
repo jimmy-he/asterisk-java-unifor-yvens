@@ -25,7 +25,7 @@
 				<div class="header_menu">
 					<ul>
 						<li>
-							<a id="servidor_opcoes" href="ServidorOpcoesServlet"> Opções </a>
+							<a id="servidor_opcoes" href="ServidorOpcoesServlet"> Informações </a>
 						</li>
 					</ul>
 				</div>
@@ -36,6 +36,9 @@
 				</a>
 				<div class="header_menu">
 					<ul>
+						<li>
+							<a id="monitorRamais" href="RamalMonitorServlet"> Monitoramento </a>
+						</li>
 						<li class="header_menu_grouper">
 							SIP
 						</li>
@@ -59,18 +62,12 @@
 			</div>
 			<div class="header_item"> 
 				<a id="Dolor" href="#">
-					Dolor
+					Discagem
 				</a>
 				<div class="header_menu">
 					<ul>
 						<li>
-							<a id="Lorem" href="#"> Link </a>
-						</li>
-						<li>
-							Consectetur
-						</li>
-						<li>
-							Adipiscing
+							<a id="planoDiscagem" href="TableRamalIAXServlet"> Planos de Discagem </a>
 						</li>
 					</ul>
 				</div>

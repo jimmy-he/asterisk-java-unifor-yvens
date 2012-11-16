@@ -13,6 +13,10 @@ public class SipConfigException extends Exception {
 	private static final long serialVersionUID = -1985940370669325224L;
 
 	public SipConfigException(){
-		super("Arquivo de sip.conf está vazio!");
+		this("Arquivo de sip.conf está vazio!");
+	}
+	
+	public SipConfigException(String message){
+		super(message);
 	}
 }
