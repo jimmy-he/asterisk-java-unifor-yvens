@@ -59,14 +59,14 @@ public class CrudRamalSipServlet extends HttpServlet {
 				forward = "/TableRamalSipServlet";
 			}
 			else if(request.getParameter("atividade") != null && request.getParameter("atividade").equals("alteracao")){
-				//Redirecionamento para a página de inserção, mas com os campso já preenchidos
+				//Redirecionamento para a página de inserção, mas com os campos já preenchidos
 				String tag = request.getParameter("tag");
 				RamalSip ramal = handler.getRamal(tag);
 				
 				ramal.ramalToRequest(request);
 				
 				request.setAttribute("atividade", "alterar");
-				request.setAttribute("tarefa", "Alterar");
+				request.setAttribute("tarefa", "Alterar Ramal SIP");
 				request.setAttribute("btnSubmit", "Alterar");
 			}
 			else if(request.getParameter("atividade") != null && request.getParameter("atividade").equals("alterar")){
@@ -94,7 +94,7 @@ public class CrudRamalSipServlet extends HttpServlet {
 				ramal.ramalToRequest(request);
 				
 				request.setAttribute("atividade", "inserir");
-				request.setAttribute("tarefa", "Inserir");
+				request.setAttribute("tarefa", "Inserir Ramal SIP");
 				request.setAttribute("btnSubmit", "Inserir");
 			}
 		} catch (Exception e) {
