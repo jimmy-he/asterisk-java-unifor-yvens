@@ -1,32 +1,31 @@
 package model;
 
 /**
- * Classe para representar o ramal dos comandos de show peers
- * @author yvens
- *
+ * Classe para representar o ramal dos comandos de iax2 show peers
+ * 
+ * @author daniel
+ * 
  */
-public class MonitorRamal {
 
+public class MonitorRamalIAX {
 	private String name;
 	private String host;
 	private String dyn;
-	private String forceport;
-	private String acl;
+	private String mask;
 	private int port;
 	private String status;
-	
-	public MonitorRamal(){
-		this("","","","","",0,"");
+
+	public MonitorRamalIAX() {
+		this("", "", "", "", 0, "");
 	}
-	
-	public MonitorRamal(String name, String host, String dyn,
-			String forceport, String acl, int port, String status) {
+
+	public MonitorRamalIAX(String name, String host, String dyn, String mask,
+			int port, String status) {
 		super();
 		this.name = name;
 		this.host = host;
 		this.dyn = dyn;
-		this.forceport = forceport;
-		this.acl = acl;
+		this.mask = mask;
 		this.port = port;
 		this.status = status;
 	}
@@ -55,20 +54,12 @@ public class MonitorRamal {
 		this.dyn = dyn;
 	}
 
-	public String getForceport() {
-		return forceport;
+	public String getMask() {
+		return mask;
 	}
 
-	public void setForceport(String forceport) {
-		this.forceport = forceport;
-	}
-
-	public String getAcl() {
-		return acl;
-	}
-
-	public void setAcl(String acl) {
-		this.acl = acl;
+	public void setMask(String mask) {
+		this.mask = mask;
 	}
 
 	public int getPort() {
