@@ -15,6 +15,10 @@ public class IAXConfigException extends Exception {
 	private static final long serialVersionUID = -1985940370669325224L;
 
 	public IAXConfigException() {
-		super("Arquivo de iax.conf está vazio!");
+		this("Arquivo de iax.conf está vazio!");
+	}
+	
+	public IAXConfigException(String message){
+		super(message);
 	}
 }

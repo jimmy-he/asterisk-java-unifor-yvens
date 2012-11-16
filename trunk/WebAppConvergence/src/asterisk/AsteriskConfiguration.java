@@ -15,6 +15,9 @@ public class AsteriskConfiguration {
 	//Path do arquivo iax.conf
 	public static final String IAX_CONFIG_PATH = "/etc/asterisk/iax.conf";
 
+	//Path do arquivo extensions.conf
+	public static final String EXTENSIONS_CONFIG_PATH = "/etc/asterisk/extensions.conf";
+	
 	//IP de conexão com o servidor do asterisk
 	public static final String ASTERISK_IP = "127.0.0.1";
 	
