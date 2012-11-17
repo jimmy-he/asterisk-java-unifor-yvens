@@ -254,6 +254,10 @@ public class FileHandler {
 			}
 			else
 			{
+				System.out.println(newFile.length);
+				System.out.println(i);
+				System.out.println(end);
+				System.out.println("..");
 				newFile[i - end] = file[i + end];	
 			}
 		}

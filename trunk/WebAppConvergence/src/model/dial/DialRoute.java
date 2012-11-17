@@ -34,10 +34,54 @@ public class DialRoute implements Comparable<DialRoute>{
 	 * @param command
 	 */
 	public void addCommand(DialCommand command){
+		boolean reorder = false;
+		for(DialCommand dialCommand : listCommands){
+			if(reorder){
+				dialCommand.incrementOrder();
+			}
+			if(dialCommand.getOrder() == command.getOrder()){
+				reorder = true;
+				dialCommand.incrementOrder();
+			}
+		}
+		
 		listCommands.add(command);
 		Collections.sort(listCommands);
 	}
-
+	
+	public void removeCommand(DialCommand command){
+		boolean reorder = false;
+		for(DialCommand dialCommand : listCommands){
+			if(reorder){
+				dialCommand.decrementOrder();
+			}
+			if(dialCommand.getOrder() == command.getOrder()){
+				reorder = true;
+				dialCommand.decrementOrder();
+			}
+		}
+		
+		listCommands.remove(command);
+		Collections.sort(listCommands);
+		
+		//Pega o primeiro comando da lista para verifica se sua ordem é 1
+		command = listCommands.get(0);
+		
+		//Caso não seja 1, ele é substituído para 1
+		if(command.getOrder() != 1){
+			command.setOrder(1);
+		}
+	}
+	
+	public boolean containsCommand(DialCommand command){
+		for(DialCommand dialCommand : listCommands){
+			if(dialCommand.equals(command)){
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public String getIdentifier() {
 		return identifier;
 	}
@@ -76,5 +120,33 @@ public class DialRoute implements Comparable<DialRoute>{
 	public int compareTo(DialRoute o) {
 		return o.getIdentifier().compareTo(this.getIdentifier());
 	}
-	
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((identifier == null) ? 0 : identifier.hashCode());
+		return result;
+	}
+
+	@Override
+	/**
+	 * Compara os valores do identifier 
+	 */
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DialRoute other = (DialRoute) obj;
+		if (identifier == null) {
+			if (other.identifier != null)
+				return false;
+		} else if (!identifier.equals(other.identifier))
+			return false;
+		return true;
+	}
 }
