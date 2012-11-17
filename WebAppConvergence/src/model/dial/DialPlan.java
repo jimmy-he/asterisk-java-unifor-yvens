@@ -42,6 +42,20 @@ public class DialPlan implements Comparable<DialPlan>{
 		Collections.sort(routeList);
 	}
 	
+	public void removeRoute(DialRoute route){
+		routeList.remove(route);
+		Collections.sort(routeList);
+	}
+	
+	public boolean containsRoute(DialRoute route){
+		for(DialRoute dialRoute : routeList){
+			if(dialRoute.equals(route)){
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public String getTag() {
 		return tag;
 	}
@@ -69,8 +83,10 @@ public class DialPlan implements Comparable<DialPlan>{
 			}
 		}
 		
-		String[] dialPlan = new String[dialPlanList.size()];
-		for (int i = 0; i < dialPlan.length; i++) {
+		String[] dialPlan = new String[dialPlanList.size()+1];
+		dialPlan[0] = "["+tag+"]";
+		
+		for (int i = 1; i < dialPlan.length - 1; i++) {
 			dialPlan[i] = dialPlanList.get(i);
 		}
 		
@@ -84,4 +100,33 @@ public class DialPlan implements Comparable<DialPlan>{
 	public int compareTo(DialPlan o) {
 		return o.getTag().compareTo(this.getTag());
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((tag == null) ? 0 : tag.hashCode());
+		return result;
+	}
+
+	@Override
+	/**
+	 * Compara os valores da tag
+	 */
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DialPlan other = (DialPlan) obj;
+		if (tag == null) {
+			if (other.tag != null)
+				return false;
+		} else if (!tag.equals(other.tag))
+			return false;
+		return true;
+	}
+	
 }
