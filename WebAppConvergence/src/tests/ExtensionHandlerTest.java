@@ -26,7 +26,9 @@ public class ExtensionHandlerTest {
 	@Before
 	public void setUp() {
 		DialCommand dialCommand = new DialCommand(1, "Answer()");
-		command = new DialCommand(3, "Answer()");
+		
+		//não é para adicionar um comando que já existe no plano de discagem
+		command = new DialCommand(3, "Troço()");
 		
 		DialRoute dialRoute = new DialRoute("*444");
 		dialRoute.addCommand(dialCommand);
@@ -152,13 +154,18 @@ public class ExtensionHandlerTest {
 		
 		list = handler.listDialPlan();
 		
-		boolean existe = true;
+		boolean existe = false;
 		for(DialPlan dialPlan : list){
 			if(dialPlan.equals(plan)){
 				routeList = dialPlan.getRouteList();
 				
 				for(DialRoute dialRouteList : routeList){
-					existe = dialRouteList.containsCommand(command);
+					if (dialRouteList.containsCommand(command)){
+						//se foi adicionado corretamente, ele existirá 
+						existe = true;
+						break;
+					}
+					
 				}
 			}
 		}
@@ -172,13 +179,17 @@ public class ExtensionHandlerTest {
 		
 		list = handler.listDialPlan();
 		
-		existe = true;
+		existe = false;
 		for(DialPlan dialPlan : list){
 			if(dialPlan.equals(plan)){
 				routeList = dialPlan.getRouteList();
 				
 				for(DialRoute dialRouteList : routeList){
-					existe = dialRouteList.containsCommand(command);
+					if (dialRouteList.containsCommand(command)){
+						//se foi deletado corretamente, ele nunca entrará aqui 
+						existe = true;
+						break;
+					}
 				}
 			}
 		}
