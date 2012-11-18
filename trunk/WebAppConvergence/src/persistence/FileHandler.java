@@ -206,11 +206,7 @@ public class FileHandler {
 			{
 				newFile[i] = file[i];
 			}
-			else if(i == line)
-			{
-				continue;
-			}
-			else
+			else if(i > line)
 			{
 				newFile[i - 1] = file[i];	
 			}
@@ -248,17 +244,10 @@ public class FileHandler {
 			{
 				newFile[i] = file[i];
 			}
-			else if(i <= begin + end)
+			else if(i > end)
 			{
-				continue;
-			}
-			else
-			{
-				System.out.println(newFile.length);
-				System.out.println(i);
-				System.out.println(end);
-				System.out.println("..");
-				newFile[i - end] = file[i + end];	
+				
+				newFile[i - (end - begin - 1)] = file[i];	
 			}
 		}
 		
