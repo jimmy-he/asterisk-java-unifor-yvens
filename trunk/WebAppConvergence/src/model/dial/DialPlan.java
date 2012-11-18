@@ -86,8 +86,9 @@ public class DialPlan implements Comparable<DialPlan>{
 		String[] dialPlan = new String[dialPlanList.size()+1];
 		dialPlan[0] = "["+tag+"]";
 		
-		for (int i = 1; i < dialPlan.length - 1; i++) {
-			dialPlan[i] = dialPlanList.get(i);
+		for (int i = 1; i < dialPlan.length; i++) {
+			//dialPlanList tem 1 elemento a menos que o vetor dialPlan
+			dialPlan[i] = dialPlanList.get(i-1);
 		}
 		
 		return dialPlan;
