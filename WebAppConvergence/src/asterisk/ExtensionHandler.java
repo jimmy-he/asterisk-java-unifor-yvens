@@ -69,10 +69,10 @@ public class ExtensionHandler {
 				}
 			}
 			
-			// Gera as linhas que devem ser adicionadas ao sip.conf
+			// Gera as linhas que devem ser adicionadas ao extensions.conf
 			String[] dialPlan = dial.toDialPlan();
 			
-			// Escreve as linhas no arquivo sip.conf
+			// Escreve as linhas no arquivo extensions.conf
 			fileHandler.writeOnFile(extensionsFile, dialPlan, extensionsFile.length);
 			
 			mutex.release();
@@ -125,9 +125,10 @@ public class ExtensionHandler {
 					dialFound = true;
 				}
 				i++;
+				
 			}
 			
-			// Apagado o ramal do arquivo sip.conf
+			// Apagado o ramal do arquivo extensions.conf
 			fileHandler.deleteLineOnFile(extensionsFile, begin, end);
 			
 			// Atualiza o arquivo extensions.conf
@@ -135,7 +136,7 @@ public class ExtensionHandler {
 			
 			String[] dialPlan = dial.toDialPlan();
 			
-			// Escreve as linhas no arquivo sip.conf
+			// Escreve as linhas no arquivo extensions.conf
 			fileHandler.writeOnFile(extensionsFile, dialPlan, extensionsFile.length);
 			
 			mutex.release();
@@ -188,7 +189,7 @@ public class ExtensionHandler {
 				i++;
 			}
 			
-			// Apagado o ramal do arquivo sip.conf
+			// Apagado o ramal do arquivo extensions.conf
 			fileHandler.deleteLineOnFile(extensionsFile, begin, end);
 			mutex.release();
 			return true;
@@ -228,11 +229,12 @@ public class ExtensionHandler {
 					String line = extensionsFile[i].trim();
 					
 					//Para remover o "exten=>"
-					line = line.substring(9);
+					line = line.substring(9);			
 					
-					String[] parameters = line.split(",");
+					//Não pode dar split ilimitado pois pode haver vírgulas dentro de um comando
+					String[] parameters = line.split(",",3);
 					
-					//Primeiro indice
+					//Primeiro índice
 					String identifier = parameters[0];
 					
 					dialRoute = new DialRoute(identifier);
@@ -256,7 +258,7 @@ public class ExtensionHandler {
 							//Para remover o "exten=>"
 							line = line.substring(9);
 							
-							parameters = line.split(",");
+							parameters = line.split(",",3);
 						}
 					}while(!line.isEmpty() && line.length() > 9 && parameters[0].equals(identifier));
 					
