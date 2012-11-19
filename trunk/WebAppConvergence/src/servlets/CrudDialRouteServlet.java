@@ -1,7 +1,6 @@
 package servlets;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,24 +8,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import model.dial.DialPlan;
+import model.dial.DialRoute;
 import asterisk.ExtensionHandler;
 
 /**
- * Servlet responsável pelo CRUD dos planos de discagem
+ * Servlet responsável pelo CRUD das rotas de discagem
  * 
  * @author yvens
  *
  */
-@WebServlet("/CrudDialPlanServlet")
-public class CrudDialPlanServlet extends HttpServlet {
+@WebServlet("/CrudDialRouteServlet")
+public class CrudDialRouteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CrudDialPlanServlet() {
+    public CrudDialRouteServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -43,33 +42,38 @@ public class CrudDialPlanServlet extends HttpServlet {
 		String error = "";
 		String feedback = "";
 		
-		String forward = "/Pages/Application/crudDialPlan.jsp";
+		String forward = "/Pages/Application/crudDialRoute.jsp";
+		
+		//Tag do DialPlan na qual o DialRoute pertence
+		String tag = request.getParameter("tag");
 		try {
 			ExtensionHandler handler = new ExtensionHandler();
 			
 			if(request.getParameter("atividade") != null && request.getParameter("atividade").equals("inserir")){
 				//Caso seja realizada uma inserção de ramal
-				DialPlan dialPlan = DialPlan.getDialPlanFromParameter(request);
+				DialRoute dialRoute = DialRoute.getDialPlanFromParameter(request);
 				
 				//TODO remover
-				System.out.println(dialPlan.toString());
+				System.out.println(dialRoute.toString());
 				
-				handler.insertDialPlan(dialPlan);
+				DialPlan dialPlan = handler.getDialPlan(tag);
+				dialPlan.addRoute(dialRoute);
+				handler.updateDialPlan(dialPlan);
 				
-				feedback = "Plano de discagem "+dialPlan.getTag()+" adicionado com sucesso!";
+				feedback = "Rota de discagem "+dialRoute.getIdentifier()+" adicionado com sucesso!";
 				
-				forward = "/ListDialPlanServlet";
+				forward = "/ListDialRouteServlet";
 			}else{
 				//Else caso não seja nenhum dos três comando dos CRUD
 				
 				//Instanciado um plano de discagem apenas com os valores para os campos avançados
-				DialPlan dialPlan = new DialPlan("");
+				DialRoute dialRoute = new DialRoute("");
 				
 				//Setado os valores avançados para o request
-				dialPlan.dialPlanToRequest(request);
+				dialRoute.dialRouteToRequest(request);
 				
 				request.setAttribute("atividade", "inserir");
-				request.setAttribute("tarefa", "Inserir Plano de Discagem");
+				request.setAttribute("tarefa", "Inserir Rota de Discagem");
 				request.setAttribute("btnSubmit", "Inserir");
 			}
 		} catch (Exception e) {
@@ -78,6 +82,7 @@ public class CrudDialPlanServlet extends HttpServlet {
 		}finally{
 			request.setAttribute("feedback", feedback);
 			request.setAttribute("error", error);
+			request.setAttribute("tag", tag);
 			getServletContext().getRequestDispatcher(forward).forward(request,response); 
 		}
 	}
