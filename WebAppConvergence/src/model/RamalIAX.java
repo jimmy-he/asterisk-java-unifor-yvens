@@ -40,7 +40,6 @@ public class RamalIAX {
 	 * @param tag
 	 * @param callerId
 	 * @param defaultUser
-	 *            ;
 	 * @param secret
 	 */
 	public RamalIAX(String tag, String callerId, String defaultUser,

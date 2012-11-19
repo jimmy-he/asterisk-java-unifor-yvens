@@ -74,12 +74,15 @@ public class CrudDialPlanServlet extends HttpServlet {
 			else if(request.getParameter("atividade") != null && request.getParameter("atividade").equals("alterar")){
 				//Caso seja realizada uma alteração em um plano de discagem já existente
 				DialPlan dialPlan = DialPlan.getDialPlanFromParameter(request);
-				handler.updateDialPlan(dialPlan);
+				//Ele vai atualizar o plano com a tag anterior
+				String previousTag = request.getParameter("previousTag");				
+				handler.updateDialPlan(dialPlan,previousTag);
 				feedback = "Plano de discagem "+dialPlan.getTag()+" alterado com sucesso!";
+				request.setAttribute("feedback", feedback);
 				
 				forward = "/ListDialPlanServlet";
 			}else{
-				//Else caso não seja nenhum dos três comando dos CRUD
+				//Else caso não seja nenhum dos três comandos dos CRUD
 				
 				//Instanciado um plano de discagem apenas com os valores para os campos avançados
 				DialPlan dialPlan = new DialPlan("");
