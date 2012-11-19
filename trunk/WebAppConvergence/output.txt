@@ -9,4 +9,8 @@ confbridge -> dentro do extensions.conf para criar sala de conferência
 
 manha para editar o arquivo -> deixar em aberto para o usuário mexer nos arquivos; dar um help dos comandos
 
-adicionar a opção de voltar nas telas do plano de discagem
+adicionar a opção de voltar nas telas do plano de discagem (Yvens)
+
+fazer a tela de help na tela de inserção dos comandos (Yvens)
+
+falta carregar o combobox de contexto nas telas de ramal sip/iax com os valores dos planos de discagem (Daniel)
