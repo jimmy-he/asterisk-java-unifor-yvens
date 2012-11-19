@@ -30,6 +30,7 @@
 				<tr>
 					<td class="left">Tag</td>
 					<td class="right"><input name="tag" type="text" value="${tag}">
+					<input name="previousTag" type="hidden" value="${tag}">
 					</td>
 				</tr>
 			</table>

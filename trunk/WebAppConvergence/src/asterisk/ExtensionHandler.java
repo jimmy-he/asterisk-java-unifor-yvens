@@ -97,7 +97,9 @@ public class ExtensionHandler {
 	 * 
 	 * @throws IOException
 	 */
-	public boolean updateDialPlan(DialPlan dial) throws IOException {
+	public boolean updateDialPlan(DialPlan dial, String previousTag) throws IOException {
+		
+	//Caso você altere o nome do plano, você precisa saber qual era a tag anterior
 		if (mutex.tryAcquire()) {
 
 			// Lê o arquivo extensions.conf
@@ -113,11 +115,11 @@ public class ExtensionHandler {
 				// Procuramos pela linha que contenha a tag do dial desejado
 				// E pegamos a posição inicial do ramal e a linha em que ele
 				// termina
-				if (extensionsFile[i].equals("[" + dial.getTag() + "]")) {
+				if (extensionsFile[i].equals("[" + previousTag + "]")) {
 					begin = i;
 					i++;
 					while (i < extensionsFile.length) {
-						if (extensionsFile[i].equals("") == false) {
+						if (!extensionsFile[i].equals("")) {
 							if (extensionsFile[i].charAt(0) == '[') {
 								break;
 							}
@@ -134,7 +136,7 @@ public class ExtensionHandler {
 				}
 				i++;
 
-			}			
+			}				
 
 			// Apagado o ramal do arquivo extensions.conf
 			fileHandler.deleteLineOnFile(extensionsFile, begin, end);
@@ -162,9 +164,9 @@ public class ExtensionHandler {
 	 * @return retorna verdadeiro caso consiga realizar a inserção, e falso caso
 	 *         alguma outra instância esteja acessando e modificando o arquivo
 	 *         no momento, assim, evitando conflito entre os arquivos
-	 * @throws InterruptedException
+	 * 
 	 * @throws IOException
-	 * @throws SipConfigException
+	 * 
 	 */
 	public boolean deleteDialPlan(DialPlan dial) throws IOException {
 		if (mutex.tryAcquire()) {
@@ -186,7 +188,7 @@ public class ExtensionHandler {
 					begin = i;
 					i++;
 					while (i < extensionsFile.length) {
-						if (extensionsFile[i].equals("") == false) {
+						if (!extensionsFile[i].equals("")) {
 							if (extensionsFile[i].charAt(0) == '[') {
 								break;
 							}
@@ -203,7 +205,7 @@ public class ExtensionHandler {
 				}
 				i++;
 			}
-			
+
 			// Apagado o ramal do arquivo extensions.conf
 			fileHandler.deleteLineOnFile(extensionsFile, begin, end);
 			mutex.release();
@@ -293,22 +295,24 @@ public class ExtensionHandler {
 
 		return listDialPlan;
 	}
-	
-	public DialPlan getDialPlan(String tag) throws IOException, ExtensionsConfigException{
+
+	public DialPlan getDialPlan(String tag) throws IOException,
+			ExtensionsConfigException {
 		List<DialPlan> list = listDialPlan();
-		
+
 		DialPlan dialPlan = null;
-		
+
 		for (DialPlan plan : list) {
-			if(plan.getTag().equals(tag)){
+			if (plan.getTag().equals(tag)) {
 				dialPlan = plan;
 			}
 		}
-		
-		if(dialPlan == null){
-			throw new ExtensionsConfigException("Erro! Plano de Discagem não encontrado!");
+
+		if (dialPlan == null) {
+			throw new ExtensionsConfigException(
+					"Erro! Plano de Discagem não encontrado!");
 		}
-		
+
 		return dialPlan;
 	}
 

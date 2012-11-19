@@ -56,6 +56,11 @@ public class ListDialPlanServlet extends HttpServlet {
 				}
 			}
 			
+			//Preenchendo o feedback de alteração de plano
+			if (request.getAttribute("feedback") != null){				
+				feedback = (String) request.getAttribute("feedback");
+			}
+			
 			List<DialPlan> list = handler.listDialPlan();
 			
 			request.setAttribute("list", list);

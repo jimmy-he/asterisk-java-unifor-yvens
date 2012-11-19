@@ -41,7 +41,7 @@ public class ExtensionHandlerTest {
     }
 	
 	@Test
-	public void TestReadingLocalSipConf() throws IOException, ExtensionsConfigException{
+	public void TestReadingLocalExtensionsConf() throws IOException, ExtensionsConfigException{
 		//Essa verificação é default e também serve para verificar exceptions lançadas 
 		//durante a execução do construtor
 		ExtensionHandler handler = new ExtensionHandler(extensions_conf);
@@ -51,7 +51,7 @@ public class ExtensionHandlerTest {
 	}
 	
 	@Test
-	public void TestReadingRealSipConf() throws IOException, ExtensionsConfigException{
+	public void TestReadingRealExtensionsConf() throws IOException, ExtensionsConfigException{
 		//Essa verificação é default e também serve para verificar exceptions lançadas 
 		//durante a execução do construtor
 		ExtensionHandler handler = new ExtensionHandler();
@@ -103,7 +103,7 @@ public class ExtensionHandlerTest {
 		plan.addRoute(route);
 		
 		//Atualiza o plano na lista
-		handler.updateDialPlan(plan);
+		handler.updateDialPlan(plan,plan.getTag());
 		
 		list = handler.listDialPlan();
 		
@@ -119,7 +119,7 @@ public class ExtensionHandlerTest {
 		plan.removeRoute(route);
 		
 		//Atualiza o plano na lista
-		handler.updateDialPlan(plan);
+		handler.updateDialPlan(plan,plan.getTag());
 		
 		list = handler.listDialPlan();
 		
@@ -150,7 +150,7 @@ public class ExtensionHandlerTest {
 		dialRoute.addCommand(command);
 		
 		//Atualiza o plano na lista
-		handler.updateDialPlan(plan);
+		handler.updateDialPlan(plan,plan.getTag());
 		
 		list = handler.listDialPlan();
 		
@@ -175,7 +175,7 @@ public class ExtensionHandlerTest {
 		dialRoute.removeCommand(command);
 		
 		//Atualiza o plano na lista
-		handler.updateDialPlan(plan);
+		handler.updateDialPlan(plan,plan.getTag());
 		
 		list = handler.listDialPlan();
 		
