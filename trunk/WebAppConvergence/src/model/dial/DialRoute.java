@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import exception.ExtensionsConfigException;
+
 /**
  * Classe para representar uma rota do plano de discagem
  * Uma rota possui diversos comandos que retratam o procedimento da rota
@@ -63,7 +65,8 @@ public class DialRoute implements Comparable<DialRoute>{
 			}
 		}
 		
-		listCommands.remove(command);
+		removeCommand(command.getId());
+		
 		Collections.sort(listCommands);
 		
 		//Pega o primeiro comando da lista para verifica se sua ordem é 1
@@ -75,6 +78,21 @@ public class DialRoute implements Comparable<DialRoute>{
 		}
 	}
 	
+	/**
+	 * Remove o comando da lista que possua id igual ao passado
+	 * @param id
+	 */
+	private void removeCommand(int id){
+		DialCommand dialCommand = null;
+		for(DialCommand command : listCommands){
+			if(command.getId() == id){
+				dialCommand = command;
+			}
+		}
+		
+		listCommands.remove(dialCommand);
+	}
+	
 	public boolean containsCommand(DialCommand command){
 		for(DialCommand dialCommand : listCommands){
 			if(dialCommand.equals(command)){
@@ -82,6 +100,29 @@ public class DialRoute implements Comparable<DialRoute>{
 			}
 		}
 		return false;
+	}
+	
+	/**
+	 * Método para buscar um DialCommand pelo id na lista de comandos
+	 * 
+	 * @param id
+	 * @return
+	 * @throws ExtensionsConfigException
+	 */
+	public DialCommand getCommand(int id) throws ExtensionsConfigException{
+		DialCommand command = null;
+		
+		for(DialCommand dialCommand : listCommands){
+			if(dialCommand.getId() == id){
+				command = dialCommand;
+			}
+		}
+		
+		if(command == null){
+			throw new ExtensionsConfigException("Erro! Comando não encontrado!");
+		}
+		
+		return command;
 	}
 	
 	public String getIdentifier() {

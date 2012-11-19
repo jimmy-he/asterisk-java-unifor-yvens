@@ -1,5 +1,7 @@
 package model.dial;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * Classe que representa os comandos de uma rota do plano de discagem
  * 
@@ -64,6 +66,45 @@ public class DialCommand implements Comparable<DialCommand>{
 		this.command = command;
 	}
 
+	/**
+	 * Método para buscar os atributos de um ramal sip que está no request
+	 * e retornar o objeto ramal sip
+	 * 
+	 * @param request
+	 * @return o objeto ramalSip que está nos parâmetros do request
+	 */
+	public static DialCommand getDialCommandFromParameter(HttpServletRequest request){
+		DialCommand dialCommand = null;
+		
+		int id = 0;
+		int order = 0;
+		String command = "";
+		
+		if(request.getParameter("id") != null){
+			id = Integer.parseInt(request.getParameter("id"));
+		}
+		if(request.getParameter("order") != null){
+			order = Integer.parseInt(request.getParameter("order"));
+		}
+		if(request.getParameter("command") != null){
+			command = request.getParameter("command");
+		}
+
+		dialCommand = new DialCommand(id, order, command);
+		return dialCommand;
+	}
+	
+	/**
+	 * Método para setar os valores do ramal atual no request
+	 * 
+	 * @param request
+	 */
+	public void dialCommandToRequest(HttpServletRequest request){
+		request.setAttribute("id", id);
+		request.setAttribute("order", order);
+		request.setAttribute("command", command);
+	}
+	
 	@Override
 	/**
 	 * Método para escrever o dialcommand como uma String
