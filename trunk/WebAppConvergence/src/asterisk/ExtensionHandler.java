@@ -293,6 +293,24 @@ public class ExtensionHandler {
 
 		return listDialPlan;
 	}
+	
+	public DialPlan getDialPlan(String tag) throws IOException, ExtensionsConfigException{
+		List<DialPlan> list = listDialPlan();
+		
+		DialPlan dialPlan = null;
+		
+		for (DialPlan plan : list) {
+			if(plan.getTag().equals(tag)){
+				dialPlan = plan;
+			}
+		}
+		
+		if(dialPlan == null){
+			throw new ExtensionsConfigException("Erro! Plano de Discagem não encontrado!");
+		}
+		
+		return dialPlan;
+	}
 
 	/**
 	 * Método para fazer a verificação do PATH do extensions.conf passado

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * Classe para representar um plano de discagem
  * Um plano de discagem tem diferentes rotas
@@ -71,6 +73,16 @@ public class DialPlan implements Comparable<DialPlan>{
 	public void setRouteList(List<DialRoute> routeList) {
 		this.routeList = routeList;
 	}
+	
+	/**
+	 * Esse atributo é puramente virtual, serve para indicar o tamanho
+	 * da lista de rotas
+	 * 
+	 * @return routeList.size(); O tamanho da lista de rotas
+	 */
+	public int getRouteListSize(){
+		return routeList.size();
+	}
 
 	public String[] toDialPlan(){
 		List<String> dialPlanList = new ArrayList<String>();
@@ -92,6 +104,35 @@ public class DialPlan implements Comparable<DialPlan>{
 		}
 		
 		return dialPlan;
+	}
+	
+	/**
+	 * Método para buscar os atributos de um plano de discagem que está no request
+	 * e retornar o objeto plano de discagem
+	 * 
+	 * @param request
+	 * @return o objeto dialPlan que está nos parâmetros do request
+	 */
+	public static DialPlan getDialPlanFromParameter(HttpServletRequest request){
+		DialPlan plan = null;
+		
+		String tag = "";
+		
+		if(request.getParameter("tag") != null){
+			tag = request.getParameter("tag");
+		}
+		
+		plan = new DialPlan(tag);
+		return plan;
+	}
+	
+	/**
+	 * Método para setar os valores do plano de discagem no request
+	 * 
+	 * @param request
+	 */
+	public void dialPlanToRequest(HttpServletRequest request){
+		request.setAttribute("tag", tag);
 	}
 	
 	@Override

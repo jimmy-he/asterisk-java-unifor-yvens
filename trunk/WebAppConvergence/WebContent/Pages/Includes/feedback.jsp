@@ -1,4 +1,4 @@
-<div class="feedback">
+<div class="feedback" onclick="$(this).slideUp();">
 	<b>
 		${feedback}
 	</b>

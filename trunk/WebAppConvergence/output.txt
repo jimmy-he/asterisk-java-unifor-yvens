@@ -3,4 +3,4 @@
 
 confbridge -> dentro do extensions.conf para criar sala de conferência
 
-manhã para editar o arquivo -> deixar em aberto para o usuário mexer nos arquivos; dar um help dos comandos
+manha para editar o arquivo -> deixar em aberto para o usuário mexer nos arquivos; dar um help dos comandos
