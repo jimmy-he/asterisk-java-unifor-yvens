@@ -4,17 +4,22 @@ package model.dial;
  * Classe que representa os comandos de uma rota do plano de discagem
  * 
  * Exemplo:
- * exten => *35,1,Answer()                    <-- Order = 1; Command = Answer()  
+ * exten => *35,1,Answer()                    <-- Order = 1; Command = Answer()
+ * 
+ * O id serve como identificador para alterações
+ * 
  * @author yvens
  *
  */
 public class DialCommand implements Comparable<DialCommand>{
 
+	private int id;
 	private int order;
 	private String command;
 	
-	public DialCommand(int order, String command) {
+	public DialCommand(int id, int order, String command) {
 		super();
+		this.id = id;
 		this.order = order;
 		this.command = command;
 	}
@@ -35,6 +40,14 @@ public class DialCommand implements Comparable<DialCommand>{
 		this.order -= decrement;
 	}
 	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public int getOrder() {
 		return order;
 	}

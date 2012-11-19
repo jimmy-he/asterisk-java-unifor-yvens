@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * Classe para representar uma rota do plano de discagem
  * Uma rota possui diversos comandos que retratam o procedimento da rota
@@ -99,6 +101,16 @@ public class DialRoute implements Comparable<DialRoute>{
 	}
 
 	/**
+	 * Esse atributo é puramente virtual, serve para indicar o tamanho
+	 * da lista de comandos
+	 * 
+	 * @return listCommands.size(); O tamanho da lista de comandos
+	 */
+	public int getListCommandSize(){
+		return listCommands.size();
+	}
+	
+	/**
 	 * Método para transformar um dialRoute em um array de Strings
 	 * 
 	 * @return um array de strings com strings no formato: exten => identifier, command.toString()
@@ -111,6 +123,35 @@ public class DialRoute implements Comparable<DialRoute>{
 		}
 		
 		return dialRoute;
+	}
+	
+	/**
+	 * Método para buscar os atributos de uma rota de discagem que está no request
+	 * e retornar o objeto plano de discagem
+	 * 
+	 * @param request
+	 * @return o objeto dialRoute que está nos parâmetros do request
+	 */
+	public static DialRoute getDialPlanFromParameter(HttpServletRequest request){
+		DialRoute route = null;
+		
+		String identifier = "";
+		
+		if(request.getParameter("identifier") != null){
+			identifier = request.getParameter("identifier");
+		}
+		
+		route = new DialRoute(identifier);
+		return route;
+	}
+	
+	/**
+	 * Método para setar os valores do plano de discagem no request
+	 * 
+	 * @param request
+	 */
+	public void dialRouteToRequest(HttpServletRequest request){
+		request.setAttribute("identifier", identifier);
 	}
 	
 	@Override

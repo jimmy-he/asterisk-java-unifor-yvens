@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import exception.ExtensionsConfigException;
+
 /**
  * Classe para representar um plano de discagem
  * Um plano de discagem tem diferentes rotas
@@ -56,6 +58,22 @@ public class DialPlan implements Comparable<DialPlan>{
 			}
 		}
 		return false;
+	}
+	
+	public DialRoute getRoute(String identifier) throws ExtensionsConfigException{
+		DialRoute dialRoute = null;
+		
+		for(DialRoute route : routeList){
+			if(route.getIdentifier().equals(identifier)){
+				dialRoute = route;
+			}
+		}
+		
+		if(dialRoute == null){
+			throw new ExtensionsConfigException("Erro! Rota de identificador"+identifier+" não encontrada");
+		}
+		
+		return dialRoute;
 	}
 	
 	public String getTag() {

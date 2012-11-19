@@ -25,10 +25,10 @@ public class ExtensionHandlerTest {
 	
 	@Before
 	public void setUp() {
-		DialCommand dialCommand = new DialCommand(1, "Answer()");
+		DialCommand dialCommand = new DialCommand(1, 1, "Answer()");
 		
 		//não é para adicionar um comando que já existe no plano de discagem
-		command = new DialCommand(3, "Troço()");
+		command = new DialCommand(1, 3, "Troço()");
 		
 		DialRoute dialRoute = new DialRoute("*444");
 		dialRoute.addCommand(dialCommand);
@@ -103,7 +103,7 @@ public class ExtensionHandlerTest {
 		plan.addRoute(route);
 		
 		//Atualiza o plano na lista
-		handler.updateDialPlan(plan,plan.getTag());
+		handler.updateDialPlan(plan);
 		
 		list = handler.listDialPlan();
 		
@@ -119,7 +119,7 @@ public class ExtensionHandlerTest {
 		plan.removeRoute(route);
 		
 		//Atualiza o plano na lista
-		handler.updateDialPlan(plan,plan.getTag());
+		handler.updateDialPlan(plan);
 		
 		list = handler.listDialPlan();
 		
@@ -150,7 +150,7 @@ public class ExtensionHandlerTest {
 		dialRoute.addCommand(command);
 		
 		//Atualiza o plano na lista
-		handler.updateDialPlan(plan,plan.getTag());
+		handler.updateDialPlan(plan);
 		
 		list = handler.listDialPlan();
 		
@@ -175,7 +175,7 @@ public class ExtensionHandlerTest {
 		dialRoute.removeCommand(command);
 		
 		//Atualiza o plano na lista
-		handler.updateDialPlan(plan,plan.getTag());
+		handler.updateDialPlan(plan);
 		
 		list = handler.listDialPlan();
 		

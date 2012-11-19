@@ -1,0 +1,14 @@
+Cara, tava aqui fazendo o CRUD dos planos de discagem e relacionados, mas eu descobri que a gente praticamente só faz alteração nos identificadores, assim, não vou aprofundar muito, eu te explico melhor de tarde. A questão é que eu decidi que o usuário não vai poder fazer alterações no Plano de Discagem e nem na Rota de Discagem, ele só faz alterações nos comandos, o que já é bastante complexo.
+
+Vai ser mais ou menos assim:
+
+    Usuário vê a lista de planos de discagem
+    Ele pode clicar em detalhar para ver as rotas e em remover para apagar o plano
+    Usuário clica em detalhar para ver as rotas de determinado plano de discagem, digamos Local
+    Usuário vê a lista de rotas de discagem do plano Local
+    Ele pode clicar em detalhar para ver os comandos da rota e em remover para apagar a rota, também há, fora da tabela e embaixo da mesma, um botão para adicionar uma rota
+    Usuário clica em detalhar para ver os comandos da rota, digamos que a rota seja 666
+    Usuário vê a lista de comandos, ordenados pela ordem dos comandos (a variável order) e o comando. Cada comando terá um id para que seja possível fazer a alteração, esse campo será adicionado e não é visível ou alterável pelo usuário.
+    Ele pode clicar em alterar, remover e por último, fora da tabela exista um botão para adicionar mais um
+
+Farei assim.
