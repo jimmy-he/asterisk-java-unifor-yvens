@@ -67,7 +67,10 @@
 				<div class="header_menu">
 					<ul>
 						<li>
-							<a id="planoDiscagem" href="TableRamalIAXServlet"> Planos de Discagem </a>
+							<a id="planoDiscagem" href="CrudDialPlanServlet"> Adicionar </a>
+						</li>
+						<li>
+							<a id="planoDiscagem" href="ListDialPlanServlet"> Listar </a>
 						</li>
 					</ul>
 				</div>

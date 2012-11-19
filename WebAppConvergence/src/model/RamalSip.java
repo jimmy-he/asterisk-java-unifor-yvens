@@ -113,6 +113,13 @@ public class RamalSip {
 		return ramalSip;
 	}
 	
+	/**
+	 * Método para buscar os atributos de um ramal sip que está no request
+	 * e retornar o objeto ramal sip
+	 * 
+	 * @param request
+	 * @return o objeto ramalSip que está nos parâmetros do request
+	 */
 	public static RamalSip getRamalFromParameter(HttpServletRequest request){
 		RamalSip ramal = null;
 		
