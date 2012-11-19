@@ -1,0 +1,18 @@
+Nova divisão das tarefas:
+
+    Aplicação deverá permitir o usuário inserir endereço IP e porta de conexão do Servidor de Telefonia IP. Ex: IP 10.255.0.101 Porta – 22 - FEITO
+    Aplicação deve permitir a configuração de Ramais SIP - FEITO
+    Aplicação deve permitir a configuração de Ramais IAX - FEITO
+    Aplicação deve permitir a configuração de Plano de Discagem - FEITO
+    Aplicação deve permitir a configuração de Filas de Atendimento
+    Aplicação deve permitir a configuração de Agentes de Atendimento
+    Aplicação deve permitir a configuração de Salas de Conferência
+    Aplicação deve permitir o Monitoramento de Ramais - FEITO
+
+Sim, como nós combinamos em sala de aula, a tarefa 5 fica para mim e você fica com a tarefa 7.
+A tarefa 6 fica para depois dessas duas concluídas.
+Falta as adições de extras como:
+
+    Macro para os planos de discagem;
+    Liberar de alguma forma para que o usuário possa ver os arquivos e fazer modificações;
+    Adicionar as opções de voltar no plano de discagem;

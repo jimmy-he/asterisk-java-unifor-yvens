@@ -308,7 +308,7 @@ public class ExtensionHandler {
 		}
 		
 		if(dialPlan == null){
-			throw new ExtensionsConfigException("Erro! Plano de Discagem não encontrado!");
+			throw new ExtensionsConfigException("Erro! Plano de Discagem não encontrado!Tag = "+tag);
 		}
 		
 		return dialPlan;
