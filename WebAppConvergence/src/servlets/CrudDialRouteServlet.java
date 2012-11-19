@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.dial.DialCommand;
 import model.dial.DialPlan;
 import model.dial.DialRoute;
 import asterisk.ExtensionHandler;
@@ -46,6 +47,7 @@ public class CrudDialRouteServlet extends HttpServlet {
 		
 		//Tag do DialPlan na qual o DialRoute pertence
 		String tag = request.getParameter("tag");
+		
 		try {
 			ExtensionHandler handler = new ExtensionHandler();
 			
@@ -55,12 +57,20 @@ public class CrudDialRouteServlet extends HttpServlet {
 				
 				//TODO remover
 				System.out.println(dialRoute.toString());
+				System.out.println(dialRoute.getIdentifier());
+				
+				//Adição de um comando default
+				DialCommand dialCommand = new DialCommand(1, 1, "Answer()");
+				dialRoute.addCommand(dialCommand);
 				
 				DialPlan dialPlan = handler.getDialPlan(tag);
 				dialPlan.addRoute(dialRoute);
-				handler.updateDialPlan(dialPlan);
-				
-				feedback = "Rota de discagem "+dialRoute.getIdentifier()+" adicionado com sucesso!";
+				boolean update = handler.updateDialPlan(dialPlan);
+				if(update){
+					feedback = "Rota de discagem "+dialRoute.getIdentifier()+" adicionado com sucesso!";
+				}else{
+					error = "Erro! Algum outro usuário está fazendo modificações no sistema, tente novamente mais tarde.";
+				}
 				
 				forward = "/ListDialRouteServlet";
 			}else{

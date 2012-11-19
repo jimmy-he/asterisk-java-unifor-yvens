@@ -78,6 +78,7 @@ public class CrudDialCommandServlet extends HttpServlet {
 				
 				//ID do comando
 				int id = Integer.parseInt(request.getParameter("id"));
+				System.out.println(id);
 				
 				DialPlan dialPlan = handler.getDialPlan(tag);
 				DialRoute dialRoute = dialPlan.getRoute(identifier);
@@ -117,10 +118,14 @@ public class CrudDialCommandServlet extends HttpServlet {
 			}
 			else if(request.getParameter("atividade") != null && request.getParameter("atividade").equals("remocao")){
 				//Caso seja feita a remoção de um ramal já existente
-				DialCommand dialCommand = DialCommand.getDialCommandFromParameter(request);
+				int id = Integer.parseInt(request.getParameter("id"));
+				System.out.println(id);
 				
 				DialPlan dialPlan = handler.getDialPlan(tag);
 				DialRoute dialRoute = dialPlan.getRoute(identifier);
+				DialCommand dialCommand = dialRoute.getCommand(id);
+				
+				dialCommand.dialCommandToRequest(request);
 				
 				//TODO remover
 				System.out.println(dialCommand.toString());

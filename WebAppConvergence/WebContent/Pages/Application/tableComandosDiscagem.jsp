@@ -36,10 +36,10 @@
 						<c:out value="${dialCommand.command}"></c:out>
 					</td>
 					<td class="result">
-						<a href="CrudDialCommandServlet?tag=${tag}&identifier=${identifier}&alteracao=${dialCommand.id}">Alterar</a>
+						<a href="CrudDialCommandServlet?tag=${tag}&identifier=${identifier}&atividade=alteracao&id=${dialCommand.id}">Alterar</a>
 					</td>
 					<td class="result" style="border: none;">
-						<a href="ListDialCommandServlet?tag=${tag}&identifier=${identifier}&remover=${dialCommand.id}">Remover</a>
+						<a href="CrudDialCommandServlet?tag=${tag}&identifier=${identifier}&atividade=remocao&id=${dialCommand.id}">Remover</a>
 					</td>
 				</tr>
 			</c:forEach>

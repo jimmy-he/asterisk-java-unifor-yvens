@@ -25,7 +25,7 @@
 
 		<!-- Atributos que normalmente são modificados quando criamos um plano de discagem -->
 
-		<form method="post" action="CrudDialRouteServlet?tarefa=${btnSubmit}&atividade=${atividade}">
+		<form method="post" action="CrudDialRouteServlet?tarefa=${btnSubmit}&atividade=${atividade}&tag=${tag}">
 			<table id="main_table" cellspacing="0">
 				<tr>
 					<td class="left">Identificador</td>

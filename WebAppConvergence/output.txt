@@ -1,6 +1,12 @@
-[intro]texttexttext[intro2]
+[intro]
+text
+text
+text
+[intro2]
 
 
 confbridge -> dentro do extensions.conf para criar sala de conferência
 
 manha para editar o arquivo -> deixar em aberto para o usuário mexer nos arquivos; dar um help dos comandos
+
+adicionar a opção de voltar nas telas do plano de discagem

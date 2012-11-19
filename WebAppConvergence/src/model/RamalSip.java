@@ -36,7 +36,7 @@ public class RamalSip {
 	private String secret;
 	private boolean canReinvite;
 	private String host; 
-	private String context;
+	private String context; //TODO precisa ser carregado dos valores do extensions.conf
 	private String dtmfMode;
 	private String accountCode;
 	private int callLimit;
