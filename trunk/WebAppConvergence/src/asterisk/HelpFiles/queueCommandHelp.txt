@@ -1,0 +1,38 @@
+;[markq]
+;
+; A sample call queue
+;
+; Musicclass sets which music applies for this particular call queue.
+; The only class which can override this one is if the MOH class is set
+; directly on the channel using Set(CHANNEL(musicclass)=whatever) in the
+; dialplan.
+;
+;musicclass = default
+;
+; An announcement may be specified which is played for the member as
+; soon as they answer a call, typically to indicate to them which queue
+; this call should be answered as, so that agents or members who are
+; listening to more than one queue can differentiated how they should
+; engage the customer
+;
+;announce = queue-markq
+;
+; A strategy may be specified.  Valid strategies include:
+;
+; ringall - ring all available channels until one answers (default)
+; leastrecent - ring interface which was least recently hung up by this queue
+; fewestcalls - ring the one with fewest completed calls from this queue
+; random - ring random interface
+; rrmemory - round robin with memory, remember where we left off last ring pass
+; rrordered - same as rrmemory, except the queue member order from config file 
+;             is preserved
+; linear - rings interfaces in the order specified in this configuration file.
+;          If you use dynamic members, the members will be rung in the order in
+;          which they were added
+; wrandom - rings random interface, but uses the member's penalty as a weight
+;           when calculating their metric. So a member with penalty 0 will have
+;           a metric somewhere between 0 and 1000, and a member with penalty 1 will
+;			have a metric between 0 and 2000, and a member with penalty 2 will have
+;           a metric between 0 and 3000. Please note, if using this strategy, the member
+;           penalty is not the same as when using other queue strategies. It is ONLY used
+;           as a weight for calculating metric.

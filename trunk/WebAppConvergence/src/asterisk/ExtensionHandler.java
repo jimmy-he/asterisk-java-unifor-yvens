@@ -56,8 +56,7 @@ public class ExtensionHandler {
 	 * @throws ExtensionsConfigException
 	 * @throws SipConfigException
 	 */
-	public boolean insertDialPlan(DialPlan dial) throws IOException,
-			ExtensionsConfigException {
+	public boolean insertDialPlan(DialPlan dial) throws IOException, ExtensionsConfigException {
 		if (mutex.tryAcquire()) {
 
 			// Lê o arquivo extensions.conf
