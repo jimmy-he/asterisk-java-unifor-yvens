@@ -18,3 +18,6 @@ falta carregar o combobox de contexto nas telas de ramal sip/iax com os valores 
 fonte do arquivo de help: http://www.voip-info.org/wiki/view/Asterisk+-+documentation+of+application+commands
 
 A gente devia verificar, na leitura dos arquivos, para ignorar as linhas de comentário, são as que começam com ";"
+
+A gente precisa verificar caso um usuário apague todos os comandos de uma rota (Planos de Discagem), porque isso aí vai é apagar a rota, 
+precisamos verificar se isso tá ok

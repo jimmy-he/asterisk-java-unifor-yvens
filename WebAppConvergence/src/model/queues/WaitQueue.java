@@ -51,6 +51,10 @@ public class WaitQueue implements Comparable<WaitQueue>{
 		Collections.sort(listCommands);
 	}
 	
+	/**
+	 * Remove o comando pelo id
+	 * @param command
+	 */
 	public void removeCommand(QueueCommand command){
 		boolean reorder = false;
 		for(QueueCommand queueCommand : listCommands){
@@ -64,15 +68,17 @@ public class WaitQueue implements Comparable<WaitQueue>{
 		}
 		
 		removeCommand(command.getId());
-		
-		Collections.sort(listCommands);
-		
-		//Pega o primeiro comando da lista para verifica se sua ordem é 1
-		command = listCommands.get(0);
-		
-		//Caso não seja 1, ele é substituído para 1
-		if(command.getOrder() != 1){
-			command.setOrder(1);
+
+		if(listCommands.size() > 0){
+			Collections.sort(listCommands);
+			
+			//Pega o primeiro comando da lista para verifica se sua ordem é 1
+			command = listCommands.get(0);
+			
+			//Caso não seja 1, ele é substituído para 1
+			if(command.getOrder() != 1){
+				command.setOrder(1);
+			}
 		}
 	}
 	
@@ -145,6 +151,16 @@ public class WaitQueue implements Comparable<WaitQueue>{
 
 	public void setListCommands(List<QueueCommand> listCommands) {
 		this.listCommands = listCommands;
+	}
+	
+	/**
+	 * Esse atributo é puramente virtual, serve para indicar o tamanho
+	 * da lista de comandos
+	 * 
+	 * @return listCommands.size(); O tamanho da lista de rotas
+	 */
+	public int getCommandListSize(){
+		return listCommands.size();
 	}
 	
 	/**
