@@ -85,6 +85,23 @@ div.header_menu ul li a:hover   {
 	outline-width:0; 
 }
 
+div.helpList {
+	color: #474747;
+	padding-left: 10%;
+	font-size: 14px;
+}
+
+div.helpList ul {
+	margin: 0;
+	padding: 0;
+	list-style: circle;
+	width: auto;
+}
+
+div.header_menu ul li{
+	border-bottom: 1px solid #474747;
+}
+
 div.error {
 	background-color: #F62F3C;
 	border: 0.5px solid #474747;

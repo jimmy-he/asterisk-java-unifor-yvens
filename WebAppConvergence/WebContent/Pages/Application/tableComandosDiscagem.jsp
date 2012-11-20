@@ -15,6 +15,12 @@
 
 <div class="pageBody">
 	<div class="pageTable">
+		
+		<!-- Ajeitar -->
+		<div style="padding-left: 10%;">
+			<a href="ListDialRouteServlet?tag=${tag}">Voltar</a>
+		</div>
+		
 		<table align="center" class="result" cellspacing="0" style="width: auto;">
 			<tr>
 				<td class="title" colspan="7">Comando de Discagem - ${tag}/${identifier}</td>
