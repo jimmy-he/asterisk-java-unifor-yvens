@@ -90,6 +90,21 @@
 					</ul>
 				</div>
 			</div>
+			<div class="header_item"> 
+				<a id="Filas" href="#">
+					Atendimento
+				</a>
+				<div class="header_menu">
+					<ul>
+						<li>
+							<a id="criarFila" href="CrudWaitQueueServlet"> Adicionar </a>
+						</li>
+						<li>
+							<a id="listarFila" href="ListWaitQueueServlet"> Listar </a>
+						</li>
+					</ul>
+				</div>
+			</div>
 		</div>
 	</div>
 	<div class="hardGreyLine">

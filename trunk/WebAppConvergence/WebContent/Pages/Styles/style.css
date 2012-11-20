@@ -23,7 +23,7 @@ div.hardGreyLine {
 
 div.header {
 	background-color: #F6772F;
-	height: 46px;
+	height: 42px;
 	line-height: 43px;
 	margin: 0;
 	padding-left: 10%;
@@ -31,9 +31,9 @@ div.header {
 }
 
 div.header_item {
-	font-size: 23px;
+	font-size: 19px;
 	float: left;
-	padding-right: 50px;
+	padding-right: 35px;
 }
 
 div.header_menu {
