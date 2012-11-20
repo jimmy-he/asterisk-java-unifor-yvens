@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import model.RamalSip;
+import model.dial.DialPlan;
+import asterisk.ExtensionHandler;
 import asterisk.RamalSipHandler;
 
 /**
@@ -45,6 +48,13 @@ public class CrudRamalSipServlet extends HttpServlet {
 		String forward = "/Pages/Application/crudRamalSip.jsp";
 		try {
 			RamalSipHandler handler = new RamalSipHandler();
+			
+			//carregando a lista de planos de discagem
+			ExtensionHandler exhandler = new ExtensionHandler();
+			
+			List<DialPlan> dialPlanList = exhandler.listDialPlan();
+			
+			request.setAttribute("dialPlanList", dialPlanList);
 			
 			if(request.getParameter("atividade") != null && request.getParameter("atividade").equals("inserir")){
 				//Caso seja realizada uma inserção de ramal

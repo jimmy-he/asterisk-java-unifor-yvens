@@ -75,6 +75,21 @@
 					</ul>
 				</div>
 			</div>
+			<div class="header_item"> 
+				<a id="Conferencia" href="#">
+					Conferência
+				</a>
+				<div class="header_menu">
+					<ul>
+						<li>
+							<a id="criarConferencias" href="CrudConferenceRoomServlet"> Adicionar </a>
+						</li>
+						<li>
+							<a id="listarConferencias" href="ListConferenceRoomServlet"> Listar </a>
+						</li>
+					</ul>
+				</div>
+			</div>
 		</div>
 	</div>
 	<div class="hardGreyLine">
