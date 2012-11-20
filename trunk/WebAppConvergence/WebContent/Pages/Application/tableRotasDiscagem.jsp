@@ -15,6 +15,11 @@
 
 <div class="pageBody">
 	<div class="pageTable">
+		<!-- Ajeitar -->
+		<div style="padding-left: 10%;">
+			<a href="ListDialPlanServlet">Voltar</a>
+		</div>
+	
 		<table align="center" class="result" cellspacing="0" style="width: auto;">
 			<tr>
 				<td class="title" colspan="7">Rotas de Discagem - ${tag}</td>

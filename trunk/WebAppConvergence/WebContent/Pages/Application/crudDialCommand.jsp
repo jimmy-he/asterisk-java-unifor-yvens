@@ -14,7 +14,7 @@
 	}
 
 	function helpWindow() {
-		var NWin = window.open('janelaAjudaComandos.jsp', '', 'height=800,width=800');
+		var NWin = window.open('CommandHelpServlet', '', 'height=600,scrollbars=yes,width=800');
 	    if (window.focus) {
 	      NWin.focus();
 	    }
@@ -51,11 +51,13 @@
 					<td class="buttons" colspan="2">
 						<input type="submit" value="${btnSubmit}"> 
 						<input type="reset" value="Limpar">
-						<input type="button" value="Ajuda" onclick="">
+						<input type="button" value="Ajuda" onclick="helpWindow();">
 					</td>
 				</tr>
 			</table>
 		</form>
+		
+		<a href="ListDialCommandServlet?tag=${tag}&identifier=${identifier}">Voltar</a>
 	</div>
 </div>
 

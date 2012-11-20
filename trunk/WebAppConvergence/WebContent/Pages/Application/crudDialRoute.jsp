@@ -42,6 +42,8 @@
 				</tr>
 			</table>
 		</form>
+		
+		<a href="ListDialRouteServlet?tag=${tag}">Voltar</a>
 	</div>
 </div>
 
