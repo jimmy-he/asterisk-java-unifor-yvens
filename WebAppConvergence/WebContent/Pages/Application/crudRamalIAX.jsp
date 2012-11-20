@@ -44,23 +44,23 @@
 			<table id="main_table" cellspacing="0">
 				<tr>
 					<td class="left">Tag</td>
-					<td class="right"><input name="tag" type="text" value="">
+					<td class="right"><input name="tag" type="text" value="${tag}">
 					</td>
 				</tr>
 				<tr>
 					<td class="left">Caller Id</td>
-					<td class="right"><input name="callerId" type="text" value="">
+					<td class="right"><input name="callerId" type="text" value="${callerId}">
 					</td>
 				</tr>
 				<tr>
 					<td class="left">Default User</td>
 					<td class="right"><input name="defaultUser" type="text"
-						value=""></td>
+						value="${defaultUser}"></td>
 				</tr>
 				<tr>
 					<td class="left">Secret</td>
 					<td class="right"><input name="secret" type="password"
-						value=""></td>
+						value="${secret}"></td>
 				</tr>
 				<tr>
 					<td class="left">Ramal Type</td>
@@ -95,7 +95,7 @@
 					</tr>
 					<tr class="hidden_tr">
 						<td class="left">Auth</td>
-						<td class="right"><input name="auth" type="text" value="md5"></td>
+						<td class="right"><input name="auth" type="text" value="${auth}"></td>
 					</tr>
 
 					<tr class="hidden_tr">

@@ -44,8 +44,8 @@ public class ConferenceRoom {
 	 * @param quietMode
 	 */
 
-	public ConferenceRoom(String number, String context, boolean announceUserCount,
-			boolean musicOnHold, boolean quietMode) {
+	public ConferenceRoom(String number, String context,
+			boolean announceUserCount, boolean musicOnHold, boolean quietMode) {
 		super();
 		this.number = number;
 		this.context = context;
@@ -62,16 +62,16 @@ public class ConferenceRoom {
 	 *         arquivo extensions.conf
 	 */
 	public String toConference() {
-		String conference = "ConfBridge(" + number;
-		conference += conference + "," + ((announceUserCount) ? "c" : "");
-		conference += conference + "," + ((musicOnHold) ? "M" : "");
-		conference += conference + "," + ((quietMode) ? "q" : "");
-		conference += conference + ")";
+		String conference = "ConfBridge(" + number + ","
+				+ ((announceUserCount) ? "c" : "") + ""
+				+ ((musicOnHold) ? "M" : "") + "" + ((quietMode) ? "q" : "")
+				+ ")";
 
 		return conference;
 	}
-	
-	public static ConferenceRoom getConferenceFromParameter(HttpServletRequest request) {
+
+	public static ConferenceRoom getConferenceFromParameter(
+			HttpServletRequest request) {
 		ConferenceRoom conference = null;
 
 		String number = "";
@@ -82,46 +82,46 @@ public class ConferenceRoom {
 
 		if (request.getParameter("number") != null) {
 			number = request.getParameter("number");
-		}		
+		}
 
 		if (request.getParameter("context") != null) {
 			context = request.getParameter("context");
 		}
-	
+
 		if (request.getParameter("announceUserCount") != null) {
-			announceUserCount = (request.getParameter("transfer").equals("yes")) ? true
-					: false;
+			announceUserCount = (request.getParameter("announceUserCount")
+					.equalsIgnoreCase("true")) ? true : false;
 		}
 
 		if (request.getParameter("musicOnHold") != null) {
 			musicOnHold = (request.getParameter("musicOnHold")
-					.equals("yes")) ? true : false;
-		}
-		
-		if (request.getParameter("quietMode") != null) {
-			musicOnHold = (request.getParameter("quietMode")
-					.equals("yes")) ? true : false;
+					.equalsIgnoreCase("true")) ? true : false;
 		}
 
-		conference = new ConferenceRoom(number,context,announceUserCount,musicOnHold,quietMode);
+		if (request.getParameter("quietMode") != null) {
+			quietMode = (request.getParameter("quietMode")
+					.equalsIgnoreCase("true")) ? true : false;
+		}
+
+		conference = new ConferenceRoom(number, context, announceUserCount,
+				musicOnHold, quietMode);
 		return conference;
 	}
-	
+
 	/**
 	 * 
 	 * @param request
 	 */
 	public void conferenceToRequest(HttpServletRequest request) {
 
-		request.setAttribute("number", number);		
-		request.setAttribute("context", context);		
-		request.setAttribute("announceUserCount", (announceUserCount) ? "yes" : "no");
-		request.setAttribute("musicOnHold", (musicOnHold) ? "yes"
+		request.setAttribute("number", number);
+		request.setAttribute("context", context);
+		request.setAttribute("announceUserCount", (announceUserCount) ? "yes"
 				: "no");
-		request.setAttribute("quietMode", (quietMode) ? "yes"
-				: "no");
+		request.setAttribute("musicOnHold", (musicOnHold) ? "yes" : "no");
+		request.setAttribute("quietMode", (quietMode) ? "yes" : "no");
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

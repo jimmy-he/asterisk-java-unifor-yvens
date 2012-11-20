@@ -105,7 +105,7 @@ public class CrudRamalIAXServlet extends HttpServlet {
 
 				forward = "/TableRamalIAXServlet";
 			} else {
-				// Else caso não seja nenhum dos três comando dos CRUD
+				// Else caso não seja nenhum dos três comandos dos CRUD
 
 				// Instanciado um ramal apenas com os valores para os campos
 				// avançados

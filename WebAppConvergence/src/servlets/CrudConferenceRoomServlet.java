@@ -15,7 +15,6 @@ import model.dial.DialCommand;
 import model.dial.DialPlan;
 import model.dial.DialRoute;
 import asterisk.ExtensionHandler;
-import asterisk.RamalIAXHandler;
 
 /**
  * Servlet implementation class CrudConferenceServlet
@@ -65,9 +64,10 @@ public class CrudConferenceRoomServlet extends HttpServlet {
 
 				ConferenceRoom conference = ConferenceRoom
 						.getConferenceFromParameter(request);
+				
+				System.out.println("music"+request.getParameter("musicOnHold"));
 
-				DialRoute dialRoute = DialRoute
-						.getDialPlanFromParameter(request);
+				DialRoute dialRoute = new DialRoute(conference.getNumber());
 
 				// Adição de um comando default
 				DialCommand dialCommand = new DialCommand(1, 1, "Answer()");
@@ -89,11 +89,17 @@ public class CrudConferenceRoomServlet extends HttpServlet {
 					error = "Erro! Algum outro usuário está fazendo modificações no sistema, tente novamente mais tarde.";
 				}
 
-				forward = "/TableRamalIAXServlet";
+				forward = "/ListConferenceRoomServlet";
 			} else if (request.getParameter("atividade") != null
 					&& request.getParameter("atividade").equals("alteracao")) {
 				// Redirecionamento para a página de inserção, mas com os campos
 				// já preenchidos
+				String tag = request.getParameter("tag");
+				
+
+				request.setAttribute("atividade", "alterar");
+				request.setAttribute("tarefa", "Alterar Ramal IAX");
+				request.setAttribute("btnSubmit", "Alterar");
 
 			} else if (request.getParameter("atividade") != null
 					&& request.getParameter("atividade").equals("alterar")) {
