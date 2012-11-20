@@ -19,8 +19,14 @@ public class AsteriskConfiguration {
 	//Path do arquivo extensions.conf
 	public static final String EXTENSIONS_CONFIG_PATH = "/etc/asterisk/extensions.conf";
 	
+	//Path do arquivo extensions.conf
+	public static final String QUEUES_CONFIG_PATH = "/etc/asterisk/queues.conf";
+	
 	//Path do arquivo com o texto de help para DialCommand
 	public static final String COMMAND_HELP_PATH = "/home/yvens/workspace/WebAppConvergence/src/asterisk/HelpFiles/commandHelp.txt";
+	
+	//Path do arquivo com o texto de help para QueueCommand
+	public static final String QUEUE_HELP_PATH = "/home/yvens/workspace/WebAppConvergence/src/asterisk/HelpFiles/queueCommandHelp.txt";
 	
 	//IP de conexão com o servidor do asterisk
 	public static final String ASTERISK_IP = "127.0.0.1";

@@ -1,0 +1,99 @@
+
+
+Fonte: http://mestreasterisk.com.br/configuracao/configuracao-asterisk-1-6-x-queues-conf/
+
+Configurando as Filas de Espera
+
+Agora iremos editar o arquivo queues.conf e conhecer seu funcionamento.
+
+nano /etc/asterisk/queues.conf
+
+[general] ; Chave general, configurações gerais
+
+persistentmembers = yes ; se usamos agentes dinámicos suas configurações  estarão no banco de dados do Asterisk. Desta forma se o Asterisk for reiniciado cada agente será colocado na sua fila respectivamente.
+
+keepstats = no ; mantém as estatisticas das filas durante um reload do Asterisk.
+
+autofill = yes ; normalmente uma fila funciona da seguinte maneira. Existem alguns usuarios esperando para ser atendido pelos agentes. Quando o usuario está em primeiro da fila e é atendido o segundo se torna o primeiro da fila e será atendido pelo próximo agente disponível. Este comportamento ignora o fato de que pode haver muitos agentes disponíveis, mas cada usuário vai ter que esperar para se tornar o primeiro na lista para o seu atendimento. Este parâmetro define um outro tipo de comportamento, os usuários serão tratados em paralelo, até que você tenha agentes disponíveis durante o tempo de espera.
+
+monitor-type = MixMonitor ; se vamos gravar as conversações, com esse parametro os arquivos de audio dos canais serão mesclados em um só.
+
+shared_lastcall=yes ; no caso dos agentes pertencerem a mais de uma  fila e o parametro estiver como yes os tempos de espera entre as filas distintas se repeitaram.
+
+[vendas] ; é o nome da fila
+
+musicclass = default ; é classe utilizada para a música de espera
+
+;announce = queue-vendas ; podemos configurar um anuncio para indicar aos agentes (quando atendem uma chamada) a que fila pertenece o usuario que estão atendendo (util para os agentes que atendem mais de uma fila).
+
+strategy = ringall ; é definido o tipo de estratégia que será utilizada pelas filas.
+
+As opções são:
+
+    Leastrecent: Atribui a chamada para o agente que está a mas tempo sem atender uma chamada
+    Fewestcalls: Atribui a chamada para o agente que menos atendeu chamadas
+    Random: Atribui a chamada aleatóriamente para qualquer agente disponível
+    Ringall: Chama todos os agentes de uma unica vez e os primeiros a escolher é que irão atender as chamadas
+    RRMemory: Distribui as chamdas  entre os agente e lembra o utilimo agente que tentou chamar.
+    Linear: Distribui as chamadas de acordo com as configurações desse arquivo.
+    Wrandom: Atribui a chamada aleatoriamente usando uma métrica baseada em penalidaes
+
+timeout = 15 ; é o tempo em segundos que será passada a próxima chamada para o agente se essa não for considerada contestada pelo mesmo
+
+retry = 5 ; é o tempo em segundos antes de voltar a chamar os agentes
+
+weight=0 ; cada fila pode ter um peso. Filas de maior valor terão prioridade sobre as de menor valor
+
+autopause=no ; Se um agente não responder a uma chamada será colocada em espera
+
+maxlen = 0 ; com este parâmetro define o número máximo de usuários que podem entrar na fila (0 = sem limite)
+
+announce-frequency = 90 ; A cada quantos segundos o usuario será informado em que posição está na fila e o tempo estimado de espera
+
+min-announce-frequency = 15 ; para evitar que cada vez que a posição /e o tempo estimado de um usuario mude a ele se apresente um anuncio, este parametro define o tempo  (em segundos) que se esperará antes de comunicar sua nova posição/tempo estimado
+
+;periodic-announce-frequency=60 ; este parametro representa os segundos que um usuario ouvira um anuncio durante a espera (pode ser algo relacionado a novos produtos da empresa).
+
+announce-holdtime = once ; anunciar junto a posição da fila o tempo estimado de espera. Pode ser yes, no, e once (uma só vez)
+
+announce-position = yes ; periódicamente será anunciado ao usuario da fila sua posição na mesma
+
+announce-round-seconds = 10 ; o tempo estimado de espera será arredondado as dezenas
+
+reportholdtime = yes ; antes do agente atender uma chamada ele será informado do tempo que o usuario ficou na fila de espera
+
+ringinuse = no ; com este parametro como no não se ringam as extensões dos agentes que estão em uso (só protocolo SIP)
+
+Para terminar a configração desta fila definiremos os agentes que fazem parte dela. Podemos fazer de duas maneiras:
+
+· Indicando um agente por linha
+
+· Indicando um grupo de agentes
+
+Um agente por linha:
+
+member => Agent/2001
+
+member => Agent/2002
+
+Um grupo de agentes:
+
+; member => Agent/@1 ; por hora deixamos comentado
+
+Agora que a configuração terminou, salvamos as mudanças no arquivo e adicionamos as seguintes linhas no arquivo extensions.conf para configurar a fila em seu plano de discagem:
+
+nano /etc/asterisk/extensions.conf
+
+No contexto internas colocamos as linhas:
+
+exten => 3000,1,Queue(vendas)
+
+exten => 3000,n,Hangup
+
+Salvamos as mudanças e atualizamos as configurações do Asterisk:
+
+/etc/init.d/asterisk reload
+
+Agora podemos a partir de um softphone se conectar a central e digitar a opção 3000 para ver como funciona a fila de espera.
+
+Abraços,
