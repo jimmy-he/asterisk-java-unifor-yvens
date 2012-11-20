@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,21 +9,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.ConferenceRoom;
 import model.dial.DialPlan;
 import model.dial.DialRoute;
 import asterisk.ExtensionHandler;
 
 /**
- * Servlet implementation class ListDialRouteServlet
+ * Servlet implementation class ListConferenceRoomServlet
  */
-@WebServlet("/ListDialRouteServlet")
-public class ListDialRouteServlet extends HttpServlet {
+@WebServlet("/ListConferenceRoomServlet")
+public class ListConferenceRoomServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ListDialRouteServlet() {
+    public ListConferenceRoomServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,7 +33,7 @@ public class ListDialRouteServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doPost(request, response);
+		doPost(request,response);
 	}
 
 	/**
@@ -41,7 +43,7 @@ public class ListDialRouteServlet extends HttpServlet {
 		String error = "";
 		String feedback = "";
 
-		String forward = "/Pages/Application/tableRotasDiscagem.jsp";
+		String forward = "/Pages/Application/tableConferencias.jsp";
 		try {
 			ExtensionHandler handler = new ExtensionHandler();
 			
@@ -49,7 +51,7 @@ public class ListDialRouteServlet extends HttpServlet {
 			String tag = request.getParameter("tag");
 			
 			if(request.getParameter("remover") != null){
-				//Manda o comando para remover o DialRoute que possua a tag recebida pela URL
+				//Manda o comando para remover o DialRoute com a conferência que possua a tag recebida pela URL
 				DialPlan dialPlan = handler.getDialPlan(tag);
 				String identifier = request.getParameter("remover");
 				DialRoute dialRoute = dialPlan.getRoute(identifier);
@@ -57,20 +59,20 @@ public class ListDialRouteServlet extends HttpServlet {
 				boolean remocao = handler.updateDialPlan(dialPlan);
 				
 				if(remocao){
-					feedback = "Rota de Discagem removida com sucesso!";
+					feedback = "Conferência removida com sucesso!";
 				}else{
 					error = "Algum outro usuário está alterando o arquivo, por favor, tente novamente!";
 				}
 			}
 			
-			//Busca o dialPlan com a tag passada
-			DialPlan dialPlan = handler.getDialPlan(tag);
+			//Preenchendo o feedback de alteração de plano
+			if (request.getAttribute("feedback") != null){				
+				feedback = (String) request.getAttribute("feedback");
+			}
 			
-			//Adiciona no request a lista de rotas do dialPlan
-			request.setAttribute("list", dialPlan.getRouteList());
+			List<ConferenceRoom> list = handler.listConferenceRooms();
 			
-			//Adiciona a tag de volta ao request, ela será exibida na tela
-			request.setAttribute("tag", tag);
+			request.setAttribute("list", list);
 		} catch (Exception e) {
 			error = e.getMessage();
 			e.printStackTrace();

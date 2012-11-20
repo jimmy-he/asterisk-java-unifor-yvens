@@ -17,41 +17,41 @@
 	<div class="pageTable">
 		<table align="center" class="result" cellspacing="0" style="width: auto;">
 			<tr>
-				<td class="title" colspan="7">Tabela de Ramais IAX</td>
+				<td class="title" colspan="7">Tabela de Salas de Conferência</td>
 			</tr>
 			<tr>
-				<td class="subtitle" colspan="7">Listagem de todos os ramais IAX do servidor</td>
+				<td class="subtitle" colspan="7">Listagem de todas as salas de conferência do servidor</td>
 			</tr>
 			<tr>
-				<td class="header">TAG</td>
-				<td class="header">Caller ID</td>
-				<td class="header">Default User</td>
-				<td class="header">Type</td>
+				<td class="header">Number</td>
 				<td class="header">Context</td>
+				<td class="header">AnnounceUserCount</td>
+				<td class="header">MusicOnHold</td>
+				<td class="header">QuietMode</td>
 				<td class="header" style="border: none;" colspan="2">Opções</td>
 			</tr>
-			<c:forEach var="ramal" items="${list}" >
+			<c:forEach var="conference" items="${list}" >
 				<tr>
 					<td class="result">
-						<c:out value="${ramal.tag}"></c:out>
+						<c:out value="${conference.number}"></c:out>
 					</td>
 					<td class="result">
-						<c:out value="${ramal.callerId}"></c:out>
+						<c:out value="${conference.context}"></c:out>
 					</td>
 					<td class="result">
-						<c:out value="${ramal.defaultUser}"></c:out>
+						<c:out value="${conference.announceUserCount}"></c:out>
 					</td>
 					<td class="result">
-						<c:out value="${ramal.type}"></c:out>
+						<c:out value="${conference.musicOnHold}"></c:out>
 					</td>
 					<td class="result">
-						<c:out value="${ramal.context}"></c:out>
+						<c:out value="${conference.quietMode}"></c:out>
 					</td>
 					<td class="result">
-						<a href="CrudRamalIAXServlet?tarefa=alteracao&atividade=alteracao&tag=${ramal.tag}">Alterar</a>
+						<a href="CrudConferenceRoomServlet?tarefa=alteracao&tag=${conference.number}">Alterar</a>
 					</td>
 					<td class="result" style="border: none;">
-						<a href="CrudRamalIAXServlet?tarefa=remocao&atividade=remocao&tag=${ramal.tag}">Remover</a>
+						<a href="#">Remover</a>
 					</td>
 				</tr>
 			</c:forEach>

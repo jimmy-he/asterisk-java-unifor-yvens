@@ -143,13 +143,13 @@ public class RamalIAX {
 			auth = request.getParameter("auth");
 		}
 		if (request.getParameter("transfer") != null) {
-			transfer = (request.getParameter("transfer").equals("yes")) ? true
+			transfer = (request.getParameter("transfer").equals("Yes")) ? true
 					: false;
 		}
 
 		if (request.getParameter("requireCallToken") != null) {
 			requireCallToken = (request.getParameter("requireCallToken")
-					.equals("yes")) ? true : false;
+					.equals("Yes")) ? true : false;
 		}
 
 		ramal = new RamalIAX(tag, callerId, type, defaultUser, secret, context,

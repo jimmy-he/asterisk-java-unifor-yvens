@@ -297,7 +297,7 @@ public class RamalIAXHandler {
 		RamalIAX ramal = null;
 		
 		for (RamalIAX ramalIAX : list) {
-			if(ramal.getTag().equals(tag)){
+			if(ramalIAX.getTag().equals(tag)){
 				ramal = ramalIAX;
 			}
 		}

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Semaphore;
 
+import model.ConferenceRoom;
 import model.dial.DialCommand;
 import model.dial.DialPlan;
 import model.dial.DialRoute;
@@ -134,7 +135,7 @@ public class ExtensionHandler {
 				}
 				i++;
 
-			}			
+			}
 
 			// Apagado o ramal do arquivo extensions.conf
 			fileHandler.deleteLineOnFile(extensionsFile, begin, end);
@@ -203,7 +204,7 @@ public class ExtensionHandler {
 				}
 				i++;
 			}
-			
+
 			// Apagado o ramal do arquivo extensions.conf
 			fileHandler.deleteLineOnFile(extensionsFile, begin, end);
 			mutex.release();
@@ -262,8 +263,9 @@ public class ExtensionHandler {
 					do {
 						DialCommand command = null;
 						String commandTxt = parameters[2];
-						
-						//Durante a leitura, usamos a própria order como id do comando
+
+						// Durante a leitura, usamos a própria order como id do
+						// comando
 						command = new DialCommand(order, order, commandTxt);
 
 						dialRoute.addCommand(command);
@@ -295,22 +297,24 @@ public class ExtensionHandler {
 
 		return listDialPlan;
 	}
-	
-	public DialPlan getDialPlan(String tag) throws IOException, ExtensionsConfigException{
+
+	public DialPlan getDialPlan(String tag) throws IOException,
+			ExtensionsConfigException {
 		List<DialPlan> list = listDialPlan();
-		
+
 		DialPlan dialPlan = null;
-		
+
 		for (DialPlan plan : list) {
-			if(plan.getTag().equals(tag)){
+			if (plan.getTag().equals(tag)) {
 				dialPlan = plan;
 			}
 		}
-		
-		if(dialPlan == null){
-			throw new ExtensionsConfigException("Erro! Plano de Discagem não encontrado!Tag = "+tag);
+
+		if (dialPlan == null) {
+			throw new ExtensionsConfigException(
+					"Erro! Plano de Discagem não encontrado!Tag = " + tag);
 		}
-		
+
 		return dialPlan;
 	}
 
@@ -330,4 +334,48 @@ public class ExtensionHandler {
 	public int getExtensionsConfLines() {
 		return extensionsConfLines;
 	}
+
+	public List<ConferenceRoom> listConferenceRooms() throws IOException {
+		String[] extensionsFile = fileHandler.readFile(extensionsConfPath);
+		List<ConferenceRoom> listConferenceRooms = new ArrayList<ConferenceRoom>();
+		String tag = null;
+		for (int i = 0; i < extensionsFile.length; i++) {
+			if (!extensionsFile[i].isEmpty()
+					&& extensionsFile[i].charAt(0) == '['
+					&& !extensionsFile[i].equals("[general]")) {
+				tag = extensionsFile[i];
+				tag = tag.substring(1, tag.length() - 1);
+			}
+			
+			// Se achou uma conferência
+			if (extensionsFile[i].contains("ConfBridge")){
+				String line = extensionsFile[i].trim();
+
+				// Para remover o "exten=>"
+				line = line.substring(9);
+				
+				String[] parameters = line.split(",", 4);
+				String number = parameters[0];
+				String context = tag;
+				boolean announceUserCount = false;
+				boolean musicOnHold = false;
+				boolean quietMode = false;
+				if (parameters[3].contains("c")){
+					announceUserCount = true;
+				}
+				if (parameters[3].contains("M")){
+					musicOnHold = true;			
+				}
+				if (parameters[3].contains("q")){
+					quietMode = true;
+				}
+				ConferenceRoom c = new ConferenceRoom(number,context,announceUserCount,musicOnHold,quietMode);
+				listConferenceRooms.add(c);
+			}
+			
+		}
+		return listConferenceRooms;
+
+	}	
+	
 }
