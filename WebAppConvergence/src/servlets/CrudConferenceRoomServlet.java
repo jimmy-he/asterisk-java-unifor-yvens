@@ -9,26 +9,27 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.ConferenceRoom;
 import model.RamalIAX;
+import model.dial.DialCommand;
 import model.dial.DialPlan;
+import model.dial.DialRoute;
 import asterisk.ExtensionHandler;
 import asterisk.RamalIAXHandler;
 
 /**
- * Servlet responsável pelo CRUD dos ramais IAX
- * 
- * @author daniel
- * 
+ * Servlet implementation class CrudConferenceServlet
  */
-@WebServlet("/CrudRamalIAXServlet")
-public class CrudRamalIAXServlet extends HttpServlet {
+@WebServlet("/CrudConferenceRoomServlet")
+public class CrudConferenceRoomServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public CrudRamalIAXServlet() {
+	public CrudConferenceRoomServlet() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -49,73 +50,71 @@ public class CrudRamalIAXServlet extends HttpServlet {
 		String error = "";
 		String feedback = "";
 
-		String forward = "/Pages/Application/crudRamalIAX.jsp";
+		String forward = "/Pages/Application/crudConferenceRoom.jsp";
 		try {
-			RamalIAXHandler handler = new RamalIAXHandler();
-			
-			//carregando a lista de planos de discagem
-			ExtensionHandler exhandler = new ExtensionHandler();
-			
-			List<DialPlan> dialPlanList = exhandler.listDialPlan();
-			
+
+			ExtensionHandler handler = new ExtensionHandler();
+
+			List<DialPlan> dialPlanList = handler.listDialPlan();
+
 			request.setAttribute("dialPlanList", dialPlanList);
 
 			if (request.getParameter("atividade") != null
 					&& request.getParameter("atividade").equals("inserir")) {
-				// Caso seja realizada uma inserção de ramal
+				// Caso seja realizada uma inserção de conferência
 
-				RamalIAX ramalIAX = RamalIAX.getRamalFromParameter(request);
+				ConferenceRoom conference = ConferenceRoom
+						.getConferenceFromParameter(request);
 
-				// TODO remover
-				System.out.println(ramalIAX.toString());
+				DialRoute dialRoute = DialRoute
+						.getDialPlanFromParameter(request);
 
-				handler.createRamal(ramalIAX);
-				feedback = "Ramal " + ramalIAX.getTag()
-						+ " adicionado com sucesso!";
+				// Adição de um comando default
+				DialCommand dialCommand = new DialCommand(1, 1, "Answer()");
+				dialRoute.addCommand(dialCommand);
+
+				// Adição da sala de conferência em si
+				DialCommand conferenceCommand = new DialCommand(2, 2,
+						conference.toConference());
+				dialRoute.addCommand(conferenceCommand);
+
+				DialPlan dialPlan = handler
+						.getDialPlan(conference.getContext());
+				dialPlan.addRoute(dialRoute);
+				boolean update = handler.updateDialPlan(dialPlan);
+				if (update) {
+					feedback = "Conferência " + dialRoute.getIdentifier()
+							+ " adicionada com sucesso!";
+				} else {
+					error = "Erro! Algum outro usuário está fazendo modificações no sistema, tente novamente mais tarde.";
+				}
 
 				forward = "/TableRamalIAXServlet";
 			} else if (request.getParameter("atividade") != null
 					&& request.getParameter("atividade").equals("alteracao")) {
 				// Redirecionamento para a página de inserção, mas com os campos
 				// já preenchidos
-				String tag = request.getParameter("tag");
-				RamalIAX ramal = handler.getRamal(tag);
 
-				ramal.ramalToRequest(request);
-
-				request.setAttribute("atividade", "alterar");
-				request.setAttribute("tarefa", "Alterar Ramal IAX");
-				request.setAttribute("btnSubmit", "Alterar");
 			} else if (request.getParameter("atividade") != null
 					&& request.getParameter("atividade").equals("alterar")) {
-				// Caso seja realizada uma alteração em um ramal já existente
-				RamalIAX ramalIAX = RamalIAX.getRamalFromParameter(request);
-				handler.updateRamal(ramalIAX);
-				feedback = "Ramal " + ramalIAX.getTag()
-						+ " alterado com sucesso!";
+				// Caso seja realizada uma alteração em uma conferência já
+				// existente
 
-				forward = "/TableRamalIAXServlet";
 			} else if (request.getParameter("atividade") != null
 					&& request.getParameter("atividade").equals("remocao")) {
-				// Caso seja feita a remoção de um ramal já existente
-				RamalIAX ramalIAX = RamalIAX.getRamalFromParameter(request);
-				handler.deleteRamal(ramalIAX);
-				feedback = "Ramal " + ramalIAX.getTag()
-						+ " removido com sucesso!";
+				// Caso seja feita a remoção de uma conferência já existente
 
-				forward = "/TableRamalIAXServlet";
 			} else {
-				// Else caso não seja nenhum dos três comando dos CRUD
-
+				// Else caso não seja nenhum dos três comandos dos CRUD
 				// Instanciado um ramal apenas com os valores para os campos
 				// avançados
-				RamalIAX ramal = new RamalIAX("", "", "", "");
+				ConferenceRoom conference = new ConferenceRoom("", "");
 
 				// Setado os valores avançados para o request
-				ramal.ramalToRequest(request);
+				conference.conferenceToRequest(request);
 
 				request.setAttribute("atividade", "inserir");
-				request.setAttribute("tarefa", "Inserir Ramal IAX");
+				request.setAttribute("tarefa", "Inserir Conferência");
 				request.setAttribute("btnSubmit", "Inserir");
 			}
 		} catch (Exception e) {

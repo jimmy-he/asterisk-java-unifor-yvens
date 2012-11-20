@@ -67,7 +67,7 @@ public class CrudDialRouteServlet extends HttpServlet {
 				dialPlan.addRoute(dialRoute);
 				boolean update = handler.updateDialPlan(dialPlan);
 				if(update){
-					feedback = "Rota de discagem "+dialRoute.getIdentifier()+" adicionado com sucesso!";
+					feedback = "Rota de discagem "+dialRoute.getIdentifier()+" adicionada com sucesso!";
 				}else{
 					error = "Erro! Algum outro usuário está fazendo modificações no sistema, tente novamente mais tarde.";
 				}

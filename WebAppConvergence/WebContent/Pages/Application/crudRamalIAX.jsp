@@ -87,8 +87,11 @@
 					</tr>
 					<tr class="hidden_tr">
 						<td class="left">Context</td>
-						<td class="right"><input name="context" type="text"
-							value="LOCAL"></td>
+						<td class="right"><select name="context">
+								<c:forEach var="dialPlan" items="${dialPlanList}">
+									<option>${dialPlan.tag}</option>
+								</c:forEach>
+						</select></td>
 					</tr>
 					<tr class="hidden_tr">
 						<td class="left">Auth</td>
