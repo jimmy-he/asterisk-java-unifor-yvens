@@ -49,8 +49,8 @@
 				</tr>
 				<tr>
 					<td class="left">Caller Id</td>
-					<td class="right"><input name="callerId" type="text" value="${callerId}">
-					</td>
+					<td class="right"><input name="callerId" type="text"
+						value="${callerId}"></td>
 				</tr>
 				<tr>
 					<td class="left">Default User</td>
@@ -81,9 +81,23 @@
 
 					<tr class="hidden_tr">
 						<td class="left">Transfer</td>
-						<td class="right"><input name="transfer" type="radio"
-							value="true" checked="checked"> Yes <input
-							name="transfer" type="radio" value="false"> No</td>
+						<c:if test="${empty transfer}">
+							<td class="right"><input name="transfer" type="radio"
+								value="true" checked="checked"> Yes <input
+								name="transfer" type="radio" value="false"> No</td>
+						</c:if>
+						<c:if test="${!empty transfer}">
+							<c:if test="${transfer == 'yes'}">
+								<td class="right"><input name="transfer" type="radio"
+									value="true" checked="checked"> Yes <input
+									name="transfer" type="radio" value="false"> No</td>
+							</c:if>
+							<c:if test="${transfer != 'yes'}">
+								<td class="right"><input name="transfer" type="radio"
+									value="true"> Yes <input
+									name="transfer" type="radio" value="false" checked="checked"> No</td>
+							</c:if>
+						</c:if>
 					</tr>
 					<tr class="hidden_tr">
 						<td class="left">Context</td>
@@ -95,7 +109,8 @@
 					</tr>
 					<tr class="hidden_tr">
 						<td class="left">Auth</td>
-						<td class="right"><input name="auth" type="text" value="${auth}"></td>
+						<td class="right"><input name="auth" type="text"
+							value="${auth}"></td>
 					</tr>
 
 					<tr class="hidden_tr">
@@ -106,9 +121,25 @@
 
 					<tr class="hidden_tr">
 						<td class="left">Require Call Token</td>
-						<td class="right"><input name="requireCallToken" type="radio"
-							value="true"> Yes <input name="requireCallToken"
-							checked="checked" type="radio" value="false"> No</td>
+						<c:if test="${empty requireCallToken}">
+							<td class="right"><input name="requireCallToken"
+								type="radio" value="true"> Yes <input
+								name="requireCallToken" checked="checked" type="radio"
+								value="false"> No</td>
+						</c:if>
+						<c:if test="${!empty requireCallToken}">
+							<c:if test="${requireCallToken == 'yes'}">
+								<td class="right"><input name="requireCallToken"
+									type="radio" value="true" checked="checked"> Yes <input
+									name="requireCallToken" type="radio" value="false"> No</td>
+							</c:if>
+							<c:if test="${requireCallToken != 'yes'}">
+								<td class="right"><input name="requireCallToken"
+									type="radio" value="true"> Yes <input
+									name="requireCallToken" checked="checked" type="radio"
+									value="false"> No</td>
+							</c:if>
+						</c:if>
 					</tr>
 				</table>
 			</div>

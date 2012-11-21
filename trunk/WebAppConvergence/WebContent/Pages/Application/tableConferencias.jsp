@@ -48,10 +48,10 @@
 						<c:out value="${conference.quietMode}"></c:out>
 					</td>
 					<td class="result">
-						<a href="CrudConferenceRoomServlet?tarefa=alteracao&tag=${conference.number}">Alterar</a>
+						<a href="CrudConferenceRoomServlet?tarefa=alteracao&atividade=alteracao&number=${conference.number}&context=${conference.context}">Alterar</a>
 					</td>
 					<td class="result" style="border: none;">
-						<a href="#">Remover</a>
+						<a href="CrudConferenceRoomServlet?tarefa=remocao&atividade=remocao&number=${conference.number}&context=${conference.context}">Remover</a>
 					</td>
 				</tr>
 			</c:forEach>
