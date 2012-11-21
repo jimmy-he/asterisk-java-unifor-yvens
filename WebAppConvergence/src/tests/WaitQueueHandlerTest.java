@@ -36,7 +36,7 @@ public class WaitQueueHandlerTest {
 		//durante a execução do construtor
 		WaitQueueHandler handler = new WaitQueueHandler(queues_conf);
 		
-		//Verificação se o arquivo de extensions.conf lido possui mais de 1 linha
+		//Verificação se o arquivo de queues.conf lido possui mais de 1 linha
 		Assert.assertEquals(true, handler.getQueueConfLines() > 0);
 	}
 	
@@ -46,7 +46,7 @@ public class WaitQueueHandlerTest {
 		//durante a execução do construtor
 		WaitQueueHandler handler = new WaitQueueHandler();
 		
-		//Verificação se o arquivo de extensions.conf lido possui mais de 1 linha
+		//Verificação se o arquivo de queues.conf lido possui mais de 1 linha
 		Assert.assertEquals(true, handler.getQueueConfLines() > 0);
 	}
 	

@@ -10,7 +10,7 @@
 
 		$("#hiddenAttr").hide();
 
-		igualarDiv();		
+		igualarDiv();
 
 		//carregar o valor dos radio bottons
 	});
@@ -83,9 +83,23 @@
 				<table cellspacing="0">
 					<tr class="hidden_tr">
 						<td class="left">Can Reinvite</td>
-						<td class="right"><input name="canReinvite" type="radio"
-							value="true"> Yes <input name="canReinvite"
-							checked="checked" type="radio" value="false"> No</td>
+						<c:if test="${empty canReinvite}">
+							<td class="right"><input name="canReinvite" type="radio"
+								value="true"> Yes <input name="canReinvite"
+								checked="checked" type="radio" value="false"> No</td>
+						</c:if>
+						<c:if test="${!empty canReinvite}">
+							<c:if test="${canReinvite == 'yes'}">
+								<td class="right"><input name="canReinvite" type="radio"
+									value="true" checked="checked"> Yes <input
+									name="canReinvite" type="radio" value="false"> No</td>
+							</c:if>
+							<c:if test="${canReinvite != 'yes'}">
+								<td class="right"><input name="canReinvite" type="radio"
+								value="true"> Yes <input name="canReinvite"
+								checked="checked" type="radio" value="false"> No</td>
+							</c:if>
+						</c:if>
 					</tr>
 					<tr class="hidden_tr">
 						<td class="left">Context</td>
@@ -117,9 +131,23 @@
 					</tr>
 					<tr class="hidden_tr">
 						<td class="left">Nat</td>
-						<td class="right"><input name="nat" type="radio" value="true">
-							Yes <input name="nat" checked="checked" type="radio"
-							value="false"> No</td>
+						<c:if test="${empty nat}">
+							<td class="right"><input name="nat" type="radio"
+								value="true"> Yes <input name="nat" checked="checked"
+								type="radio" value="false"> No</td>
+						</c:if>
+						<c:if test="${!empty nat}">
+							<c:if test="${nat == 'yes'}">
+								<td class="right"><input name="nat" type="radio"
+									value="true" checked="checked"> Yes <input name="nat"
+									type="radio" value="false"> No</td>
+							</c:if>
+							<c:if test="${nat != 'yes'}">
+								<td class="right"><input name="nat" type="radio"
+									value="true"> Yes <input name="nat" checked="checked"
+									type="radio" value="false"> No</td>
+							</c:if>
+						</c:if>
 					</tr>
 				</table>
 			</div>

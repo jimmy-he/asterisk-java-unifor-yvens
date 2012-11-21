@@ -44,7 +44,7 @@
 			<table id="main_table" cellspacing="0">
 				<tr>
 					<td class="left">Number</td>
-					<td class="right"><input name="number" type="text" value="">
+					<td class="right"><input name="number" type="text" value="${number}">
 					</td>
 				</tr>
 				<tr>

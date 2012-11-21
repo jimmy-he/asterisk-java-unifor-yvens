@@ -56,7 +56,8 @@ public class ExtensionHandler {
 	 * @throws ExtensionsConfigException
 	 * @throws SipConfigException
 	 */
-	public boolean insertDialPlan(DialPlan dial) throws IOException, ExtensionsConfigException {
+	public boolean insertDialPlan(DialPlan dial) throws IOException,
+			ExtensionsConfigException {
 		if (mutex.tryAcquire()) {
 
 			// Lê o arquivo extensions.conf
@@ -334,6 +335,14 @@ public class ExtensionHandler {
 		return extensionsConfLines;
 	}
 
+	/**
+	 * Método para buscar a lista de salas de conferência do arquivo
+	 * extensions.conf
+	 * 
+	 * @return retorna um arraylist de conferenceroom
+	 * @throws IOException
+	 */
+	
 	public List<ConferenceRoom> listConferenceRooms() throws IOException {
 		String[] extensionsFile = fileHandler.readFile(extensionsConfPath);
 		List<ConferenceRoom> listConferenceRooms = new ArrayList<ConferenceRoom>();
@@ -345,36 +354,78 @@ public class ExtensionHandler {
 				tag = extensionsFile[i];
 				tag = tag.substring(1, tag.length() - 1);
 			}
-			
+
 			// Se achou uma conferência
-			if (extensionsFile[i].contains("ConfBridge")){
+			if (extensionsFile[i].contains("ConfBridge")) {
 				String line = extensionsFile[i].trim();
 
 				// Para remover o "exten=>"
 				line = line.substring(9);
-				
+
 				String[] parameters = line.split(",", 4);
 				String number = parameters[0];
 				String context = tag;
 				boolean announceUserCount = false;
 				boolean musicOnHold = false;
 				boolean quietMode = false;
-				if (parameters[3].contains("c")){
+				if (parameters[3].contains("c")) {
 					announceUserCount = true;
 				}
-				if (parameters[3].contains("M")){
-					musicOnHold = true;			
+				if (parameters[3].contains("M")) {
+					musicOnHold = true;
 				}
-				if (parameters[3].contains("q")){
+				if (parameters[3].contains("q")) {
 					quietMode = true;
 				}
-				ConferenceRoom c = new ConferenceRoom(number,context,announceUserCount,musicOnHold,quietMode);
+				ConferenceRoom c = new ConferenceRoom(number, context,
+						announceUserCount, musicOnHold, quietMode);
 				listConferenceRooms.add(c);
 			}
-			
+
 		}
 		return listConferenceRooms;
 
-	}	
-	
+	}
+
+	public ConferenceRoom getConferenceRoom(String number, String context)
+			throws IOException {
+		String[] extensionsFile = fileHandler.readFile(extensionsConfPath);
+		String tag = null;
+		for (int i = 0; i < extensionsFile.length; i++) {
+			if (!extensionsFile[i].isEmpty()
+					&& extensionsFile[i].charAt(0) == '['
+					&& !extensionsFile[i].equals("[general]")) {
+				tag = extensionsFile[i];
+				tag = tag.substring(1, tag.length() - 1);
+			}
+
+			// Se tiver mesmo contexto e número, achou a sala de conferência
+			if (extensionsFile[i].contains("ConfBridge")&&(extensionsFile[i].contains(number)&&(tag.equals(context)))) {
+				String line = extensionsFile[i].trim();
+
+				// Para remover o "exten=>"
+				line = line.substring(9);
+
+				String[] parameters = line.split(",", 4);				
+				boolean announceUserCount = false;
+				boolean musicOnHold = false;
+				boolean quietMode = false;
+				if (parameters[3].contains("c")) {
+					announceUserCount = true;
+				}
+				if (parameters[3].contains("M")) {
+					musicOnHold = true;
+				}
+				if (parameters[3].contains("q")) {
+					quietMode = true;
+				}
+				ConferenceRoom c = new ConferenceRoom(number, context,
+						announceUserCount, musicOnHold, quietMode);
+				return c;
+			}
+
+		}
+		return null;
+	}
+
 }

@@ -19,7 +19,7 @@ public class AsteriskConfiguration {
 	//Path do arquivo extensions.conf
 	public static final String EXTENSIONS_CONFIG_PATH = "/etc/asterisk/extensions.conf";
 	
-	//Path do arquivo extensions.conf
+	//Path do arquivo queues.conf
 	public static final String QUEUES_CONFIG_PATH = "/etc/asterisk/queues.conf";
 	
 	//Path do arquivo com o texto de help para DialCommand

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import model.ConferenceRoom;
 import model.RamalIAX;
+import model.RamalSip;
 import model.dial.DialCommand;
 import model.dial.DialPlan;
 import model.dial.DialRoute;
@@ -64,8 +65,6 @@ public class CrudConferenceRoomServlet extends HttpServlet {
 
 				ConferenceRoom conference = ConferenceRoom
 						.getConferenceFromParameter(request);
-				
-				System.out.println("music"+request.getParameter("musicOnHold"));
 
 				DialRoute dialRoute = new DialRoute(conference.getNumber());
 
@@ -94,21 +93,67 @@ public class CrudConferenceRoomServlet extends HttpServlet {
 					&& request.getParameter("atividade").equals("alteracao")) {
 				// Redirecionamento para a página de inserção, mas com os campos
 				// já preenchidos
-				String tag = request.getParameter("tag");
-				
+				String number = request.getParameter("number");
+				String context = request.getParameter("context");
 
+				ConferenceRoom conference = handler.getConferenceRoom(number,
+						context);
+
+				conference.conferenceToRequest(request);
 				request.setAttribute("atividade", "alterar");
-				request.setAttribute("tarefa", "Alterar Ramal IAX");
+				request.setAttribute("tarefa", "Alterar Sala de Conferência");
 				request.setAttribute("btnSubmit", "Alterar");
 
 			} else if (request.getParameter("atividade") != null
 					&& request.getParameter("atividade").equals("alterar")) {
 				// Caso seja realizada uma alteração em uma conferência já
 				// existente
+				ConferenceRoom conference = ConferenceRoom
+						.getConferenceFromParameter(request);
+
+				DialRoute dialRoute = new DialRoute(conference.getNumber());
+
+				// Adição de um comando default
+				DialCommand dialCommand = new DialCommand(1, 1, "Answer()");
+				dialRoute.addCommand(dialCommand);
+
+				// Adição da sala de conferência em si
+				DialCommand conferenceCommand = new DialCommand(2, 2,
+						conference.toConference());
+				dialRoute.addCommand(conferenceCommand);
+
+				DialPlan dialPlan = handler
+						.getDialPlan(conference.getContext());
+				dialPlan.addRoute(dialRoute);
+				boolean update = handler.updateDialPlan(dialPlan);
+				feedback = "Sala de conferência "+conference.getNumber()+" alterada com sucesso!";
+				
+				forward = "/ListConferenceRoomServlet";
 
 			} else if (request.getParameter("atividade") != null
 					&& request.getParameter("atividade").equals("remocao")) {
 				// Caso seja feita a remoção de uma conferência já existente
+				ConferenceRoom conference = ConferenceRoom
+						.getConferenceFromParameter(request);
+				DialRoute dialRoute = new DialRoute(conference.getNumber());
+
+				// Adição de um comando default
+				DialCommand dialCommand = new DialCommand(1, 1, "Answer()");
+				dialRoute.addCommand(dialCommand);
+
+				// Adição da sala de conferência em si
+				DialCommand conferenceCommand = new DialCommand(2, 2,
+						conference.toConference());
+				dialRoute.addCommand(conferenceCommand);
+
+				DialPlan dialPlan = handler
+						.getDialPlan(conference.getContext());
+				//remove a rota equivalente à conferência
+				dialPlan.removeRoute(dialRoute);
+				boolean update = handler.updateDialPlan(dialPlan);
+				feedback = "Sala de conferência "+conference.getNumber()+" removida com sucesso!";
+				
+				forward = "/ListConferenceRoomServlet";
 
 			} else {
 				// Else caso não seja nenhum dos três comandos dos CRUD
