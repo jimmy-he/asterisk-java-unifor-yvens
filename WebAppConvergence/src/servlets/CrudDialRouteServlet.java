@@ -64,7 +64,10 @@ public class CrudDialRouteServlet extends HttpServlet {
 				
 				//Adição de um comando default
 				DialCommand dialCommand = new DialCommand(1, 1, "Answer()");
+				//Adição do comando hangup como default
+				DialCommand dialCommand2 = new DialCommand(2, 2, "HangUp()");
 				dialRoute.addCommand(dialCommand);
+				dialRoute.addCommand(dialCommand2);
 				
 				DialPlan dialPlan = handler.getDialPlan(tag);
 				dialPlan.addRoute(dialRoute);

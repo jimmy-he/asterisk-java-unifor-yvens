@@ -11,6 +11,9 @@ package asterisk;
 public class AsteriskConfiguration {
 
 	//Path do arquivo sip.conf
+	public static final String AGENT_CONFIG_PATH = "/etc/asterisk/agents.conf";
+	
+	//Path do arquivo sip.conf
 	public static final String SIP_CONFIG_PATH = "/etc/asterisk/sip.conf";
 
 	//Path do arquivo iax.conf
