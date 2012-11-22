@@ -247,9 +247,10 @@ public class FileHandler {
 			else if(i > end)
 			{
 				
-				newFile[i - (end - begin)] = file[i];	
+				newFile[i - 1 - (end - begin)] = file[i];	
 			}
-		}
+			
+		}		
 		
 		//Depois desse processo, chamamos o método de salvar o arquivo em disco
 		//usando seu path original, que foi mantido na variável PATH durante sua
