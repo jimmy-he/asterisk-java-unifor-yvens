@@ -44,8 +44,9 @@
 			<table id="main_table" cellspacing="0">
 				<tr>
 					<td class="left">Number</td>
-					<td class="right"><input name="number" type="text" value="${number}">
-					</td>
+					<td class="right"><input name="number" type="text"
+						value="${number}"><input name="oldNumber" type="hidden"
+						value="${number}"></td>
 				</tr>
 				<tr>
 
@@ -59,8 +60,8 @@
 				</tr>
 				<tr>
 					<td class="left">Password</td>
-					<td class="right"><input name="password" type="password" value="${password}">
-					</td>
+					<td class="right"><input name="password" type="password"
+						value="${password}"></td>
 				</tr>
 			</table>
 
@@ -76,15 +77,15 @@
 						<td class="right"><input name="announceUserCount"
 							type="radio" value="true" checked="checked"> Yes <input
 							name="announceUserCount" type="radio" value="false"> No</td>
-					</tr>				
+					</tr>
 
 					<tr class="hidden_tr">
 						<td class="left">Music on Hold</td>
 						<td class="right"><input name="musicOnHold" type="radio"
-							value="true" checked="checked" > Yes <input name="musicOnHold"
-							type="radio" value="false"> No</td>
+							value="true" checked="checked"> Yes <input
+							name="musicOnHold" type="radio" value="false"> No</td>
 					</tr>
-					
+
 					<tr class="hidden_tr">
 						<td class="left">Quiet Mode</td>
 						<td class="right"><input name="quietMode" type="radio"

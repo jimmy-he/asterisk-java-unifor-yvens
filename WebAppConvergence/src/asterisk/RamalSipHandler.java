@@ -138,6 +138,7 @@ public class RamalSipHandler {
 			}
 
 			// Apagado o ramal do arquivo sip.conf
+			System.out.println("begin="+begin+" end="+end);
 			fileHandler.deleteLineOnFile(sipConf, begin, end);
 
 			// Caso não tenha sido encontrado o ramal, é lançada uma exceção
@@ -256,7 +257,9 @@ public class RamalSipHandler {
 					String parameters[] = sipConfFile[i++].split("=");
 
 					if (parameters[0].equals("callerid")) {
-						callerId = parameters[1];
+						//só retorna o callerid em si
+						String[] callerIdTemp = parameters[1].split("'");
+						callerId = callerIdTemp[1];
 					} else if (parameters[0].equals("type")) {
 						type = RamalSipType.getRamalType(parameters[1]);
 					} else if (parameters[0].equals("accountcode")) {
