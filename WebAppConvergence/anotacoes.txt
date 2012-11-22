@@ -21,3 +21,35 @@ A gente devia verificar, na leitura dos arquivos, para ignorar as linhas de come
 
 A gente precisa verificar caso um usuário apague todos os comandos de uma rota (Planos de Discagem), porque isso aí vai é apagar a rota, 
 precisamos verificar se isso tá ok
+
+lembrar de dar o reload nas telas que precisam
+
+Ajustar para a tela enfatizar como obrigatórios os campos mais importantes, no caso do SIP/IAX
+Campos mais importantes:
+CallerId
+DefaultUser
+Secret
+Context
+
+Colocar como default o Answer() e o HangUp() para os dial commands
+
+!important É sempre bom dar um hangup()
+
+No queues.conf -> #include queue_g4.conf <- chamar um outro arquivo para ser incluso
+
+ordenar os menus em ordem alfabética
+
+jogar um ramal na fila -> queues.conf
+member=>TIPO[SIP | IAX] / TAG
+se for agente
+member=>AGENT / código_do_agente
+
+agente:
+agent=>código_do_agente, senha, nome
+
+Ajustar o callerID para só aparecer o texto entre "" aspas
+
+tirar o reload do monitoramento
+
+procurar sobre sala sem senha para o confbridge -> comando authenticate
+
