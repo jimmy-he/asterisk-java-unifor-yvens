@@ -15,6 +15,8 @@ import connection.AsteriskSocket;
 
 public class ReloadHandler {
 
+	public static boolean DEBUG = false;
+	
 	// Método para dar reload
 	public void reload() {
 		AsteriskSocket socket;
@@ -26,13 +28,20 @@ public class ReloadHandler {
 
 			socket.delay(500);
 			List<String> list = socket.receiveMessage();
-
+			
+			if(DEBUG){
+				debugList(list);
+			}
+			
 			socket.sendMessage("Action: reload\r\n\r\n");
 
 			socket.delay(1000);
 
 			list = socket.receiveMessage();
-
+			if(DEBUG){
+				debugList(list);
+			}
+			
 			socket.sendMessage("Action: Logoff\r\n\r\n");
 			
 		} catch (UnknownHostException e) {
@@ -45,7 +54,11 @@ public class ReloadHandler {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 
+	private void debugList(List<String> list){
+		for (String string : list) {
+			System.out.println(string);
+		}
+	}
 }

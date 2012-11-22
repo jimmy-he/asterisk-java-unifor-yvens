@@ -18,6 +18,7 @@
 					Início
 				</a>
 			</div>
+			<!--  Removido
 			<div class="header_item"> 
 				<a id="servidor" href="#">
 					Servidor
@@ -30,6 +31,64 @@
 					</ul>
 				</div>
 			</div>
+			-->
+			<div class="header_item"> 
+				<a id="Filas" href="#">
+					Atendimento
+				</a>
+				<div class="header_menu">
+					<ul>
+						<li>
+							<a id="criarFila" href="CrudWaitQueueServlet"> Adicionar </a>
+						</li>
+						<li>
+							<a id="listarFila" href="ListWaitQueueServlet"> Listar </a>
+						</li>
+						<li class="header_menu_grouper">
+							Agentes
+						</li>
+						<li>
+							<a id="xxx" href="#"> Adicionar </a>
+						</li>
+						<li>
+							<a id="xxx" href="#"> Listar </a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			
+			<div class="header_item"> 
+				<a id="Dolor" href="#">
+					Discagem
+				</a>
+				<div class="header_menu">
+					<ul>
+						<li>
+							<a id="planoDiscagem" href="CrudDialPlanServlet"> Adicionar </a>
+						</li>
+						<li>
+							<a id="planoDiscagem" href="ListDialPlanServlet"> Listar </a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			
+			<div class="header_item"> 
+				<a id="Conferencia" href="#">
+					Conferência
+				</a>
+				<div class="header_menu">
+					<ul>
+						<li>
+							<a id="criarConferencias" href="CrudConferenceRoomServlet"> Adicionar </a>
+						</li>
+						<li>
+							<a id="listarConferencias" href="ListConferenceRoomServlet"> Listar </a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			
 			<div class="header_item"> 
 				<a id="ramais" href="#">
 					Ramais
@@ -60,51 +119,7 @@
 					</ul>
 				</div>
 			</div>
-			<div class="header_item"> 
-				<a id="Dolor" href="#">
-					Discagem
-				</a>
-				<div class="header_menu">
-					<ul>
-						<li>
-							<a id="planoDiscagem" href="CrudDialPlanServlet"> Adicionar </a>
-						</li>
-						<li>
-							<a id="planoDiscagem" href="ListDialPlanServlet"> Listar </a>
-						</li>
-					</ul>
-				</div>
-			</div>
-			<div class="header_item"> 
-				<a id="Conferencia" href="#">
-					Conferência
-				</a>
-				<div class="header_menu">
-					<ul>
-						<li>
-							<a id="criarConferencias" href="CrudConferenceRoomServlet"> Adicionar </a>
-						</li>
-						<li>
-							<a id="listarConferencias" href="ListConferenceRoomServlet"> Listar </a>
-						</li>
-					</ul>
-				</div>
-			</div>
-			<div class="header_item"> 
-				<a id="Filas" href="#">
-					Atendimento
-				</a>
-				<div class="header_menu">
-					<ul>
-						<li>
-							<a id="criarFila" href="CrudWaitQueueServlet"> Adicionar </a>
-						</li>
-						<li>
-							<a id="listarFila" href="ListWaitQueueServlet"> Listar </a>
-						</li>
-					</ul>
-				</div>
-			</div>
+			
 		</div>
 	</div>
 	<div class="hardGreyLine">
