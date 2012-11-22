@@ -123,8 +123,15 @@ public class CrudConferenceRoomServlet extends HttpServlet {
 				// existente
 				ConferenceRoom conference = ConferenceRoom
 						.getConferenceFromParameter(request);
+				DialPlan dialPlan = handler
+						.getDialPlan(conference.getContext());
 
-				DialRoute dialRoute = new DialRoute(conference.getNumber());
+				//caso você mude o número da conferência, deleta a conferência com o número antigo
+				DialRoute dialRoute = dialPlan.getRoute(request.getParameter("oldNumber"));
+				
+				dialPlan.removeRoute(dialRoute);
+				
+				dialRoute = new DialRoute(conference.getNumber());
 
 				// Adição de um comando default
 				DialCommand dialCommand = new DialCommand(1, 1, "Answer()");
@@ -142,10 +149,8 @@ public class CrudConferenceRoomServlet extends HttpServlet {
 				//Comando hangup
 				DialCommand hangupCommand = new DialCommand(4, 4,
 						"Hangup()");
-				dialRoute.addCommand(hangupCommand);
-
-				DialPlan dialPlan = handler
-						.getDialPlan(conference.getContext());
+				dialRoute.addCommand(hangupCommand);				
+				
 				dialPlan.addRoute(dialRoute);
 				boolean update = handler.updateDialPlan(dialPlan);
 				if (update) {

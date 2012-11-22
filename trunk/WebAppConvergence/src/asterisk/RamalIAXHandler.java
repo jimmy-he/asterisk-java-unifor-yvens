@@ -252,7 +252,9 @@ public class RamalIAXHandler {
 					String parameters[] = iaxConfFile[i++].split("=");
 
 					if (parameters[0].equals("callerid")) {
-						callerId = parameters[1];
+						//só retorna o callerid em si
+						String[] callerIdTemp = parameters[1].split("'");
+						callerId = callerIdTemp[1];
 					} else if (parameters[0].equals("type")) {
 						type = RamalIAXType.getRamalType(parameters[1]);
 					} else if (parameters[0].equals("defaultuser")) {

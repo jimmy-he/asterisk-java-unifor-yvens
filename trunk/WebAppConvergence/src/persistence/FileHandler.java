@@ -239,7 +239,7 @@ public class FileHandler {
 		//nesse momento ignoramos todas as linhas que vierem até chegar ao ponto end,
 		//daí o backUp continua, mas com I + 'end + 1' no arquivo original para não 
 		//repercurtir os efeitos da remoção da nova linha
-		for (int i = 0; i < newFile.length; i++) {
+		for (int i = 0; i < file.length; i++) {
 			if(i < begin)
 			{
 				newFile[i] = file[i];
@@ -247,7 +247,7 @@ public class FileHandler {
 			else if(i > end)
 			{
 				
-				newFile[i - (end - begin - 1)] = file[i];	
+				newFile[i - (end - begin)] = file[i];	
 			}
 		}
 		
