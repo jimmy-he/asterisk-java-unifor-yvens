@@ -62,7 +62,7 @@
 			</table>
 		</form>
 		
-		<a href="ListDialCommandServlet?tag=${tag}">Voltar</a>
+		<a href="ListWaitQueueServlet?tag=${tag}">Voltar</a>
 	</div>
 </div>
 
