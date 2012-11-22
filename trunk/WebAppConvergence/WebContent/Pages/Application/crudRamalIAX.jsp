@@ -63,11 +63,11 @@
 						value="${secret}"></td>
 				</tr>
 				<tr>
-					<td class="left">Ramal Type</td>
-					<td class="right"><select size="1" name="type"
-						style="width: 65%">
-							<option selected value="...">Selecione</option>
-							<option value="FRIEND">FRIEND</option>
+					<td class="left">Context</td>
+					<td class="right"><select name="context">
+							<c:forEach var="dialPlan" items="${dialPlanList}">
+								<option>${dialPlan.tag}</option>
+							</c:forEach>
 					</select></td>
 				</tr>
 			</table>
@@ -94,19 +94,20 @@
 							</c:if>
 							<c:if test="${transfer != 'yes'}">
 								<td class="right"><input name="transfer" type="radio"
-									value="true"> Yes <input
-									name="transfer" type="radio" value="false" checked="checked"> No</td>
+									value="true"> Yes <input name="transfer" type="radio"
+									value="false" checked="checked"> No</td>
 							</c:if>
 						</c:if>
 					</tr>
-					<tr class="hidden_tr">
-						<td class="left">Context</td>
-						<td class="right"><select name="context">
-								<c:forEach var="dialPlan" items="${dialPlanList}">
-									<option>${dialPlan.tag}</option>
-								</c:forEach>
+					<tr>
+						<td class="left">Ramal Type</td>
+						<td class="right"><select size="1" name="type"
+							style="width: 65%">
+
+								<option value="FRIEND">FRIEND</option>
 						</select></td>
 					</tr>
+
 					<tr class="hidden_tr">
 						<td class="left">Auth</td>
 						<td class="right"><input name="auth" type="text"

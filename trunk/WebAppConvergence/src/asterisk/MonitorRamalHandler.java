@@ -36,15 +36,7 @@ public class MonitorRamalHandler {
 		socket.sendMessage("Action: login\r\nUsername: root\r\nSecret: root\r\n\r\n");
 
 		socket.delay(500);
-		List<String> list = socket.receiveMessage();
-
-		socket.sendMessage("Action: reload\r\n\r\n");
-
-		// o serviço demora mais de 500ms para dar reload
-
-		socket.delay(1000);
-
-		list = socket.receiveMessage();
+		List<String> list = socket.receiveMessage();		
 
 		socket.sendMessage("Action: SIPpeers\r\n\r\n");
 
@@ -106,14 +98,7 @@ public class MonitorRamalHandler {
 		socket.sendMessage("Action: login\r\nUsername: root\r\nSecret: root\r\n\r\n");
 
 		socket.delay(500);
-		List<String> list = socket.receiveMessage();
-
-		socket.sendMessage("Action: reload\r\n\r\n");
-
-		// o serviço demora mais de 500ms para dar reload
-		socket.delay(1000);
-
-		list = socket.receiveMessage();
+		List<String> list = socket.receiveMessage();		
 
 		socket.sendMessage("Action: IAXpeers\r\n\r\n");
 

@@ -66,11 +66,11 @@
 						value="${secret}"></td>
 				</tr>
 				<tr>
-					<td class="left">Ramal Type</td>
-					<td class="right"><select size="1" name="type"
-						style="width: 65%">
-							<option selected value="...">Selecione</option>
-							<option value="FRIEND">FRIEND</option>
+					<td class="left">Context</td>
+					<td class="right"><select name="context">
+							<c:forEach var="dialPlan" items="${dialPlanList}">
+								<option>${dialPlan.tag}</option>
+							</c:forEach>
 					</select></td>
 				</tr>
 			</table>
@@ -96,19 +96,19 @@
 							</c:if>
 							<c:if test="${canReinvite != 'yes'}">
 								<td class="right"><input name="canReinvite" type="radio"
-								value="true"> Yes <input name="canReinvite"
-								checked="checked" type="radio" value="false"> No</td>
+									value="true"> Yes <input name="canReinvite"
+									checked="checked" type="radio" value="false"> No</td>
 							</c:if>
 						</c:if>
 					</tr>
 					<tr class="hidden_tr">
-						<td class="left">Context</td>
-						<td class="right"><select name="context">
-								<c:forEach var="dialPlan" items="${dialPlanList}">
-									<option>${dialPlan.tag}</option>
-								</c:forEach>
+						<td class="left">Ramal Type</td>
+						<td class="right"><select size="1" name="type"
+							style="width: 65%">
+								<option value="FRIEND">FRIEND</option>
 						</select></td>
 					</tr>
+
 					<tr class="hidden_tr">
 						<td class="left">DtmfMode</td>
 						<td class="right"><input name="dtmfMode" type="text"

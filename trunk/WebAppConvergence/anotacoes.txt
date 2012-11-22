@@ -47,9 +47,12 @@ member=>AGENT / código_do_agente
 agente:
 agent=>código_do_agente, senha, nome
 
-Ajustar o callerID para só aparecer o texto entre "" aspas
+Ajustar o callerID para só aparecer o texto entre "" aspas (Daniel)
 
-tirar o reload do monitoramento
+tirar o reload do monitoramento (Daniel)
 
-procurar sobre sala sem senha para o confbridge -> comando authenticate
+procurar sobre sala sem senha para o confbridge -> comando authenticate (Daniel)
 
+Na hora de digitar a senha do authenticate, depois de digitar todos os números tem que apertar jogo da velha (#)
+
+Yvens, verificar se usar aspas simples no callerId não dá problema na hora de fazer ligações

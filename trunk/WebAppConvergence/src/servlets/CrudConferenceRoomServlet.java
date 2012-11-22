@@ -10,12 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import model.ConferenceRoom;
-import model.RamalIAX;
-import model.RamalSip;
 import model.dial.DialCommand;
 import model.dial.DialPlan;
 import model.dial.DialRoute;
 import asterisk.ExtensionHandler;
+import asterisk.ReloadHandler;
 
 /**
  * Servlet implementation class CrudConferenceServlet
@@ -54,6 +53,8 @@ public class CrudConferenceRoomServlet extends HttpServlet {
 		try {
 
 			ExtensionHandler handler = new ExtensionHandler();
+			
+			ReloadHandler reload = new ReloadHandler();
 
 			List<DialPlan> dialPlanList = handler.listDialPlan();
 
@@ -72,10 +73,19 @@ public class CrudConferenceRoomServlet extends HttpServlet {
 				DialCommand dialCommand = new DialCommand(1, 1, "Answer()");
 				dialRoute.addCommand(dialCommand);
 
+				// Adição da autenticação por senha
+				DialCommand authenticateCommand = new DialCommand(2, 2, "Authenticate("+conference.getPassword()+")");
+				dialRoute.addCommand(authenticateCommand);
+				
 				// Adição da sala de conferência em si
-				DialCommand conferenceCommand = new DialCommand(2, 2,
+				DialCommand conferenceCommand = new DialCommand(3, 3,
 						conference.toConference());
 				dialRoute.addCommand(conferenceCommand);
+				
+				//Comando hangup
+				DialCommand hangupCommand = new DialCommand(4, 4,
+						"Hangup()");
+				dialRoute.addCommand(hangupCommand);
 
 				DialPlan dialPlan = handler
 						.getDialPlan(conference.getContext());
@@ -87,6 +97,9 @@ public class CrudConferenceRoomServlet extends HttpServlet {
 				} else {
 					error = "Erro! Algum outro usuário está fazendo modificações no sistema, tente novamente mais tarde.";
 				}
+				
+				//recarregando o serviço
+				reload.reload();
 
 				forward = "/ListConferenceRoomServlet";
 			} else if (request.getParameter("atividade") != null
@@ -117,16 +130,33 @@ public class CrudConferenceRoomServlet extends HttpServlet {
 				DialCommand dialCommand = new DialCommand(1, 1, "Answer()");
 				dialRoute.addCommand(dialCommand);
 
+				// Adição da autenticação por senha
+				DialCommand authenticateCommand = new DialCommand(2, 2, "Authenticate("+conference.getPassword()+")");
+				dialRoute.addCommand(authenticateCommand);
+				
 				// Adição da sala de conferência em si
-				DialCommand conferenceCommand = new DialCommand(2, 2,
+				DialCommand conferenceCommand = new DialCommand(3, 3,
 						conference.toConference());
 				dialRoute.addCommand(conferenceCommand);
+				
+				//Comando hangup
+				DialCommand hangupCommand = new DialCommand(4, 4,
+						"Hangup()");
+				dialRoute.addCommand(hangupCommand);
 
 				DialPlan dialPlan = handler
 						.getDialPlan(conference.getContext());
 				dialPlan.addRoute(dialRoute);
 				boolean update = handler.updateDialPlan(dialPlan);
-				feedback = "Sala de conferência "+conference.getNumber()+" alterada com sucesso!";
+				if (update) {
+					feedback = "Sala de conferência "+conference.getNumber()+" alterada com sucesso!";
+				} else {
+					error = "Erro! Algum outro usuário está fazendo modificações no sistema, tente novamente mais tarde.";
+				}
+				
+				
+				//recarregando o serviço
+				reload.reload();
 				
 				forward = "/ListConferenceRoomServlet";
 
@@ -141,17 +171,33 @@ public class CrudConferenceRoomServlet extends HttpServlet {
 				DialCommand dialCommand = new DialCommand(1, 1, "Answer()");
 				dialRoute.addCommand(dialCommand);
 
+				// Adição da autenticação por senha
+				DialCommand authenticateCommand = new DialCommand(2, 2, "Authenticate("+conference.getPassword()+")");
+				dialRoute.addCommand(authenticateCommand);
+				
 				// Adição da sala de conferência em si
-				DialCommand conferenceCommand = new DialCommand(2, 2,
+				DialCommand conferenceCommand = new DialCommand(3, 3,
 						conference.toConference());
 				dialRoute.addCommand(conferenceCommand);
+				
+				//Comando hangup
+				DialCommand hangupCommand = new DialCommand(4, 4,
+						"Hangup()");
+				dialRoute.addCommand(hangupCommand);
 
 				DialPlan dialPlan = handler
 						.getDialPlan(conference.getContext());
 				//remove a rota equivalente à conferência
 				dialPlan.removeRoute(dialRoute);
 				boolean update = handler.updateDialPlan(dialPlan);
-				feedback = "Sala de conferência "+conference.getNumber()+" removida com sucesso!";
+				if (update) {
+					feedback = "Sala de conferência "+conference.getNumber()+" removida com sucesso!";
+				} else {
+					error = "Erro! Algum outro usuário está fazendo modificações no sistema, tente novamente mais tarde.";
+				}
+				
+				//recarregando o serviço
+				reload.reload();
 				
 				forward = "/ListConferenceRoomServlet";
 
@@ -159,7 +205,7 @@ public class CrudConferenceRoomServlet extends HttpServlet {
 				// Else caso não seja nenhum dos três comandos dos CRUD
 				// Instanciado um ramal apenas com os valores para os campos
 				// avançados
-				ConferenceRoom conference = new ConferenceRoom("", "");
+				ConferenceRoom conference = new ConferenceRoom("", "", "");
 
 				// Setado os valores avançados para o request
 				conference.conferenceToRequest(request);

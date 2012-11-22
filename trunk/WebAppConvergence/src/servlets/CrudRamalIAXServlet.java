@@ -13,6 +13,7 @@ import model.RamalIAX;
 import model.dial.DialPlan;
 import asterisk.ExtensionHandler;
 import asterisk.RamalIAXHandler;
+import asterisk.ReloadHandler;
 
 /**
  * Servlet responsável pelo CRUD dos ramais IAX
@@ -53,6 +54,8 @@ public class CrudRamalIAXServlet extends HttpServlet {
 		try {
 			RamalIAXHandler handler = new RamalIAXHandler();
 			
+			ReloadHandler reload = new ReloadHandler();
+			
 			//carregando a lista de planos de discagem
 			ExtensionHandler exhandler = new ExtensionHandler();
 			
@@ -72,6 +75,9 @@ public class CrudRamalIAXServlet extends HttpServlet {
 				handler.createRamal(ramalIAX);
 				feedback = "Ramal " + ramalIAX.getTag()
 						+ " adicionado com sucesso!";
+				
+				//recarregando o serviço
+				reload.reload();
 
 				forward = "/TableRamalIAXServlet";
 			} else if (request.getParameter("atividade") != null
@@ -93,7 +99,8 @@ public class CrudRamalIAXServlet extends HttpServlet {
 				handler.updateRamal(ramalIAX);
 				feedback = "Ramal " + ramalIAX.getTag()
 						+ " alterado com sucesso!";
-
+				//recarregando o serviço
+				reload.reload();
 				forward = "/TableRamalIAXServlet";
 			} else if (request.getParameter("atividade") != null
 					&& request.getParameter("atividade").equals("remocao")) {
@@ -102,7 +109,8 @@ public class CrudRamalIAXServlet extends HttpServlet {
 				handler.deleteRamal(ramalIAX);
 				feedback = "Ramal " + ramalIAX.getTag()
 						+ " removido com sucesso!";
-
+				//recarregando o serviço
+				reload.reload();
 				forward = "/TableRamalIAXServlet";
 			} else {
 				// Else caso não seja nenhum dos três comandos dos CRUD

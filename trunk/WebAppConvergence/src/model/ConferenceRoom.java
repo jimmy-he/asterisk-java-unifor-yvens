@@ -16,6 +16,7 @@ public class ConferenceRoom {
 	private String number;
 	private String context; // conferência só ocorre entre números em um mesmo
 							// contexto
+	private String password; //senha para o authenticate
 	private boolean announceUserCount; // anuncia número de usuários quando
 										// alguém entra
 	private boolean musicOnHold; // toca música de espera quando só tem 1 pessoa
@@ -30,8 +31,8 @@ public class ConferenceRoom {
 	 * @param context
 	 */
 
-	public ConferenceRoom(String number, String context) {
-		this(number, context, true, true, false);
+	public ConferenceRoom(String number, String context, String password) {
+		this(number, context, password, true, true, false);
 	}
 
 	/**
@@ -39,21 +40,23 @@ public class ConferenceRoom {
 	 * 
 	 * @param number
 	 * @param context
+	 * @param password
 	 * @param announceUserCount
 	 * @param musicOnHold
 	 * @param quietMode
 	 */
 
-	public ConferenceRoom(String number, String context,
+	
+	public ConferenceRoom(String number, String context, String password,
 			boolean announceUserCount, boolean musicOnHold, boolean quietMode) {
 		super();
 		this.number = number;
 		this.context = context;
+		this.password = password;
 		this.announceUserCount = announceUserCount;
 		this.musicOnHold = musicOnHold;
 		this.quietMode = quietMode;
 	}
-
 	/**
 	 * Método para retornar a conferência no formato que deve ser escrita no
 	 * extensions.conf
@@ -69,6 +72,7 @@ public class ConferenceRoom {
 
 		return conference;
 	}
+	
 
 	public static ConferenceRoom getConferenceFromParameter(
 			HttpServletRequest request) {
@@ -76,6 +80,7 @@ public class ConferenceRoom {
 
 		String number = "";
 		String context = "";
+		String password = "";
 		boolean announceUserCount = false;
 		boolean musicOnHold = false;
 		boolean quietMode = false;
@@ -86,6 +91,10 @@ public class ConferenceRoom {
 
 		if (request.getParameter("context") != null) {
 			context = request.getParameter("context");
+		}
+		
+		if (request.getParameter("password") != null) {
+			password = request.getParameter("password");
 		}
 
 		if (request.getParameter("announceUserCount") != null) {
@@ -103,7 +112,7 @@ public class ConferenceRoom {
 					.equalsIgnoreCase("true")) ? true : false;
 		}
 
-		conference = new ConferenceRoom(number, context, announceUserCount,
+		conference = new ConferenceRoom(number, context, password, announceUserCount,
 				musicOnHold, quietMode);
 		return conference;
 	}
@@ -116,6 +125,7 @@ public class ConferenceRoom {
 
 		request.setAttribute("number", number);
 		request.setAttribute("context", context);
+		request.setAttribute("password", password);
 		request.setAttribute("announceUserCount", (announceUserCount) ? "yes"
 				: "no");
 		request.setAttribute("musicOnHold", (musicOnHold) ? "yes" : "no");
@@ -163,6 +173,14 @@ public class ConferenceRoom {
 		this.context = context;
 	}
 
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	public boolean isAnnounceUserCount() {
 		return announceUserCount;
 	}
@@ -186,5 +204,7 @@ public class ConferenceRoom {
 	public void setQuietMode(boolean quietMode) {
 		this.quietMode = quietMode;
 	}
+
+	
 
 }
