@@ -342,7 +342,7 @@ public class ExtensionHandler {
 	 * @return retorna um arraylist de conferenceroom
 	 * @throws IOException
 	 */
-	
+
 	public List<ConferenceRoom> listConferenceRooms() throws IOException {
 		String[] extensionsFile = fileHandler.readFile(extensionsConfPath);
 		List<ConferenceRoom> listConferenceRooms = new ArrayList<ConferenceRoom>();
@@ -365,6 +365,9 @@ public class ExtensionHandler {
 				String[] parameters = line.split(",", 4);
 				String number = parameters[0];
 				String context = tag;
+				String authenticate[] = extensionsFile[i - 1].trim().split("Authenticate");
+				String password = authenticate[1].substring(1,
+						authenticate[1].length() - 1);
 				boolean announceUserCount = false;
 				boolean musicOnHold = false;
 				boolean quietMode = false;
@@ -378,7 +381,7 @@ public class ExtensionHandler {
 					quietMode = true;
 				}
 				ConferenceRoom c = new ConferenceRoom(number, context,
-						announceUserCount, musicOnHold, quietMode);
+						password, announceUserCount, musicOnHold, quietMode);
 				listConferenceRooms.add(c);
 			}
 
@@ -400,13 +403,18 @@ public class ExtensionHandler {
 			}
 
 			// Se tiver mesmo contexto e número, achou a sala de conferência
-			if (extensionsFile[i].contains("ConfBridge")&&(extensionsFile[i].contains(number)&&(tag.equals(context)))) {
+			if (extensionsFile[i].contains("ConfBridge")
+					&& (extensionsFile[i].contains(number) && (tag
+							.equals(context)))) {
 				String line = extensionsFile[i].trim();
 
 				// Para remover o "exten=>"
 				line = line.substring(9);
 
-				String[] parameters = line.split(",", 4);				
+				String[] parameters = line.split(",", 4);
+				String authenticate[] = extensionsFile[i - 1].trim().split("Authenticate");
+				String password = authenticate[1].substring(1,
+						authenticate[1].length() - 1);
 				boolean announceUserCount = false;
 				boolean musicOnHold = false;
 				boolean quietMode = false;
@@ -419,7 +427,7 @@ public class ExtensionHandler {
 				if (parameters[3].contains("q")) {
 					quietMode = true;
 				}
-				ConferenceRoom c = new ConferenceRoom(number, context,
+				ConferenceRoom c = new ConferenceRoom(number, context, password,
 						announceUserCount, musicOnHold, quietMode);
 				return c;
 			}

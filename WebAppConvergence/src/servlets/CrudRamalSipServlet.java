@@ -13,6 +13,7 @@ import model.RamalSip;
 import model.dial.DialPlan;
 import asterisk.ExtensionHandler;
 import asterisk.RamalSipHandler;
+import asterisk.ReloadHandler;
 
 /**
  * Servlet responsável pelo CRUD dos ramais
@@ -49,6 +50,8 @@ public class CrudRamalSipServlet extends HttpServlet {
 		try {
 			RamalSipHandler handler = new RamalSipHandler();
 			
+			ReloadHandler reload = new ReloadHandler();
+			
 			//carregando a lista de planos de discagem
 			ExtensionHandler exhandler = new ExtensionHandler();
 			
@@ -65,6 +68,9 @@ public class CrudRamalSipServlet extends HttpServlet {
 				
 				handler.createRamal(ramalSip);
 				feedback = "Ramal "+ramalSip.getTag()+" adicionado com sucesso!";
+				
+				//recarregando o serviço
+				reload.reload();
 				
 				forward = "/TableRamalSipServlet";
 			}
@@ -85,6 +91,9 @@ public class CrudRamalSipServlet extends HttpServlet {
 				handler.updateRamal(ramalSip);
 				feedback = "Ramal "+ramalSip.getTag()+" alterado com sucesso!";
 				
+				//recarregando o serviço
+				reload.reload();
+				
 				forward = "/TableRamalSipServlet";
 			}
 			else if(request.getParameter("atividade") != null && request.getParameter("atividade").equals("remocao")){
@@ -93,9 +102,12 @@ public class CrudRamalSipServlet extends HttpServlet {
 				handler.deleteRamal(ramalSip);
 				feedback = "Ramal "+ramalSip.getTag()+" removido com sucesso!";
 				
+				//recarregando o serviço
+				reload.reload();
+				
 				forward = "/TableRamalSipServlet";
 			}else{
-				//Else caso não seja nenhum dos três comando dos CRUD
+				//Else caso não seja nenhum dos três comandos dos CRUD
 				
 				//Instanciado um ramal apenas com os valores para os campos avançados
 				RamalSip ramal = new RamalSip("", "", "","");

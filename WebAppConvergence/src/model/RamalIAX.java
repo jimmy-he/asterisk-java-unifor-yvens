@@ -88,7 +88,7 @@ public class RamalIAX {
 	public String[] toRamalIAX() {
 		String[] ramalIAX = new String[10];
 		ramalIAX[0] = "\r[" + tag + "]\r";
-		ramalIAX[1] = "callerid=" + callerId + "\r";
+		ramalIAX[1] = "callerid='"+callerId+"' <"+tag+">\r";
 		ramalIAX[2] = "type=" + type.toString() + "\r";
 		ramalIAX[3] = "defaultuser=" + defaultUser + "\r";
 		ramalIAX[4] = "secret=" + secret + "\r";

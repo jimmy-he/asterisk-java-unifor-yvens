@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import model.dial.DialPlan;
 import asterisk.ExtensionHandler;
+import asterisk.ReloadHandler;
 
 /**
  * Servlet responsável pelo CRUD dos planos de discagem
@@ -47,6 +48,8 @@ public class CrudDialPlanServlet extends HttpServlet {
 		try {
 			ExtensionHandler handler = new ExtensionHandler();
 			
+			ReloadHandler reload = new ReloadHandler();
+			
 			if(request.getParameter("atividade") != null && request.getParameter("atividade").equals("inserir")){
 				//Caso seja realizada uma inserção de ramal
 				DialPlan dialPlan = DialPlan.getDialPlanFromParameter(request);
@@ -58,9 +61,12 @@ public class CrudDialPlanServlet extends HttpServlet {
 				
 				feedback = "Plano de discagem "+dialPlan.getTag()+" adicionado com sucesso!";
 				
+				//recarregando o serviço
+				reload.reload();
+				
 				forward = "/ListDialPlanServlet";
 			}else{
-				//Else caso não seja nenhum dos três comando dos CRUD
+				//Else caso não seja nenhum dos três comandos dos CRUD
 				
 				//Instanciado um plano de discagem apenas com os valores para os campos avançados
 				DialPlan dialPlan = new DialPlan("");

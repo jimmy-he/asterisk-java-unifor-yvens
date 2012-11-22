@@ -12,6 +12,7 @@ import model.dial.DialCommand;
 import model.dial.DialPlan;
 import model.dial.DialRoute;
 import asterisk.ExtensionHandler;
+import asterisk.ReloadHandler;
 
 /**
  * Servlet implementation class CrudDialCommandServlet
@@ -51,6 +52,8 @@ public class CrudDialCommandServlet extends HttpServlet {
 		try {
 			ExtensionHandler handler = new ExtensionHandler();
 			
+			ReloadHandler reload = new ReloadHandler();
+			
 			if(request.getParameter("atividade") != null && request.getParameter("atividade").equals("inserir")){
 				//Caso seja realizada uma inserção de um comando
 				DialCommand dialCommand = DialCommand.getDialCommandFromParameter(request);
@@ -70,6 +73,9 @@ public class CrudDialCommandServlet extends HttpServlet {
 				}else{
 					error = "Erro! Algum outro usuário está fazendo modificações no sistema, tente novamente mais tarde.";
 				}
+				
+				//recarregando o serviço
+				reload.reload();
 				
 				forward = "/ListDialCommandServlet";
 			}
@@ -114,6 +120,9 @@ public class CrudDialCommandServlet extends HttpServlet {
 					error = "Erro! Algum outro usuário está fazendo modificações no sistema, tente novamente mais tarde.";
 				}
 				
+				//recarregando o serviço
+				reload.reload();
+				
 				forward = "/ListDialCommandServlet";
 			}
 			else if(request.getParameter("atividade") != null && request.getParameter("atividade").equals("remocao")){
@@ -140,6 +149,9 @@ public class CrudDialCommandServlet extends HttpServlet {
 				}else{
 					error = "Erro! Algum outro usuário está fazendo modificações no sistema, tente novamente mais tarde.";
 				}
+				
+				//recarregando o serviço
+				reload.reload();
 				
 				forward = "/ListDialCommandServlet";
 			}else{

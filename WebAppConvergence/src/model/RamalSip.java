@@ -98,7 +98,7 @@ public class RamalSip {
 	public String[] toRamalSip(){
 		String[] ramalSip = new String[12];
 		ramalSip[0] = "\r["+tag+"]\r";
-		ramalSip[1] = "callerid=\""+callerId+"\" <"+tag+">\r";
+		ramalSip[1] = "callerid='"+callerId+"' <"+tag+">\r";
 		ramalSip[2] = "type="+type.toString()+"\r";
 		ramalSip[3] = "accountcode="+accountCode+"\r";
 		ramalSip[4] = "username="+username+"\r";

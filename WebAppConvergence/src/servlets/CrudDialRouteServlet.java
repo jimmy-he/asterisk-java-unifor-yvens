@@ -11,6 +11,7 @@ import model.dial.DialCommand;
 import model.dial.DialPlan;
 import model.dial.DialRoute;
 import asterisk.ExtensionHandler;
+import asterisk.ReloadHandler;
 
 /**
  * Servlet responsável pelo CRUD das rotas de discagem
@@ -45,11 +46,13 @@ public class CrudDialRouteServlet extends HttpServlet {
 		
 		String forward = "/Pages/Application/crudDialRoute.jsp";
 		
-		//Tag do DialPlan na qual o DialRoute pertence
+		//Tag do DialPlan ao qual o DialRoute pertence
 		String tag = request.getParameter("tag");
 		
 		try {
 			ExtensionHandler handler = new ExtensionHandler();
+			
+			ReloadHandler reload = new ReloadHandler();
 			
 			if(request.getParameter("atividade") != null && request.getParameter("atividade").equals("inserir")){
 				//Caso seja realizada uma inserção de ramal
@@ -72,9 +75,11 @@ public class CrudDialRouteServlet extends HttpServlet {
 					error = "Erro! Algum outro usuário está fazendo modificações no sistema, tente novamente mais tarde.";
 				}
 				
+				//recarregando o serviço
+				reload.reload();
 				forward = "/ListDialRouteServlet";
 			}else{
-				//Else caso não seja nenhum dos três comando dos CRUD
+				//Else caso não seja nenhum dos três comandos dos CRUD
 				
 				//Instanciado um plano de discagem apenas com os valores para os campos avançados
 				DialRoute dialRoute = new DialRoute("");

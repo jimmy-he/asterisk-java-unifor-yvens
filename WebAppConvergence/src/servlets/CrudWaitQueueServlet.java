@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import model.queues.WaitQueue;
+import asterisk.ReloadHandler;
 import asterisk.WaitQueueHandler;
 
 /**
@@ -43,6 +44,8 @@ public class CrudWaitQueueServlet extends HttpServlet {
 		try {
 			WaitQueueHandler handler = new WaitQueueHandler();
 			
+			ReloadHandler reload = new ReloadHandler();
+			
 			if(request.getParameter("atividade") != null && request.getParameter("atividade").equals("inserir")){
 				//Caso seja realizada uma inserção de ramal
 				WaitQueue waitQueue = WaitQueue.getWaitQueueFromParameter(request);
@@ -53,6 +56,9 @@ public class CrudWaitQueueServlet extends HttpServlet {
 				handler.insertWaitQueue(waitQueue);
 				
 				feedback = "Fila de espera "+waitQueue.getTag()+" adicionada com sucesso!";
+				
+				//recarregando o serviço
+				reload.reload();
 				
 				forward = "/ListWaitQueueServlet";
 			}else{

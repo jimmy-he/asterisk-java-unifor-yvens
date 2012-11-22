@@ -57,6 +57,11 @@
 					</select></td>
 
 				</tr>
+				<tr>
+					<td class="left">Password</td>
+					<td class="right"><input name="password" type="password" value="${password}">
+					</td>
+				</tr>
 			</table>
 
 			<!-- Atributos avançados da criação de uma conferência -->

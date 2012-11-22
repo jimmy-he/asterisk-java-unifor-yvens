@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import model.dial.DialCommand;
 import model.queues.QueueCommand;
 import model.queues.WaitQueue;
+import asterisk.ReloadHandler;
 import asterisk.WaitQueueHandler;
 
 /**
@@ -49,6 +50,8 @@ public class CrudQueueCommandServlet extends HttpServlet {
 		try {
 			WaitQueueHandler handler = new WaitQueueHandler();
 			
+			ReloadHandler reload = new ReloadHandler();
+			
 			if(request.getParameter("atividade") != null && request.getParameter("atividade").equals("inserir")){
 				//Caso seja realizada uma inserção de um comando
 				QueueCommand queueCommand = QueueCommand.getQueueCommandFromParameter(request);
@@ -66,6 +69,9 @@ public class CrudQueueCommandServlet extends HttpServlet {
 				}else{
 					error = "Erro! Algum outro usuário está fazendo modificações no sistema, tente novamente mais tarde.";
 				}
+				
+				//recarregando o serviço
+				reload.reload();
 				
 				forward = "/ListQueueCommandServlet";
 			}
@@ -108,6 +114,9 @@ public class CrudQueueCommandServlet extends HttpServlet {
 					error = "Erro! Algum outro usuário está fazendo modificações no sistema, tente novamente mais tarde.";
 				}
 				
+				//recarregando o serviço
+				reload.reload();
+				
 				forward = "/ListQueueCommandServlet";
 			}
 			else if(request.getParameter("atividade") != null && request.getParameter("atividade").equals("remocao")){
@@ -133,6 +142,9 @@ public class CrudQueueCommandServlet extends HttpServlet {
 				}else{
 					error = "Erro! Algum outro usuário está fazendo modificações no sistema, tente novamente mais tarde.";
 				}
+				
+				//recarregando o serviço
+				reload.reload();
 				
 				forward = "/ListQueueCommandServlet";
 			}else{
