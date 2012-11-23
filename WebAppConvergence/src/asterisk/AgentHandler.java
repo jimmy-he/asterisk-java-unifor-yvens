@@ -222,6 +222,24 @@ public class AgentHandler {
 		
 		return agent;
 	}
+	
+	public Agent getAgent(int id) throws AgentException, IOException{
+		Agent agent = null;
+		
+		List<Agent> listAgent = listAgent();
+		
+		for (Agent listedAgent : listAgent) {
+			if(listedAgent.getId() == id){
+				agent = listedAgent;
+			}
+		}
+		
+		if (agent == null) {
+			throw new AgentException("Erro! Agente não encontrado com id = " + id);
+		}
+		
+		return agent;
+	}
 
 	/**
 	 * Método para fazer a verificação do PATH do agent.conf passado

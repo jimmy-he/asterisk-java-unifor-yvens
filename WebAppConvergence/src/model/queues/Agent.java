@@ -65,6 +65,10 @@ public class Agent implements Comparable<Agent>{
 		if(request.getParameter("name") != null){
 			name = request.getParameter("name");
 		}
+		
+		if(id.isEmpty()){
+			id = "0";
+		}
 
 		agent = new Agent(Integer.parseInt(id),code, name, secret);
 		return agent;

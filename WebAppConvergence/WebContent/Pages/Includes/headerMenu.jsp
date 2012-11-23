@@ -38,6 +38,9 @@
 				</a>
 				<div class="header_menu">
 					<ul>
+						<li class="header_menu_grouper">
+							Filas
+						</li>
 						<li>
 							<a id="criarFila" href="CrudWaitQueueServlet"> Adicionar </a>
 						</li>
@@ -48,10 +51,10 @@
 							Agentes
 						</li>
 						<li>
-							<a id="xxx" href="#"> Adicionar </a>
+							<a id="criarAgente" href="CrudAgentServlet"> Adicionar </a>
 						</li>
 						<li>
-							<a id="xxx" href="#"> Listar </a>
+							<a id="listarAgente" href="ListAgentServlet"> Listar </a>
 						</li>
 					</ul>
 				</div>
