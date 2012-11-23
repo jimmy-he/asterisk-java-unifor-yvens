@@ -16,12 +16,14 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class Agent implements Comparable<Agent>{
 
+	private int id;
 	private String code;
 	private String name;
 	private String secret;
 	
-	public Agent(String code, String name, String secret) {
+	public Agent(int id, String code, String name, String secret) {
 		super();
+		this.id = id;
 		this.code = code;
 		this.name = name;
 		this.secret = secret;
@@ -46,10 +48,14 @@ public class Agent implements Comparable<Agent>{
 	public static Agent getAgentFromParameter(HttpServletRequest request){
 		Agent agent = null;
 
+		String id = "";
 		String code = "";
 		String secret = "";
 		String name = "";
 		
+		if(request.getParameter("id") != null){
+			id = request.getParameter("id");
+		}
 		if(request.getParameter("code") != null){
 			code = request.getParameter("code");
 		}
@@ -60,7 +66,7 @@ public class Agent implements Comparable<Agent>{
 			name = request.getParameter("name");
 		}
 
-		agent = new Agent(code, name, secret);
+		agent = new Agent(Integer.parseInt(id),code, name, secret);
 		return agent;
 	}
 
@@ -70,11 +76,20 @@ public class Agent implements Comparable<Agent>{
 	 * @param request
 	 */
 	public void agentToRequest(HttpServletRequest request){
+		request.setAttribute("id", id);
 		request.setAttribute("code", code);
 		request.setAttribute("name", name);
 		request.setAttribute("secret", secret);
 	}
 	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public String getCode() {
 		return code;
 	}

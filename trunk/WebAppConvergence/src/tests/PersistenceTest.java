@@ -153,4 +153,10 @@ public class PersistenceTest {
 		//Verifica se o arquivo tem o mesmo número de linhas que originalmente tinha
 		Assert.assertEquals(lines, file.length);
 	}
+	
+	@Test
+	public void testDeletingInbetweenLines() throws IOException
+	{
+		
+	}
 }
