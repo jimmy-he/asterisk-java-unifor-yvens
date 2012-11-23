@@ -5,21 +5,18 @@ import java.io.IOException;
 import java.util.List;
 
 import junit.framework.Assert;
-import model.RamalSip;
 import model.queues.Agent;
 
 import org.junit.Test;
 
 import asterisk.AgentHandler;
-import asterisk.RamalSipHandler;
 import exception.AgentException;
-import exception.SipConfigException;
 
 public class AgentHandlerTest {
 
 public final static String agents_conf = "src"+File.separator+"tests"+File.separator+"input"+File.separator+"agents.conf";
 	
-	public final static Agent agent = new Agent("666", "rock", "Rockeiro");
+	public final static Agent agent = new Agent(3, "666", "rock", "Rockeiro");
 	
 	@Test
 	public void TestReadingLocalAgentConf() throws IOException, AgentException {
@@ -61,7 +58,8 @@ public final static String agents_conf = "src"+File.separator+"tests"+File.separ
 		
 		Agent newAgent = handler.getAgent(agent.getName());
 		newAgent.setSecret("1234");
-		handler.updateAgent(agent);
+		
+		handler.updateAgent(newAgent);
 		
 		list = handler.listAgent();
 		
@@ -81,7 +79,7 @@ public final static String agents_conf = "src"+File.separator+"tests"+File.separ
 		Assert.assertEquals(true, exist);
 		Assert.assertEquals(true, passwordChanged);
 		
-		handler.deleteAgent(agent);
+		handler.deleteAgent(newAgent);
 		
 		list = handler.listAgent();
 		
@@ -97,12 +95,17 @@ public final static String agents_conf = "src"+File.separator+"tests"+File.separ
 	}
 	
 	@Test
-	public void TestListingRamalLocalSipConf() throws IOException, SipConfigException {
-		RamalSipHandler ramalHandler = new RamalSipHandler(agents_conf);
+	public void TestListingAgentsLocalSipConf() throws IOException, AgentException {
+		AgentHandler handler = new AgentHandler(agents_conf);
 		
-		List<RamalSip> ramalList = ramalHandler.listRamal();
+		List<Agent> agentList = handler.listAgent();
 		
-		Assert.assertEquals(2, ramalList.size());
+		for (Agent agent : agentList) {
+			System.out.println(agent+" c: "+agent.getCode());
+		}
+		
+		Assert.assertEquals(true, agentList != null);
+		Assert.assertEquals(true, agentList.size() > 0);
 	}
 
 }

@@ -55,5 +55,28 @@ procurar sobre sala sem senha para o confbridge -> comando authenticate (Daniel)
 
 Na hora de digitar a senha do authenticate, depois de digitar todos os números tem que apertar jogo da velha (#)
 
+Yvens, verificar se usar aspas simples no callerId não dá problema na hora de fazer ligações -FEITO > funciona
 
-Yvens, verificar se usar aspas simples no callerId não dá problema na hora de fazer ligações
+
+
+Anotações críticas:
+
+1)
+Eu tinha 4 ramais, 
+4610
+4611
+4666
+4680
+
+Quando removi o 4666, o 4680 foi removido junto, precisamos ver isso!
+
+2)
+Eu criei uma sala de conferência, quando eu tentei alterá-la ele duplicou. Quando eu tentei remover 1, ele removeu as duas.
+
+3)
+Quando eu tentei alterar um ramal sip, ele sobrescreveu o outro e ainda avacalhou o caller id
+
+4)
+Melhor dizendo, acho que em todos os casos, se houver uma remoção de um texto que está entre outras linhas,  ele
+vai apagar o que tiver embaixo. Com exceção do DialRoute e do DialCommand, e suspeito que acontece isso por causa
+ordenação

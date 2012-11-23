@@ -1,6 +1,7 @@
 package asterisk;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Semaphore;
 
@@ -48,7 +49,20 @@ public class AgentHandler {
 	 */
 	public boolean insertAgent(Agent agent) throws IOException, AgentException {
 		if (mutex.tryAcquire()) {
-
+			List<Agent> listAgent = listAgent();
+			
+			for (Agent listedAgent : listAgent) {
+				if(listedAgent.getCode().equals(agent.getCode())){
+					throw new AgentException();
+				}
+			}
+			
+			String[] agentConf = fileHandler.readFile(agentConfPath);
+			
+			String newAgent = agent.toString();
+			
+			fileHandler.writeOnFile(agentConf, newAgent, agentConf.length);
+			
 			mutex.release();
 			return true;
 		} else {
@@ -67,10 +81,43 @@ public class AgentHandler {
 	 *         no momento, assim, evitando conflito entre os arquivos
 	 * 
 	 * @throws IOException
+	 * @throws AgentException 
 	 */
-	public boolean updateAgent(Agent agent) throws IOException {
+	public boolean updateAgent(Agent agent) throws IOException, AgentException {
 		if (mutex.tryAcquire()) {
 
+			String[] agentConf = fileHandler.readFile(agentConfPath);
+			Agent oldAgent = null;
+			
+			List<Agent> listAgent = listAgent();
+			
+			for (Agent listedAgent : listAgent) {
+				if(listedAgent.getId() == agent.getId()){
+					oldAgent = listedAgent;
+				}
+			}
+			
+			if(oldAgent == null){
+				throw new AgentException("Agente não encontrando com código igual a "+agent.getCode());
+			}
+			
+			int line = -1;
+			for (int i = 0; i < agentConf.length; i++) {
+				if(agentConf[i].equals(oldAgent.toString())){
+					line = i;
+				}
+			}
+			
+			if(line == -1){
+				throw new AgentException("Agente não encontrando com código igual a "+agent.getCode());
+			}
+			
+			fileHandler.deleteLineOnFile(agentConf, line);
+			
+			agentConf = fileHandler.readFile(agentConfPath);
+			
+			fileHandler.writeOnFile(agentConf, agent.toString(), agentConf.length);
+			
 			mutex.release();
 			return true;
 		} else {
@@ -87,11 +134,26 @@ public class AgentHandler {
 	 *         no momento, assim, evitando conflito entre os arquivos
 	 * @throws InterruptedException
 	 * @throws IOException
+	 * @throws AgentException 
 	 * @throws SipConfigException
 	 */
-	public boolean deleteAgent(Agent agent) throws IOException {
+	public boolean deleteAgent(Agent agent) throws IOException, AgentException {
 		if (mutex.tryAcquire()) {
-
+			String[] agentConf = fileHandler.readFile(agentConfPath);
+			
+			int line = -1;
+			for (int i = 0; i < agentConf.length; i++) {
+				if(agentConf[i].equals(agent.toString())){
+					line = i;
+				}
+			}
+			
+			if(line == -1){
+				throw new AgentException("Agente não encontrando com código igual a "+agent.getCode());
+			}
+			
+			fileHandler.deleteLineOnFile(agentConf, line);
+			
 			mutex.release();
 			return true;
 		} else {
@@ -107,16 +169,56 @@ public class AgentHandler {
 	 * @throws IOException
 	 */
 	public List<Agent> listAgent() throws IOException {
-		//TODO
-		return null;
+		String[] agentConfFile = fileHandler.readFile(agentConfPath);
+		List<Agent> listAgent = new ArrayList<Agent>();
+		
+		for (int i = 0; i < agentConfFile.length; i++) {
+			// Verificando se acha uma TAG no estilo [4666]
+			if (!agentConfFile[i].isEmpty() && agentConfFile[i].charAt(0) == '[' && !agentConfFile[i].equals("[general]")) {
+				//Linha de agentes
+				//Ignora a linha [Agents]
+				i++;
+				
+				int id = 1;
+				while(i < agentConfFile.length){
+					if(!agentConfFile[i].isEmpty()){
+						String line = agentConfFile[i].replace('>', ' ').trim();
+						
+						//agent=>1001,4321,Mark Spencer
+						line = line.substring(7);
+						
+						String parameters[] = line.split(",");
+						
+						String code = parameters[0].trim();
+						String secret = parameters[1];
+						String name = parameters[2];
+						
+						Agent agent = new Agent(id++, code, name, secret);
+						
+						listAgent.add(agent);
+					}
+					i++;
+				}
+			}
+		}
+		
+		return listAgent;
 	}
 
-	public Agent getAgent(String name) throws AgentException{
+	public Agent getAgent(String name) throws AgentException, IOException{
 		Agent agent = null;
 		
-//		if (agent == null) {
-//			throw new AgentException("Erro! Plano de Discagem não encontrado!Name = " + name);
-//		}
+		List<Agent> listAgent = listAgent();
+		
+		for (Agent listedAgent : listAgent) {
+			if(listedAgent.getName().equals(name)){
+				agent = listedAgent;
+			}
+		}
+		
+		if (agent == null) {
+			throw new AgentException("Erro! Agente não encontrado com nome = " + name);
+		}
 		
 		return agent;
 	}

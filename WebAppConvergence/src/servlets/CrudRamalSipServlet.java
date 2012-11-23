@@ -89,6 +89,8 @@ public class CrudRamalSipServlet extends HttpServlet {
 				//Caso seja realizada uma alteração em um ramal já existente
 				RamalSip ramalSip = RamalSip.getRamalFromParameter(request);
 				handler.updateRamal(ramalSip);
+				
+				System.out.println(ramalSip.getCallerId());
 				feedback = "Ramal "+ramalSip.getTag()+" alterado com sucesso!";
 				
 				//recarregando o serviço
