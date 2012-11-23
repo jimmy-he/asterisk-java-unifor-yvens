@@ -40,7 +40,7 @@
 						<a href="CrudAgentServlet?atividade=alteracao&id=${agent.code}">Alterar</a>
 					</td>
 					<td class="result" style="border: none;">
-						<a href="CrudAgentServlet?atividade=remocao&id=${agent.code}">Remover</a>
+						<a href="ListAgentServlet?remover=remocao&id=${agent.id}">Remover</a>
 					</td>
 				</tr>
 			</c:forEach>

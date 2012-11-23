@@ -99,7 +99,7 @@
 							</c:if>
 						</c:if>
 					</tr>
-					<tr>
+					<tr class="hidden_tr">
 						<td class="left">Ramal Type</td>
 						<td class="right"><select size="1" name="type"
 							style="width: 65%">

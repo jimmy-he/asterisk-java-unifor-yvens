@@ -247,7 +247,7 @@ public class FileHandler {
 			else if(i > end)
 			{
 				
-				newFile[i - 1 - (end - begin)] = file[i];	
+				newFile[i - (end - begin)] = file[i];	
 			}
 			
 		}		
