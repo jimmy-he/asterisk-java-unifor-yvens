@@ -39,8 +39,8 @@
 		<!-- Atributos que normalmente são modificados quando criamos um agent -->
 		<!-- String code, String name, String secret -->
 
-		<form method="post"
-			action="CrudAgentServlet?tarefa=${btnSubmit}&atividade=${atividade}">
+		<form method="post" action="CrudAgentServlet?tarefa=${btnSubmit}&atividade=${atividade}">
+			<input type="hidden" name="id" value="${id}">
 			<table id="main_table" cellspacing="0">
 				<tr>
 					<td class="left">Código</td>

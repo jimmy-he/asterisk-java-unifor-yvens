@@ -63,6 +63,7 @@ public class CrudAgentServlet extends HttpServlet {
 			}
 			else if(request.getParameter("atividade") != null && request.getParameter("atividade").equals("alteracao")){
 				//Redirecionamento para a página de inserção, mas com os campos já preenchidos
+				
 				String id = request.getParameter("id");
 				Agent agent = handler.getAgent(Integer.parseInt(id));
 
@@ -75,10 +76,15 @@ public class CrudAgentServlet extends HttpServlet {
 			else if(request.getParameter("atividade") != null && request.getParameter("atividade").equals("alterar")){
 				//Caso seja realizada uma alteração em um ramal já existente
 				Agent agent = Agent.getAgentFromParameter(request);
-				handler.updateAgent(agent);
 				
-				System.out.println(agent.getName());
-				feedback = "Agente "+agent.getName()+" alterado com sucesso!";
+				boolean updated = handler.updateAgent(agent);
+				
+				if(updated){
+					System.out.println(agent.getName());
+					feedback = "Agente "+agent.getName()+" alterado com sucesso!";
+				}else{
+					error = "Erro! Algum outro usuário está fazendo alterações no arquivo.";
+				}
 				
 				//recarregando o serviço
 				reload.reload();
