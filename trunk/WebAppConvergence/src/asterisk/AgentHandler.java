@@ -103,7 +103,7 @@ public class AgentHandler {
 			
 			int line = -1;
 			for (int i = 0; i < agentConf.length; i++) {
-				if(agentConf[i].equals(oldAgent.toString())){
+				if(agentConf[i].trim().equals(oldAgent.toString().trim())){
 					line = i;
 				}
 			}
@@ -141,9 +141,11 @@ public class AgentHandler {
 		if (mutex.tryAcquire()) {
 			String[] agentConf = fileHandler.readFile(agentConfPath);
 			
+			System.out.println("Remover: "+agent.toString()+" >> "+agent.getId());
+			
 			int line = -1;
 			for (int i = 0; i < agentConf.length; i++) {
-				if(agentConf[i].equals(agent.toString())){
+				if(agentConf[i].trim().equals(agent.toString().trim())){
 					line = i;
 				}
 			}

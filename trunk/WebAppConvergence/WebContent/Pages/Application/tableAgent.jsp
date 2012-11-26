@@ -37,7 +37,7 @@
 						<c:out value="${agent.name}"></c:out>
 					</td>
 					<td class="result">
-						<a href="CrudAgentServlet?atividade=alteracao&id=${agent.code}">Alterar</a>
+						<a href="CrudAgentServlet?atividade=alteracao&id=${agent.id}">Alterar</a>
 					</td>
 					<td class="result" style="border: none;">
 						<a href="ListAgentServlet?remover=remocao&id=${agent.id}">Remover</a>
